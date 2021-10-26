@@ -7,6 +7,6 @@ class CreatePlaylists < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference :accounts, :playlists, foreign_key: true
+    add_reference :playlists, :account, foreign_key: true
   end
 end

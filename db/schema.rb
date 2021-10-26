@@ -20,10 +20,8 @@ ActiveRecord::Schema.define(version: 2021_10_26_025502) do
     t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "playlists_id"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["name"], name: "index_accounts_on_name", unique: true
-    t.index ["playlists_id"], name: "index_accounts_on_playlists_id"
   end
 
   create_table "playlists", force: :cascade do |t|
@@ -31,8 +29,8 @@ ActiveRecord::Schema.define(version: 2021_10_26_025502) do
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "song_id"
-    t.index ["song_id"], name: "index_playlists_on_song_id"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_playlists_on_account_id"
   end
 
   create_table "songs", force: :cascade do |t|
@@ -44,8 +42,10 @@ ActiveRecord::Schema.define(version: 2021_10_26_025502) do
     t.jsonb "metadata", default: {}
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "playlist_id"
     t.index ["album"], name: "index_songs_on_album"
     t.index ["artist"], name: "index_songs_on_artist"
+    t.index ["playlist_id"], name: "index_songs_on_playlist_id"
     t.index ["title"], name: "index_songs_on_title"
   end
 
@@ -59,6 +59,6 @@ ActiveRecord::Schema.define(version: 2021_10_26_025502) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "accounts", "playlists", column: "playlists_id"
-  add_foreign_key "playlists", "songs"
+  add_foreign_key "playlists", "accounts"
+  add_foreign_key "songs", "playlists"
 end
