@@ -24,8 +24,6 @@
 #
 #  fk_rails_...  (playlist_id => playlists.id)
 #
-require 'rails_helper'
-
-RSpec.describe Song, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+class SongSerializer < Panko::Serializer
+  attributes :id, :album, :artist, :genre, :metadata, :title, :year, :playlist_id
 end

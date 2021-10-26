@@ -6,4 +6,18 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Account.create(name: 'admin', email: 'admin@democratify.com', password: 'password', password_confirmation: 'password', admin: true)
+def songs_params(size = 50)
+  size.times.map do
+    {
+      title: Faker::Music::RockBand.song,
+      artist: Faker::Music::RockBand.name,
+      album: Faker::Music::RockBand.name,
+    }
+  end
+end
+
+ActiveRecord::Base.transaction do
+  Account.create(name: 'admin', email: 'admin@democratify.com')
+         .playlists.create!(description: 'odins favourites', name: 'Valhala')
+         .songs.create!(songs_params)
+end

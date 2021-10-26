@@ -100,6 +100,10 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
+    oj (3.13.9)
+    panko_serializer (0.7.6)
+      activesupport
+      oj (> 3.11.0, < 4.0.0)
     parallel (1.21.0)
     parser (3.0.2.0)
       ast (~> 2.4.1)
@@ -219,6 +223,7 @@ DEPENDENCIES
   byebug
   faker
   listen (~> 3.3)
+  panko_serializer
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 6.1.4, >= 6.1.4.1)

@@ -4,7 +4,7 @@ class PlaylistsController < ApplicationController
   end
 
   def show
-    @playlist = Playlist.find(params.require(:id))
+    render_one(Playlist.includes(:songs).find(params.require(:id)))
   end
 
   def create

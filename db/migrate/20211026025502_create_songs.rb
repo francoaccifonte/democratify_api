@@ -3,8 +3,8 @@ class CreateSongs < ActiveRecord::Migration[6.1]
     create_table :songs do |t|
       t.string :title, null: false
       t.string :artist, null: false
-      t.bigint :album
-      t.string :year
+      t.string :album
+      t.bigint :year
       t.string :genre
       t.jsonb :metadata, default: {}
 

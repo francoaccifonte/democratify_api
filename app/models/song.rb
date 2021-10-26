@@ -3,12 +3,12 @@
 # Table name: songs
 #
 #  id          :bigint           not null, primary key
-#  album       :bigint
+#  album       :string
 #  artist      :string           not null
 #  genre       :string
 #  metadata    :jsonb
 #  title       :string           not null
-#  year        :string
+#  year        :bigint
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  playlist_id :bigint

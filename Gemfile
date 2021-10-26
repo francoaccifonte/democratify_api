@@ -9,24 +9,21 @@ gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 gem 'pg', '~> 1.1'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
-# Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
 
-# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem "panko_serializer"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'faker'
   gem 'rspec-rails'
   gem 'rubocop-rails'
   gem 'solargraph'
-  gem 'faker'
 end
 
 group :development do
-  gem 'listen', '~> 3.3'
   gem 'annotate'
+  gem 'listen', '~> 3.3'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

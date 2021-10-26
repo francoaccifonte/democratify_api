@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(version: 2021_10_26_025502) do
   create_table "songs", force: :cascade do |t|
     t.string "title", null: false
     t.string "artist", null: false
-    t.bigint "album"
-    t.string "year"
+    t.string "album"
+    t.bigint "year"
     t.string "genre"
     t.jsonb "metadata", default: {}
     t.datetime "created_at", precision: 6, null: false
