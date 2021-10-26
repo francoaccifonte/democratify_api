@@ -17,7 +17,10 @@ gem 'puma', '~> 5.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'rspec-rails'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rubocop'
+  gem 'solargraph'
 end
 
 group :development do
