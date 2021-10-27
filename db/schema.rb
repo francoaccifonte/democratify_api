@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_26_025502) do
+ActiveRecord::Schema.define(version: 2021_10_26_233713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,19 @@ ActiveRecord::Schema.define(version: 2021_10_26_025502) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["name"], name: "index_accounts_on_name", unique: true
+  end
+
+  create_table "integrations", force: :cascade do |t|
+    t.string "integration_type", null: false
+    t.string "token", null: false
+    t.string "email"
+    t.string "name"
+    t.jsonb "metadata", default: {}
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.index ["integration_type", "user_id"], name: "index_integrations_on_integration_type_and_user_id", unique: true
+    t.index ["user_id"], name: "index_integrations_on_user_id"
   end
 
   create_table "playlists", force: :cascade do |t|
@@ -59,6 +72,7 @@ ActiveRecord::Schema.define(version: 2021_10_26_025502) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "integrations", "users"
   add_foreign_key "playlists", "accounts"
   add_foreign_key "songs", "playlists"
 end
