@@ -25,21 +25,25 @@ ActiveRecord::Schema.define(version: 2021_10_26_233713) do
   end
 
   create_table "integrations", force: :cascade do |t|
-    t.string "integration_type", null: false
-    t.string "token", null: false
+    t.string "provider", null: false
+    t.string "token"
+    t.string "uuid", null: false
     t.string "email"
     t.string "name"
     t.jsonb "metadata", default: {}
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
     t.bigint "user_id"
-    t.index ["integration_type", "user_id"], name: "index_integrations_on_integration_type_and_user_id", unique: true
+    t.index ["account_id"], name: "index_integrations_on_account_id"
+    t.index ["provider", "token", "uuid"], name: "index_integrations_on_provider_and_token_and_uuid"
     t.index ["user_id"], name: "index_integrations_on_user_id"
   end
 
   create_table "playlists", force: :cascade do |t|
     t.string "name"
     t.string "description"
+    t.string "provider"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "account_id"
@@ -72,6 +76,7 @@ ActiveRecord::Schema.define(version: 2021_10_26_233713) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "integrations", "accounts"
   add_foreign_key "integrations", "users"
   add_foreign_key "playlists", "accounts"
   add_foreign_key "songs", "playlists"

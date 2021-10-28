@@ -31,7 +31,7 @@ class IntegrationsController < ApplicationController
 
   def integration_params
     params.require(
-      :integration_type # , :user_id
+      :provider # , :user_id
     ).to_h.merge!(
       params[:email],
       params[:metadata],

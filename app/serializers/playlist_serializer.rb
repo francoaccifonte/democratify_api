@@ -5,6 +5,7 @@
 #  id          :bigint           not null, primary key
 #  description :string
 #  name        :string
+#  provider    :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  account_id  :bigint

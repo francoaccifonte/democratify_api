@@ -7,7 +7,8 @@
 #  integration_type :string           not null
 #  metadata         :jsonb
 #  name             :string
-#  token            :string           not null
+#  token            :string
+#  uuid             :string           not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  user_id          :bigint
