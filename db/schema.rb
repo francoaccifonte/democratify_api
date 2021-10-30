@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_26_233713) do
+ActiveRecord::Schema.define(version: 2021_10_30_184656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,34 +24,12 @@ ActiveRecord::Schema.define(version: 2021_10_26_233713) do
     t.index ["name"], name: "index_accounts_on_name", unique: true
   end
 
-  create_table "integrations", force: :cascade do |t|
-    t.string "provider", null: false
-    t.string "token"
-    t.string "uuid"
-    t.string "email"
-    t.string "name"
-    t.string "type_in_chain"
-    t.datetime "expires_at"
-    t.jsonb "metadata", default: {}
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "account_id"
-    t.bigint "user_id"
-    t.bigint "front_end_token_id"
-    t.bigint "active_token_id"
-    t.bigint "refresh_token_id"
-    t.index ["account_id"], name: "index_integrations_on_account_id"
-    t.index ["active_token_id"], name: "index_integrations_on_active_token_id"
-    t.index ["front_end_token_id"], name: "index_integrations_on_front_end_token_id"
-    t.index ["provider", "token", "uuid"], name: "index_integrations_on_provider_and_token_and_uuid"
-    t.index ["refresh_token_id"], name: "index_integrations_on_refresh_token_id"
-    t.index ["user_id"], name: "index_integrations_on_user_id"
-  end
-
   create_table "playlists", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.string "provider"
+    t.string "external_id"
+    t.string "external_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "account_id"
@@ -74,6 +52,21 @@ ActiveRecord::Schema.define(version: 2021_10_26_233713) do
     t.index ["title"], name: "index_songs_on_title"
   end
 
+  create_table "spotify_users", force: :cascade do |t|
+    t.string "spotify_id", null: false
+    t.string "access_token"
+    t.string "refresh_token"
+    t.datetime "access_token_expires_at"
+    t.datetime "refresh_token_expires_at"
+    t.string "scope", null: false
+    t.string "name"
+    t.string "email"
+    t.string "uri"
+    t.string "href", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "hashed_password", null: false
     t.string "session_token", null: false
@@ -84,11 +77,6 @@ ActiveRecord::Schema.define(version: 2021_10_26_233713) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "integrations", "accounts"
-  add_foreign_key "integrations", "integrations", column: "active_token_id"
-  add_foreign_key "integrations", "integrations", column: "front_end_token_id"
-  add_foreign_key "integrations", "integrations", column: "refresh_token_id"
-  add_foreign_key "integrations", "users"
   add_foreign_key "playlists", "accounts"
   add_foreign_key "songs", "playlists"
 end

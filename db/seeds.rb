@@ -20,25 +20,4 @@ ActiveRecord::Base.transaction do
   account = Account.create(name: 'admin', email: 'admin@democratify.com')
   account.playlists.create!(description: 'odins favourites', name: 'Valhala', provider: 'spotify')
          .songs.create!(songs_params)
-
-  main_token = Account.first.integrations.create!(
-    provider: 'spotify',
-    token: 'aaaa',
-    uuid: '34fFs29kd09',
-    type_in_chain: 'front_end_token'
-  )
-
-  refresh_token = Integration.create!(
-    front_end_token: main_token,
-    token: 'aaaa',
-    type_in_chain: 'refresh_token',
-    expires_at: Time.now + 3600.second
-  )
-
-  Integration.create!(
-    refresh_token: refresh_token,
-    token: 'aaaa',
-    type_in_chain: 'active_token',
-    expires_at: Time.now + 3600.second
-  )
 end

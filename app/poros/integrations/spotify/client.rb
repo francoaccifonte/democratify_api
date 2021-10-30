@@ -6,7 +6,7 @@ module Spotify
 
     SPOTIFY_URL = 'https://api.spotify.com/v1'.freeze
 
-    attr_reader :access_token, :login_token
+    attr_accessor :access_token, :login_token
 
     def initialize(login_token: nil, access_token: nil)
       @access_token = access_token
@@ -48,9 +48,16 @@ module Spotify
           }
         }
       )
-      return response unless response.success?
-
       JSON.parse(response.body, symbolize_names: true)
+    end
+
+    def user
+      response = Typhoeus.get("#{SPOTIFY_URL}/me",
+                              headers: {
+                                Authorization: "Bearer #{access_token}",
+                                'Content-Type' => 'application/json'
+                              })
+      JSON.parse response.body, symbolize_names: true
     end
   end
 end
