@@ -1,12 +1,14 @@
 class PlaylistImportWorker
-  def perform(account_id, integration_id = nil)
-    account = Account.includes(:integrations).find(account_id)
-    integration = integration_id ? account.integrations.find(integration_id) : account.integrations.first
-    token = integration.token
+  def perform(integration_id)
+    integration = Integration.find(integration_id)
 
-    client = Integrations::CLIENTS[integration.provider].new(token)
+    token = integration&.active_token&.token || integration.token
 
-    playlists = client.playlists
-    byebug
+    Spoitfy::Client.new(token).playlists[:items].pluck(:id).each do |playlist_id|
+      Playlist.create(
+        integration: integration.front_end_token,
+        external_id: playlist_id,
+      )
+    end
   end
 end

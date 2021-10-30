@@ -22,27 +22,32 @@ module Spotify
     end
 
     def playlist(playlist_id) # 37i9dQZF1EJMjJi6MvtKpN
-      Typhoeus.get("#{SPOTIFY_URL}/playlists/#{playlist_id}",
-                   headers: {
-                     Authorization: "Bearer #{access_token}",
-                     'Content-Type' => 'application/json'
-                   })
+      response = Typhoeus.get(
+        "#{SPOTIFY_URL}/playlists/#{playlist_id}",
+        headers: {
+          Authorization: "Bearer #{access_token}",
+          'Content-Type' => 'application/json'
+        }
+      )
+      JSON.parse(response.body, symbolize_names: true)
     end
 
     def authorize
-      response = Typhoeus.post('https://accounts.spotify.com/api/token',
-                               {
-                                 body: {
-                                   grant_type: 'authorization_code',
-                                   code: login_token,
-                                   redirect_uri: REDIRECT_URI,
-                                   client_id: CLIENT_ID,
-                                   client_secret: CLIENT_SECRET
-                                 },
-                                 headers: {
-                                   'Content-Type' => 'application/x-www-form-urlencoded'
-                                 }
-                               })
+      response = Typhoeus.post(
+        'https://accounts.spotify.com/api/token',
+        {
+          body: {
+            grant_type: 'authorization_code',
+            code: login_token,
+            redirect_uri: REDIRECT_URI,
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET
+          },
+          headers: {
+            'Content-Type' => 'application/x-www-form-urlencoded'
+          }
+        }
+      )
       return response unless response.success?
 
       JSON.parse(response.body, symbolize_names: true)

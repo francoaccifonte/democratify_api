@@ -4,6 +4,8 @@ class CreatePlaylists < ActiveRecord::Migration[6.1]
       t.string :name
       t.string :description
       t.string :provider
+      t.string :external_id
+      t.string :external_url
 
       t.timestamps
     end
