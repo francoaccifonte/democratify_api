@@ -45,13 +45,13 @@ class Integration < ApplicationRecord
   TYPE_IN_CHAIN_TYPES = %w[active_token refresh_token front_end_token].freeze
 
   CHILD_DICT = {
-    'front_end_token' => 'active_token',
-    'active_token' => 'refresh_token'
+    'front_end_token' => 'refresh_token',
+    'refresh_token' => 'active_token',
   }.freeze
 
   PARENT_DICT = {
-    'active_token' => 'front_end_token',
-    'refresh_token' => 'active_token'
+    'refresh_token' => 'front_end_token',
+    'active_token' => 'refresh_token',
   }.freeze
 
   belongs_to :front_end_token, class_name: 'Integration', foreign_key: :front_end_token_id, required: false
@@ -71,8 +71,7 @@ class Integration < ApplicationRecord
 
   def child_tokens_have_parent
     return unless %w[active_token refresh_token].include?(type_in_chain)
-    return if type_in_chain == 'active_token' && front_end_token.present?
-    return if type_in_chain == 'refresh_token' && active_token.present?
+    return if parent.present?
 
     errors.add(:base, 'Child tokens must have a parent')
     false

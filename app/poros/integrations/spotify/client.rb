@@ -4,16 +4,25 @@ module Spotify
     CLIENT_ID = '9d48abfbbf194adc9051e1b82b0ecdb0'.freeze
     REDIRECT_URI = 'http://localhost:3001/spotify_login'.freeze
 
-    SPOTIFY_URL = 'https://api.spotify.com/v1/'.freeze
+    SPOTIFY_URL = 'https://api.spotify.com/v1'.freeze
 
-    attr_reader :access_token
+    attr_reader :access_token, :login_token
 
-    def initialize(access_token)
+    def initialize(login_token: nil, access_token: nil)
       @access_token = access_token
+      @login_token = login_token
     end
 
     def playlists
       Typhoeus.get("#{SPOTIFY_URL}/me/playlists",
+                   headers: {
+                     Authorization: "Bearer #{access_token}",
+                     'Content-Type' => 'application/json'
+                   })
+    end
+
+    def playlist(playlist_id) # 37i9dQZF1EJMjJi6MvtKpN
+      Typhoeus.get("#{SPOTIFY_URL}/playlists/#{playlist_id}",
                    headers: {
                      Authorization: "Bearer #{access_token}",
                      'Content-Type' => 'application/json'
@@ -25,7 +34,7 @@ module Spotify
                                {
                                  body: {
                                    grant_type: 'authorization_code',
-                                   code: access_token,
+                                   code: login_token,
                                    redirect_uri: REDIRECT_URI,
                                    client_id: CLIENT_ID,
                                    client_secret: CLIENT_SECRET

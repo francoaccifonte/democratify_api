@@ -11,7 +11,7 @@ module IntegrationChainSync
   end
 
   def set_grandparent
-    return unless type_in_chain == 'refresh_token'
+    return unless type_in_chain == 'active_token'
 
     self.front_end_token_id = parent.parent.id
   end
@@ -34,17 +34,17 @@ module IntegrationChainSync
   def create_children
     return unless type_in_chain == 'front_end_token'
 
-    credentials = Spotify::Client.new(token).authorize
+    credentials = Spotify::Client.new(login_token: token).authorize
     child_token = Integration.create!(
-      front_end_token_id: id,
+      type_in_chain: 'refresh_token',
+      token: credentials[:refresh_token],
+      front_end_token_id: id
+    )
+    Integration.create!(
+      refresh_token_id: child_token.id,
       type_in_chain: 'active_token',
       token: credentials[:access_token],
       expires_at: Time.zone.now + credentials[:expires_in].seconds
-    )
-    Integration.create!(
-      type_in_chain: 'refresh_token',
-      token: credentials[:refresh_token],
-      active_token_id: child_token.id
     )
   end
 end

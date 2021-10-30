@@ -28,17 +28,17 @@ ActiveRecord::Base.transaction do
     type_in_chain: 'front_end_token'
   )
 
-  active_token = Integration.create!(
+  refresh_token = Integration.create!(
     front_end_token: main_token,
     token: 'aaaa',
-    type_in_chain: 'active_token',
+    type_in_chain: 'refresh_token',
     expires_at: Time.now + 3600.second
   )
 
   Integration.create!(
-    active_token: active_token,
+    refresh_token: refresh_token,
     token: 'aaaa',
-    type_in_chain: 'refresh_token',
+    type_in_chain: 'active_token',
     expires_at: Time.now + 3600.second
   )
 end
