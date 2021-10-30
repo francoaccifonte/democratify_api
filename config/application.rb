@@ -38,5 +38,6 @@ module DemocratifyAPI
     config.api_only = true
 
     config.autoload_paths << Rails.root.join('app', 'poros', 'integrations')
+    config.autoload_paths << Rails.root.join('app', 'models', 'concerns')
   end
 end

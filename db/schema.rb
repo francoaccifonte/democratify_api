@@ -27,16 +27,24 @@ ActiveRecord::Schema.define(version: 2021_10_26_233713) do
   create_table "integrations", force: :cascade do |t|
     t.string "provider", null: false
     t.string "token"
-    t.string "uuid", null: false
+    t.string "uuid"
     t.string "email"
     t.string "name"
+    t.string "type_in_chain"
+    t.datetime "expires_at"
     t.jsonb "metadata", default: {}
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "account_id"
     t.bigint "user_id"
+    t.bigint "front_end_token_id"
+    t.bigint "active_token_id"
+    t.bigint "refresh_token_id"
     t.index ["account_id"], name: "index_integrations_on_account_id"
+    t.index ["active_token_id"], name: "index_integrations_on_active_token_id"
+    t.index ["front_end_token_id"], name: "index_integrations_on_front_end_token_id"
     t.index ["provider", "token", "uuid"], name: "index_integrations_on_provider_and_token_and_uuid"
+    t.index ["refresh_token_id"], name: "index_integrations_on_refresh_token_id"
     t.index ["user_id"], name: "index_integrations_on_user_id"
   end
 
@@ -77,6 +85,9 @@ ActiveRecord::Schema.define(version: 2021_10_26_233713) do
   end
 
   add_foreign_key "integrations", "accounts"
+  add_foreign_key "integrations", "integrations", column: "active_token_id"
+  add_foreign_key "integrations", "integrations", column: "front_end_token_id"
+  add_foreign_key "integrations", "integrations", column: "refresh_token_id"
   add_foreign_key "integrations", "users"
   add_foreign_key "playlists", "accounts"
   add_foreign_key "songs", "playlists"

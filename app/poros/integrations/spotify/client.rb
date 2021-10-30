@@ -12,10 +12,6 @@ module Spotify
       @access_token = access_token
     end
 
-    def login
-      "https://accounts.spotify.com/authorize?client_id=#{CLIENT_ID}&response_type=code&redirect_uri=#{REDIRECT_URI}&scope=user-read-private%20user-read-email&state=34fFs29kd09"
-    end
-
     def playlists
       Typhoeus.get("#{SPOTIFY_URL}/me/playlists",
                    headers: {
@@ -39,8 +35,8 @@ module Spotify
                                  }
                                })
       return response unless response.success?
-      
-      JSON.parse(response.body).access_token
+
+      JSON.parse(response.body, symbolize_names: true)
     end
   end
 end

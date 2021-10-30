@@ -21,6 +21,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rubocop-rails'
   gem 'solargraph'
+  gem 'factory_bot_rails'
 end
 
 group :development do
