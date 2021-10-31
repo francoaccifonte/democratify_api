@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  resources :integrations
-  resources :songs
-  resources :playlists
+  resources :spotify_songs
+  resources :spotify_playlists
   resources :accounts
   resources :users
 

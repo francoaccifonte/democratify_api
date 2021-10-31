@@ -10,7 +10,7 @@
 #  updated_at      :datetime         not null
 #  account_id      :bigint
 #  external_id     :string
-#  spotify_user_id :bigint
+#  spotify_user_id :bigint           not null
 #
 # Indexes
 #
@@ -25,6 +25,6 @@
 class SpotifyPlaylist < ApplicationRecord
   has_many :songs
   belongs_to :account, optional: true
-  belongs_to :spotify_user, optional: true
+  belongs_to :spotify_user, optional: false
 
 end

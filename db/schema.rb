@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_26_025502) do
+ActiveRecord::Schema.define(version: 2021_10_31_201456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,22 +24,6 @@ ActiveRecord::Schema.define(version: 2021_10_26_025502) do
     t.index ["name"], name: "index_accounts_on_name", unique: true
   end
 
-  create_table "songs", force: :cascade do |t|
-    t.string "title", null: false
-    t.string "artist", null: false
-    t.string "album"
-    t.bigint "year"
-    t.string "genre"
-    t.jsonb "metadata", default: {}
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "spotify_playlist_id"
-    t.index ["album"], name: "index_songs_on_album"
-    t.index ["artist"], name: "index_songs_on_artist"
-    t.index ["spotify_playlist_id"], name: "index_songs_on_spotify_playlist_id"
-    t.index ["title"], name: "index_songs_on_title"
-  end
-
   create_table "spotify_playlists", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -48,9 +32,28 @@ ActiveRecord::Schema.define(version: 2021_10_26_025502) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "account_id"
-    t.bigint "spotify_user_id"
+    t.bigint "spotify_user_id", null: false
     t.index ["account_id"], name: "index_spotify_playlists_on_account_id"
     t.index ["spotify_user_id"], name: "index_spotify_playlists_on_spotify_user_id"
+  end
+
+  create_table "spotify_songs", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "artist", null: false
+    t.string "album"
+    t.bigint "year"
+    t.string "genre"
+    t.string "external_id", null: false
+    t.jsonb "metadata", default: {}
+    t.float "duration"
+    t.jsonb "cover_art", default: {}
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "spotify_playlist_id"
+    t.index ["album"], name: "index_spotify_songs_on_album"
+    t.index ["artist"], name: "index_spotify_songs_on_artist"
+    t.index ["spotify_playlist_id"], name: "index_spotify_songs_on_spotify_playlist_id"
+    t.index ["title"], name: "index_spotify_songs_on_title"
   end
 
   create_table "spotify_users", force: :cascade do |t|
@@ -78,7 +81,7 @@ ActiveRecord::Schema.define(version: 2021_10_26_025502) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "songs", "spotify_playlists"
   add_foreign_key "spotify_playlists", "accounts"
   add_foreign_key "spotify_playlists", "spotify_users"
+  add_foreign_key "spotify_songs", "spotify_playlists"
 end

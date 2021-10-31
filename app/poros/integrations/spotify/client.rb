@@ -34,6 +34,19 @@ module Spotify
       JSON.parse(response.body, symbolize_names: true)
     end
 
+    def playlist_tracks(playlist_id)
+      fields = 'items(track(id,name,artists,duration_ms,album(id,name,images))),description,id,images'
+      response = Typhoeus.get(
+        "#{SPOTIFY_URL}/playlists/#{playlist_id}/tracks?fields=#{fields}",
+        # "#{SPOTIFY_URL}/playlists/#{playlist_id}/tracks",
+        headers: {
+          Authorization: "Bearer #{access_token}",
+          'Content-Type' => 'application/json'
+        }
+      )
+      JSON.parse(response.body, symbolize_names: true)
+    end
+
     def authorize
       response = Typhoeus.post(
         'https://accounts.spotify.com/api/token',
