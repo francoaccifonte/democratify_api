@@ -1,0 +1,2 @@
+class SpotifySongsController < ApplicationController
+end

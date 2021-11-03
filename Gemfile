@@ -10,7 +10,11 @@ gem 'pg', '~> 1.1'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 
-gem "panko_serializer"
+gem 'panko_serializer'
+
+gem 'typhoeus'
+
+gem 'sidekiq'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -19,6 +23,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rubocop-rails'
   gem 'solargraph'
+  gem 'factory_bot_rails'
 end
 
 group :development do

@@ -11,13 +11,13 @@ def songs_params(size = 50)
     {
       title: Faker::Music::RockBand.song,
       artist: Faker::Music::RockBand.name,
-      album: Faker::Music::RockBand.name,
+      album: Faker::Music::RockBand.name
     }
   end
 end
 
 ActiveRecord::Base.transaction do
-  Account.create(name: 'admin', email: 'admin@democratify.com')
-         .playlists.create!(description: 'odins favourites', name: 'Valhala')
+  account = Account.create(name: 'admin', email: 'admin@democratify.com')
+  account.playlists.create!(description: 'odins favourites', name: 'Valhala', provider: 'spotify')
          .songs.create!(songs_params)
 end
