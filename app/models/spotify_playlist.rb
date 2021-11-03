@@ -23,7 +23,7 @@
 #  fk_rails_...  (spotify_user_id => spotify_users.id)
 #
 class SpotifyPlaylist < ApplicationRecord
-  has_many :songs
+  has_many :spotify_songs
   belongs_to :account, optional: true
   belongs_to :spotify_user, optional: false
 

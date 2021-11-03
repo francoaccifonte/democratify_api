@@ -17,7 +17,7 @@
 #  spotify_id               :string           not null
 #
 class SpotifyUser < ApplicationRecord
-  has_many :playlists, dependent: :destroy
+  has_many :spotify_playlists, dependent: :destroy
 
   delegate :playlists, to: :client
 
