@@ -16,8 +16,9 @@ ActiveRecord::Schema.define(version: 2021_10_31_201456) do
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name"
     t.string "email", null: false
+    t.string "token", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_accounts_on_email", unique: true

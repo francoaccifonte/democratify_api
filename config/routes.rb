@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :spotify_songs
   resources :spotify_playlists
-  resources :accounts
+  resources :accounts do
+  end
+  post 'accounts/login', to: 'accounts#login'
   resources :users
 
   get '/spotify_login', to: 'webhook#spotify_login'
