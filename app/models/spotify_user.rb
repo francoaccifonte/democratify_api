@@ -14,12 +14,23 @@
 #  uri                      :string
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
+#  account_id               :bigint
 #  spotify_id               :string           not null
+#
+# Indexes
+#
+#  index_spotify_users_on_account_id  (account_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (account_id => accounts.id)
 #
 class SpotifyUser < ApplicationRecord
   has_many :spotify_playlists, dependent: :destroy
 
   delegate :playlists, to: :client
+
+  after_create :import_playlists
 
   def client
     @client ||= Spotify::Client.new(
@@ -47,5 +58,9 @@ class SpotifyUser < ApplicationRecord
 
   def access_token_expired?
     access_token_expires_at < Time.now - 5.minutes
+  end
+
+  def import_playlists
+    PlaylistImportWorker.perform_async(id)
   end
 end

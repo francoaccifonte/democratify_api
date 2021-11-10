@@ -27,4 +27,11 @@ class SpotifyPlaylist < ApplicationRecord
   belongs_to :account, optional: true
   belongs_to :spotify_user, optional: false
 
+  after_create :import_songs
+
+  private
+
+  def import_songs
+    ImportSpotifySongsIntoPlaylistWorker.perform_async(id)
+  end
 end

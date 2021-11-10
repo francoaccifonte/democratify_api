@@ -1,6 +1,6 @@
 class ImportSpotifySongsIntoPlaylistWorker
-  # include Sidekiq::Worker
-  # sidekiq_options queue: :spotify_import
+  include Sidekiq::Worker
+  sidekiq_options queue: :spotify_import
 
   def perform(playlist_id)
     playlist = SpotifyPlaylist.find(playlist_id)

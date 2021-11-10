@@ -2,7 +2,9 @@ class SpotifyPlaylistsController < ApplicationController
   before_action :authenticate!
 
   def index
-    @playlists = SpotifyPlaylist.where(account_id: params.require(:account_id))
+    @playlists = SpotifyPlaylist.where(account_id: @current_account.id)
+
+    render_many @playlists
   end
 
   def show
