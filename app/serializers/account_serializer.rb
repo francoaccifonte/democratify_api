@@ -14,18 +14,7 @@
 #  index_accounts_on_email  (email) UNIQUE
 #  index_accounts_on_name   (name) UNIQUE
 #
-class Account < ApplicationRecord
-  has_many :users
-  has_many :playlists
+class AccountSerializer < Panko::Serializer
+  attributes :id, :email, :name, :token, :created_at, :updated_at
 
-  before_validation :set_token
-
-  private
-
-  def set_token
-    self.token = loop do
-      random_token = SecureRandom.urlsafe_base64(nil, false)
-      break random_token unless Account.exists?(token: random_token)
-    end
-  end
 end

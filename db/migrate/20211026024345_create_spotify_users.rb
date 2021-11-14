@@ -13,5 +13,7 @@ class CreateSpotifyUsers < ActiveRecord::Migration[6.1]
       t.string :href, null: false
       t.timestamps
     end
+
+    add_reference :spotify_users, :account, foreign_key: true
   end
 end

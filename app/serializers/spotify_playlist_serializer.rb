@@ -22,16 +22,8 @@
 #  fk_rails_...  (account_id => accounts.id)
 #  fk_rails_...  (spotify_user_id => spotify_users.id)
 #
-class SpotifyPlaylist < ApplicationRecord
-  has_many :spotify_songs
-  belongs_to :account, optional: true
-  belongs_to :spotify_user, optional: false
+class SpotifyPlaylistSerializer < Panko::Serializer
+  attributes :id, :description, :name, :created_at, :updated_at, :account_id, :external_id, :spotify_user_id
 
-  after_create :import_songs
-
-  private
-
-  def import_songs
-    ImportSpotifySongsIntoPlaylistWorker.perform_async(id)
-  end
+  # has_many :songs, serializer: SongSerializer
 end

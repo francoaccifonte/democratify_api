@@ -18,6 +18,6 @@ end
 
 ActiveRecord::Base.transaction do
   account = Account.create(name: 'admin', email: 'admin@democratify.com')
-  account.playlists.create!(description: 'odins favourites', name: 'Valhala', provider: 'spotify')
-         .songs.create!(songs_params)
+  # account.playlists.create!(description: 'odins favourites', name: 'Valhala', provider: 'spotify')
+  #        .songs.create!(songs_params)
 end

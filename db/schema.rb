@@ -16,8 +16,9 @@ ActiveRecord::Schema.define(version: 2021_10_31_201456) do
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name"
     t.string "email", null: false
+    t.string "token", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_accounts_on_email", unique: true
@@ -69,6 +70,8 @@ ActiveRecord::Schema.define(version: 2021_10_31_201456) do
     t.string "href", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_spotify_users_on_account_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -84,4 +87,5 @@ ActiveRecord::Schema.define(version: 2021_10_31_201456) do
   add_foreign_key "spotify_playlists", "accounts"
   add_foreign_key "spotify_playlists", "spotify_users"
   add_foreign_key "spotify_songs", "spotify_playlists"
+  add_foreign_key "spotify_users", "accounts"
 end

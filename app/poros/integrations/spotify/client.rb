@@ -1,8 +1,8 @@
 module Spotify
   class Client
-    CLIENT_SECRET = 'ddd04fa7c1b746d18d4c2cf707604dec'.freeze
-    CLIENT_ID = '9d48abfbbf194adc9051e1b82b0ecdb0'.freeze
-    REDIRECT_URI = 'http://localhost:3001/spotify_login'.freeze
+    CLIENT_SECRET = ENV['SPOTIFY_SECRET'].freeze
+    CLIENT_ID = ENV['SPOTIFY_CLIENT_ID'].freeze
+    REDIRECT_URI = ENV['SPOTIFY_REDIRECT_URL'].freeze
 
     SPOTIFY_URL = 'https://api.spotify.com/v1'.freeze
 

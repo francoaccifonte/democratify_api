@@ -14,7 +14,16 @@
 #  uri                      :string
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
+#  account_id               :bigint
 #  spotify_id               :string           not null
+#
+# Indexes
+#
+#  index_spotify_users_on_account_id  (account_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (account_id => accounts.id)
 #
 FactoryBot.define do
   factory :spotify_user do
