@@ -5,8 +5,7 @@ Rails.application.routes.draw do
 
   resources :spotify_songs
   resources :spotify_playlists
-  resources :accounts do
-  end
+  resources :accounts
   post 'accounts/login', to: 'accounts#login'
   resources :users
 

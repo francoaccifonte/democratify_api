@@ -11,8 +11,10 @@ module SerializationConcern
   def render_many(resources, serializer_class: nil, status: :ok)
     return render_no_content unless resources.any?
 
-    serializer_klass = serializer_class || guess_serializer(resources.first.class)
-    serializer = Panko::ArraySerializer.new(resources, each_serializer: serializer_klass)
+    serializer = Panko::ArraySerializer.new(
+      resources,
+      each_serializer: serializer_class || guess_serializer(resources.first.class)
+    )
 
     json = serializer.to_json
     render json: json, status: status
