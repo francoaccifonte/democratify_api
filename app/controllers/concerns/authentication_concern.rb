@@ -6,7 +6,7 @@ module AuthenticationConcern
   end
 
   def parse_authentication_token!
-    token = request.headers['Authentication']
+    token = request.headers['Authorization']
     raise AuthenticationError unless token
 
     token.split('Bearer ').last

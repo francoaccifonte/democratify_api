@@ -20,6 +20,12 @@ module SerializationConcern
     render json: json, status: status
   end
 
+  def render_no_content
+    render json: {}, status: :no_content
+  end
+
+  private
+
   def guess_serializer(klass)
     "#{klass.name}Serializer".constantize
   end
