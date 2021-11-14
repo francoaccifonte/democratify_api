@@ -1,0 +1,2 @@
+class OngoingPlaylistsController < ApplicationController
+end

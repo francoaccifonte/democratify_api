@@ -1,6 +1,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  resources :ongoing_playlists
   mount Sidekiq::Web => '/sidekiq'
 
   resources :spotify_songs
