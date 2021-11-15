@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_31_201456) do
+ActiveRecord::Schema.define(version: 2021_11_14_223632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 2021_10_31_201456) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["name"], name: "index_accounts_on_name", unique: true
+  end
+
+  create_table "ongoing_playlists", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id", null: false
+    t.bigint "spotify_playlist_id", null: false
+    t.index ["account_id", "spotify_playlist_id"], name: "index_ongoing_playlists_on_account_id_and_spotify_playlist_id", unique: true
+    t.index ["account_id"], name: "index_ongoing_playlists_on_account_id"
+    t.index ["spotify_playlist_id"], name: "index_ongoing_playlists_on_spotify_playlist_id"
   end
 
   create_table "spotify_playlists", force: :cascade do |t|
@@ -84,6 +94,8 @@ ActiveRecord::Schema.define(version: 2021_10_31_201456) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "ongoing_playlists", "accounts"
+  add_foreign_key "ongoing_playlists", "spotify_playlists"
   add_foreign_key "spotify_playlists", "accounts"
   add_foreign_key "spotify_playlists", "spotify_users"
   add_foreign_key "spotify_songs", "spotify_playlists"

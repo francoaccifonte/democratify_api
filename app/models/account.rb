@@ -16,7 +16,8 @@
 #
 class Account < ApplicationRecord
   has_many :users
-  has_many :playlists
+  has_many :spotify_playlists
+  has_one :ongoing_playlist
 
   before_validation :set_token
 

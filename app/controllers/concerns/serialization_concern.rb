@@ -2,6 +2,8 @@ module SerializationConcern
   extend ActiveSupport::Concern
 
   def render_one(object, serializer_class: nil, status: :ok)
+    return render_no_content unless object.present?
+
     serializer = serializer_class&.new ||
                  guess_serializer(object.class).new
     json = serializer.serialize_to_json(object)

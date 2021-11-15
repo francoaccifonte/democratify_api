@@ -15,6 +15,5 @@
 #  index_accounts_on_name   (name) UNIQUE
 #
 class AccountSerializer < Panko::Serializer
-  attributes :id, :email, :name, :token, :created_at, :updated_at
-
+  attributes :id, :email, :name, :created_at, :updated_at
 end

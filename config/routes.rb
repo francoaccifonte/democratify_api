@@ -1,12 +1,12 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  resources :ongoing_playlists
   mount Sidekiq::Web => '/sidekiq'
 
   resources :spotify_songs
   resources :spotify_playlists
-  resources :accounts
+  resources :ongoing_playlists, only: %i[update create show destroy]
+  resources :accounts, only: %i[show]
   post 'accounts/login', to: 'accounts#login'
   resources :users
 
