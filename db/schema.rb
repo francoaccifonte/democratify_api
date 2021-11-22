@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_14_223632) do
+ActiveRecord::Schema.define(version: 2021_11_22_224126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,10 +97,40 @@ ActiveRecord::Schema.define(version: 2021_11_14_223632) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  create_table "votation_candidates", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "accounts_id"
+    t.bigint "votations_id"
+    t.bigint "spotify_songs_id"
+    t.bigint "spotify_playlists_id"
+    t.index ["accounts_id"], name: "index_votation_candidates_on_accounts_id"
+    t.index ["spotify_playlists_id"], name: "index_votation_candidates_on_spotify_playlists_id"
+    t.index ["spotify_songs_id"], name: "index_votation_candidates_on_spotify_songs_id"
+    t.index ["votations_id"], name: "index_votation_candidates_on_votations_id"
+  end
+
+  create_table "votations", force: :cascade do |t|
+    t.boolean "in_progress"
+    t.boolean "queued"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "ongoing_playlist_id"
+    t.bigint "accounts_id"
+    t.index ["accounts_id"], name: "index_votations_on_accounts_id"
+    t.index ["ongoing_playlist_id"], name: "index_votations_on_ongoing_playlist_id"
+  end
+
   add_foreign_key "ongoing_playlists", "accounts"
   add_foreign_key "ongoing_playlists", "spotify_playlists"
   add_foreign_key "spotify_playlists", "accounts"
   add_foreign_key "spotify_playlists", "spotify_users"
   add_foreign_key "spotify_songs", "spotify_playlists"
   add_foreign_key "spotify_users", "accounts"
+  add_foreign_key "votation_candidates", "accounts", column: "accounts_id"
+  add_foreign_key "votation_candidates", "spotify_playlists", column: "spotify_playlists_id"
+  add_foreign_key "votation_candidates", "spotify_songs", column: "spotify_songs_id"
+  add_foreign_key "votation_candidates", "votations", column: "votations_id"
+  add_foreign_key "votations", "accounts", column: "accounts_id"
+  add_foreign_key "votations", "ongoing_playlists"
 end
