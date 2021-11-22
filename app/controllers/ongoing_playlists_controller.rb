@@ -1,6 +1,6 @@
 class OngoingPlaylistsController < ApplicationController
   before_action :authenticate!
-  before_action :set_ongoing_playlist, only: %i[show update destroy create]
+  before_action :set_ongoing_playlist, only: %i[index update destroy create]
 
   def update
     nil
@@ -14,7 +14,7 @@ class OngoingPlaylistsController < ApplicationController
     render_one ongoing_playlist
   end
 
-  def show
+  def index
     render_one @ongoing_playlist
   end
 

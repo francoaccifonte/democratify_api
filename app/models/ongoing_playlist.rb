@@ -22,4 +22,6 @@
 class OngoingPlaylist < ApplicationRecord
   belongs_to :account
   belongs_to :spotify_playlist
+
+  has_many :spotify_songs, through: :spotify_playlist
 end
