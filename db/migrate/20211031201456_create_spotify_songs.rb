@@ -17,6 +17,7 @@ class CreateSpotifySongs < ActiveRecord::Migration[6.1]
     add_index :spotify_songs, :title, unique: false
     add_index :spotify_songs, :artist, unique: false
     add_index :spotify_songs, :album, unique: false
+    add_index :spotify_songs, :external_id, unique: false
     add_reference :spotify_songs, :spotify_playlist, foreign_key: true
   end
 end

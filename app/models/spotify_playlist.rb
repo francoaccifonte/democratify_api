@@ -3,6 +3,7 @@
 # Table name: spotify_playlists
 #
 #  id              :bigint           not null, primary key
+#  cover_art_url   :string
 #  description     :string
 #  external_url    :string
 #  name            :string
@@ -15,6 +16,7 @@
 # Indexes
 #
 #  index_spotify_playlists_on_account_id       (account_id)
+#  index_spotify_playlists_on_external_id      (external_id) UNIQUE
 #  index_spotify_playlists_on_spotify_user_id  (spotify_user_id)
 #
 # Foreign Keys
@@ -28,6 +30,10 @@ class SpotifyPlaylist < ApplicationRecord
   belongs_to :spotify_user, optional: false
 
   after_create :import_songs
+
+  def sample_songs
+    spotify_songs.first(4)
+  end
 
   private
 

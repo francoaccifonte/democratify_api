@@ -20,6 +20,7 @@
 #
 #  index_spotify_songs_on_album                (album)
 #  index_spotify_songs_on_artist               (artist)
+#  index_spotify_songs_on_external_id          (external_id)
 #  index_spotify_songs_on_spotify_playlist_id  (spotify_playlist_id)
 #  index_spotify_songs_on_title                (title)
 #

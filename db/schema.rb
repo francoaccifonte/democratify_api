@@ -40,11 +40,13 @@ ActiveRecord::Schema.define(version: 2021_11_14_223632) do
     t.string "description"
     t.string "external_id"
     t.string "external_url"
+    t.string "cover_art_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "account_id"
     t.bigint "spotify_user_id", null: false
     t.index ["account_id"], name: "index_spotify_playlists_on_account_id"
+    t.index ["external_id"], name: "index_spotify_playlists_on_external_id", unique: true
     t.index ["spotify_user_id"], name: "index_spotify_playlists_on_spotify_user_id"
   end
 
@@ -63,6 +65,7 @@ ActiveRecord::Schema.define(version: 2021_11_14_223632) do
     t.bigint "spotify_playlist_id"
     t.index ["album"], name: "index_spotify_songs_on_album"
     t.index ["artist"], name: "index_spotify_songs_on_artist"
+    t.index ["external_id"], name: "index_spotify_songs_on_external_id"
     t.index ["spotify_playlist_id"], name: "index_spotify_songs_on_spotify_playlist_id"
     t.index ["title"], name: "index_spotify_songs_on_title"
   end
