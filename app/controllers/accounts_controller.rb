@@ -1,4 +1,10 @@
 class AccountsController < ApplicationController
+  before_action :authenticate!, only: %i[me]
+
+  def me
+    render_one @current_account
+  end
+
   def login
     @account = Account.find_by(login_params)
 

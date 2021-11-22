@@ -8,7 +8,8 @@ class WebhookController < ApplicationController
     user_data = client.user
 
     user = SpotifyUser.find_or_initialize_by(
-      spotify_id: user_data[:id]
+      spotify_id: user_data[:id],
+      account_id: params.require(:state)
     )
     user.assign_attributes(
       name: user_data[:display_name],
