@@ -26,7 +26,7 @@
 #
 class SpotifyPlaylist < ApplicationRecord
   has_many :spotify_songs
-  belongs_to :account, optional: true
+  belongs_to :account
   belongs_to :spotify_user, optional: false
 
   after_create :import_songs

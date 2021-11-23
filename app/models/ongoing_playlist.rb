@@ -24,4 +24,6 @@ class OngoingPlaylist < ApplicationRecord
   belongs_to :spotify_playlist
 
   has_many :spotify_songs, through: :spotify_playlist
+  has_many :votations, dependent: :destroy
+  has_many :votation_candidates, through: :votations
 end

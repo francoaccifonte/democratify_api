@@ -30,4 +30,5 @@
 #
 class SpotifySong < ApplicationRecord
   belongs_to :spotify_playlist
+  has_many :votation_candidates, dependent: :destroy
 end

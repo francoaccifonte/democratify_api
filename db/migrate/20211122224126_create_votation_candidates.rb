@@ -1,6 +1,7 @@
 class CreateVotationCandidates < ActiveRecord::Migration[6.1]
   def change
     create_table :votation_candidates do |t|
+      t.bigint :votes, null: false, default: 0
 
       t.timestamps
     end

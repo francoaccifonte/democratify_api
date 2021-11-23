@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_224126) do
   end
 
   create_table "votation_candidates", force: :cascade do |t|
+    t.bigint "votes", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "accounts_id"
@@ -111,12 +112,18 @@ ActiveRecord::Schema.define(version: 2021_11_22_224126) do
   end
 
   create_table "votations", force: :cascade do |t|
-    t.boolean "in_progress"
-    t.boolean "queued"
+    t.boolean "in_progress", null: false
+    t.boolean "queued", null: false
+    t.datetime "scheduled_start_for", null: false
+    t.datetime "scheduled_start_at", null: false
+    t.datetime "scheduled_end_for", null: false
+    t.datetime "scheduled_end_at", null: false
+    t.datetime "started_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "ongoing_playlist_id"
-    t.bigint "accounts_id"
+    t.bigint "ongoing_playlist_id", null: false
+    t.bigint "accounts_id", null: false
+    t.index ["accounts_id", "ongoing_playlist_id"], name: "index_votations_on_accounts_id_and_ongoing_playlist_id"
     t.index ["accounts_id"], name: "index_votations_on_accounts_id"
     t.index ["ongoing_playlist_id"], name: "index_votations_on_ongoing_playlist_id"
   end

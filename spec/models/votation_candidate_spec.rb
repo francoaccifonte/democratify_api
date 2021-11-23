@@ -3,6 +3,7 @@
 # Table name: votation_candidates
 #
 #  id                   :bigint           not null, primary key
+#  votes                :bigint           default(0), not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  accounts_id          :bigint
