@@ -7,8 +7,7 @@ class OngoingPlaylistsController < ApplicationController
   end
 
   def create
-    raise UnprocessableEntityError.new(message: 'An ongoing playlist already exists') if @ongoing_playlist
-
+    @ongoing_playlist&.destroy!
     ongoing_playlist = OngoingPlaylist.create!(creation_params)
 
     render_one ongoing_playlist
@@ -28,11 +27,24 @@ class OngoingPlaylistsController < ApplicationController
   def creation_params
     {
       account: @current_account,
-      spotify_playlist: @current_account.spotify_playlists.find(params.require(:spotify_playlist_id))
+      spotify_playlist: spotify_playlist,
+      playing_song: playing_song
     }
   end
 
   def set_ongoing_playlist
     @ongoing_playlist = @current_account.ongoing_playlist
+  end
+
+  def spotify_playlist
+    @spotify_playlist ||= @current_account.spotify_playlists.find(params.require(:spotify_playlist_id))
+  end
+
+  def playing_song
+    @playing_song ||= if params.permit(:playing_song_id).present?
+                        SpotifySong.find(params.permit(:playing_song_id))
+                      else
+                        spotify_playlist.spotify_songs.first
+                      end
   end
 end

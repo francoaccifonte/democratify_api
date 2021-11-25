@@ -30,9 +30,11 @@ ActiveRecord::Schema.define(version: 2021_11_22_224126) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "account_id", null: false
     t.bigint "spotify_playlist_id", null: false
+    t.bigint "spotify_song_id"
     t.index ["account_id", "spotify_playlist_id"], name: "index_ongoing_playlists_on_account_id_and_spotify_playlist_id", unique: true
     t.index ["account_id"], name: "index_ongoing_playlists_on_account_id"
     t.index ["spotify_playlist_id"], name: "index_ongoing_playlists_on_spotify_playlist_id"
+    t.index ["spotify_song_id"], name: "index_ongoing_playlists_on_spotify_song_id"
   end
 
   create_table "spotify_playlists", force: :cascade do |t|
@@ -130,6 +132,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_224126) do
 
   add_foreign_key "ongoing_playlists", "accounts"
   add_foreign_key "ongoing_playlists", "spotify_playlists"
+  add_foreign_key "ongoing_playlists", "spotify_songs"
   add_foreign_key "spotify_playlists", "accounts"
   add_foreign_key "spotify_playlists", "spotify_users"
   add_foreign_key "spotify_songs", "spotify_playlists"
