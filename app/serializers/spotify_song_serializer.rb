@@ -28,8 +28,7 @@
 #
 #  fk_rails_...  (spotify_playlist_id => spotify_playlists.id)
 #
-FactoryBot.define do
-  factory :spotify_song do
-    
-  end
+class SpotifySongSerializer < Panko::Serializer
+  attributes :id, :album, :artist, :cover_art, :duration, :genre, :metadata, :title, :year, :created_at, :updated_at,
+             :external_id, :spotify_playlist_id
 end

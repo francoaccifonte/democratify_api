@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_31_201456) do
+ActiveRecord::Schema.define(version: 2021_11_22_224126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,16 +25,30 @@ ActiveRecord::Schema.define(version: 2021_10_31_201456) do
     t.index ["name"], name: "index_accounts_on_name", unique: true
   end
 
+  create_table "ongoing_playlists", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id", null: false
+    t.bigint "spotify_playlist_id", null: false
+    t.bigint "spotify_song_id"
+    t.index ["account_id", "spotify_playlist_id"], name: "index_ongoing_playlists_on_account_id_and_spotify_playlist_id", unique: true
+    t.index ["account_id"], name: "index_ongoing_playlists_on_account_id"
+    t.index ["spotify_playlist_id"], name: "index_ongoing_playlists_on_spotify_playlist_id"
+    t.index ["spotify_song_id"], name: "index_ongoing_playlists_on_spotify_song_id"
+  end
+
   create_table "spotify_playlists", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.string "external_id"
     t.string "external_url"
+    t.string "cover_art_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "account_id"
     t.bigint "spotify_user_id", null: false
     t.index ["account_id"], name: "index_spotify_playlists_on_account_id"
+    t.index ["external_id"], name: "index_spotify_playlists_on_external_id", unique: true
     t.index ["spotify_user_id"], name: "index_spotify_playlists_on_spotify_user_id"
   end
 
@@ -53,6 +67,7 @@ ActiveRecord::Schema.define(version: 2021_10_31_201456) do
     t.bigint "spotify_playlist_id"
     t.index ["album"], name: "index_spotify_songs_on_album"
     t.index ["artist"], name: "index_spotify_songs_on_artist"
+    t.index ["external_id"], name: "index_spotify_songs_on_external_id"
     t.index ["spotify_playlist_id"], name: "index_spotify_songs_on_spotify_playlist_id"
     t.index ["title"], name: "index_spotify_songs_on_title"
   end
@@ -84,8 +99,48 @@ ActiveRecord::Schema.define(version: 2021_10_31_201456) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  create_table "votation_candidates", force: :cascade do |t|
+    t.bigint "votes", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "accounts_id"
+    t.bigint "votations_id"
+    t.bigint "spotify_songs_id"
+    t.bigint "spotify_playlists_id"
+    t.index ["accounts_id"], name: "index_votation_candidates_on_accounts_id"
+    t.index ["spotify_playlists_id"], name: "index_votation_candidates_on_spotify_playlists_id"
+    t.index ["spotify_songs_id"], name: "index_votation_candidates_on_spotify_songs_id"
+    t.index ["votations_id"], name: "index_votation_candidates_on_votations_id"
+  end
+
+  create_table "votations", force: :cascade do |t|
+    t.boolean "in_progress", null: false
+    t.boolean "queued", null: false
+    t.datetime "scheduled_start_for", null: false
+    t.datetime "scheduled_start_at", null: false
+    t.datetime "scheduled_end_for", null: false
+    t.datetime "scheduled_end_at", null: false
+    t.datetime "started_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "ongoing_playlist_id", null: false
+    t.bigint "accounts_id", null: false
+    t.index ["accounts_id", "ongoing_playlist_id"], name: "index_votations_on_accounts_id_and_ongoing_playlist_id"
+    t.index ["accounts_id"], name: "index_votations_on_accounts_id"
+    t.index ["ongoing_playlist_id"], name: "index_votations_on_ongoing_playlist_id"
+  end
+
+  add_foreign_key "ongoing_playlists", "accounts"
+  add_foreign_key "ongoing_playlists", "spotify_playlists"
+  add_foreign_key "ongoing_playlists", "spotify_songs"
   add_foreign_key "spotify_playlists", "accounts"
   add_foreign_key "spotify_playlists", "spotify_users"
   add_foreign_key "spotify_songs", "spotify_playlists"
   add_foreign_key "spotify_users", "accounts"
+  add_foreign_key "votation_candidates", "accounts", column: "accounts_id"
+  add_foreign_key "votation_candidates", "spotify_playlists", column: "spotify_playlists_id"
+  add_foreign_key "votation_candidates", "spotify_songs", column: "spotify_songs_id"
+  add_foreign_key "votation_candidates", "votations", column: "votations_id"
+  add_foreign_key "votations", "accounts", column: "accounts_id"
+  add_foreign_key "votations", "ongoing_playlists"
 end

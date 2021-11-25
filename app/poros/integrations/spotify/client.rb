@@ -34,6 +34,17 @@ module Spotify
       JSON.parse(response.body, symbolize_names: true)
     end
 
+    def playlist_cover_art(playlist_id)
+      response = Typhoeus.get(
+        "#{SPOTIFY_URL}/playlists/#{playlist_id}/images",
+        headers: {
+          Authorization: "Bearer #{access_token}",
+          'Content-Type' => 'application/json'
+        }
+      )
+      JSON.parse(response.body, symbolize_names: true)
+    end
+
     def playlist_tracks(playlist_id)
       fields = 'items(track(id,name,artists,duration_ms,album(id,name,images))),description,id,images'
       response = Typhoeus.get(
