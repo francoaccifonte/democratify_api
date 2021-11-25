@@ -15,6 +15,7 @@ class ImportSpotifySongsIntoPlaylistWorker
         external_id: song.fetch(:id)
       )
       new_song.assign_attributes(
+        uri: song.fetch(:uri),
         title: song.fetch(:name),
         artist: song.fetch(:artists).pluck(:name).join(' - '),
         album: song.fetch(:album).fetch(:name),

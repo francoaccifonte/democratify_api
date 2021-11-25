@@ -7,6 +7,7 @@ class CreateSpotifySongs < ActiveRecord::Migration[6.1]
       t.bigint :year
       t.string :genre
       t.string :external_id, null: false
+      t.string :uri, null: false
       t.jsonb :metadata, default: {}
       t.float :duration
       t.jsonb :cover_art, default: {}

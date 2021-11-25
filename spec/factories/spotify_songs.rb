@@ -10,6 +10,7 @@
 #  genre               :string
 #  metadata            :jsonb
 #  title               :string           not null
+#  uri                 :string           not null
 #  year                :bigint
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null

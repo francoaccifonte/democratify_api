@@ -10,6 +10,7 @@
 #  genre               :string
 #  metadata            :jsonb
 #  title               :string           not null
+#  uri                 :string           not null
 #  year                :bigint
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
@@ -29,6 +30,6 @@
 #  fk_rails_...  (spotify_playlist_id => spotify_playlists.id)
 #
 class SpotifySongSerializer < Panko::Serializer
-  attributes :id, :album, :artist, :cover_art, :duration, :genre, :metadata, :title, :year, :created_at, :updated_at,
-             :external_id, :spotify_playlist_id
+  attributes :id, :uri, :album, :artist, :cover_art, :duration, :genre, :metadata, :title, :year,
+             :created_at, :updated_at, :external_id, :spotify_playlist_id
 end

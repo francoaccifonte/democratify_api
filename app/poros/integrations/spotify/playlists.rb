@@ -15,7 +15,7 @@ module Spotify
     end
 
     def playlist_tracks(playlist_id)
-      fields = 'items(track(id,name,artists,duration_ms,album(id,name,images))),description,id,images'
+      fields = 'items(track(id,uri,name,artists,duration_ms,album(id,name,images))),description,id,images'
       get("#{self.class::SPOTIFY_URL}/playlists/#{playlist_id}/tracks?fields=#{fields}")
     end
   end

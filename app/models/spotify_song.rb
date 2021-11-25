@@ -10,6 +10,7 @@
 #  genre               :string
 #  metadata            :jsonb
 #  title               :string           not null
+#  uri                 :string           not null
 #  year                :bigint
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
@@ -29,6 +30,12 @@
 #  fk_rails_...  (spotify_playlist_id => spotify_playlists.id)
 #
 class SpotifySong < ApplicationRecord
+  include Spotifiable
+  include Spotifiable::SongSpotifiable
+
   belongs_to :spotify_playlist
+
   has_many :votation_candidates, dependent: :destroy
+
+  delegate :account, to: :spotify_playlist
 end

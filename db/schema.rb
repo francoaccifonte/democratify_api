@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_224126) do
     t.bigint "year"
     t.string "genre"
     t.string "external_id", null: false
+    t.string "uri", null: false
     t.jsonb "metadata", default: {}
     t.float "duration"
     t.jsonb "cover_art", default: {}
