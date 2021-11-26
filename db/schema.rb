@@ -30,11 +30,11 @@ ActiveRecord::Schema.define(version: 2021_11_25_233216) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "account_id", null: false
     t.bigint "spotify_playlist_id", null: false
-    t.bigint "spotify_song_id"
+    t.bigint "spotify_playlist_song_id"
     t.index ["account_id", "spotify_playlist_id"], name: "index_ongoing_playlists_on_account_id_and_spotify_playlist_id", unique: true
     t.index ["account_id"], name: "index_ongoing_playlists_on_account_id"
     t.index ["spotify_playlist_id"], name: "index_ongoing_playlists_on_spotify_playlist_id"
-    t.index ["spotify_song_id"], name: "index_ongoing_playlists_on_spotify_song_id"
+    t.index ["spotify_playlist_song_id"], name: "index_ongoing_playlists_on_spotify_playlist_song_id"
   end
 
   create_table "spotify_devices", force: :cascade do |t|
@@ -49,6 +49,16 @@ ActiveRecord::Schema.define(version: 2021_11_25_233216) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "spotify_user_id", null: false
     t.index ["spotify_user_id"], name: "index_spotify_devices_on_spotify_user_id"
+  end
+
+  create_table "spotify_playlist_songs", force: :cascade do |t|
+    t.datetime "enqueued_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "spotify_playlist_id", null: false
+    t.bigint "spotify_song_id", null: false
+    t.index ["spotify_playlist_id"], name: "index_spotify_playlist_songs_on_spotify_playlist_id"
+    t.index ["spotify_song_id"], name: "index_spotify_playlist_songs_on_spotify_song_id"
   end
 
   create_table "spotify_playlists", force: :cascade do |t|
@@ -79,11 +89,9 @@ ActiveRecord::Schema.define(version: 2021_11_25_233216) do
     t.jsonb "cover_art", default: {}
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "spotify_playlist_id"
     t.index ["album"], name: "index_spotify_songs_on_album"
     t.index ["artist"], name: "index_spotify_songs_on_artist"
     t.index ["external_id"], name: "index_spotify_songs_on_external_id"
-    t.index ["spotify_playlist_id"], name: "index_spotify_songs_on_spotify_playlist_id"
     t.index ["title"], name: "index_spotify_songs_on_title"
   end
 
@@ -146,12 +154,13 @@ ActiveRecord::Schema.define(version: 2021_11_25_233216) do
   end
 
   add_foreign_key "ongoing_playlists", "accounts"
+  add_foreign_key "ongoing_playlists", "spotify_playlist_songs"
   add_foreign_key "ongoing_playlists", "spotify_playlists"
-  add_foreign_key "ongoing_playlists", "spotify_songs"
   add_foreign_key "spotify_devices", "spotify_users"
+  add_foreign_key "spotify_playlist_songs", "spotify_playlists"
+  add_foreign_key "spotify_playlist_songs", "spotify_songs"
   add_foreign_key "spotify_playlists", "accounts"
   add_foreign_key "spotify_playlists", "spotify_users"
-  add_foreign_key "spotify_songs", "spotify_playlists"
   add_foreign_key "spotify_users", "accounts"
   add_foreign_key "votation_candidates", "accounts", column: "accounts_id"
   add_foreign_key "votation_candidates", "spotify_playlists", column: "spotify_playlists_id"

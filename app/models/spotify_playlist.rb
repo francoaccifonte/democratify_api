@@ -25,8 +25,9 @@
 #  fk_rails_...  (spotify_user_id => spotify_users.id)
 #
 class SpotifyPlaylist < ApplicationRecord
+  has_many :spotify_playlist_songs, dependent: :destroy
+  has_many :spotify_songs, through: :spotify_playlist_songs
 
-  has_many :spotify_songs
   belongs_to :account
   belongs_to :spotify_user, optional: false
 
