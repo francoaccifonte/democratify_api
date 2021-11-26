@@ -25,8 +25,6 @@
 #  fk_rails_...  (spotify_user_id => spotify_users.id)
 #
 class SpotifyPlaylist < ApplicationRecord
-  include Spotifiable
-  include Spotifiable::PlaylistSpotifiable
 
   has_many :spotify_songs
   belongs_to :account

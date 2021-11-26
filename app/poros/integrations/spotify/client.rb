@@ -12,11 +12,12 @@ module Spotify
     CLIENT_ID = ENV['SPOTIFY_CLIENT_ID'].freeze
     REDIRECT_URI = ENV['SPOTIFY_REDIRECT_URL'].freeze
 
-    SPOTIFY_URL = 'https://api.spotify.com/v1'.freeze
+    SPOTIFY_URL = 'https://api.spotify.com/v1'
 
     attr_accessor :access_token, :login_token, :refresh_token
 
-    def initialize(login_token: nil, access_token: nil, refresh_token: nil)
+    def initialize(user: nil, login_token: nil, access_token: nil, refresh_token: nil)
+      @user = user
       @access_token = access_token
       @login_token = login_token
       @refresh_token = refresh_token
@@ -27,9 +28,9 @@ module Spotify
 
       case response.code
       when 401
-        puts 410
+        puts response
       when 404
-        puts 303
+        puts response
       end
     end
   end

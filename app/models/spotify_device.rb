@@ -28,4 +28,5 @@ class SpotifyDevice < ApplicationRecord
   delegate :account, to: :spotify_user
 
   scope :active, -> { where(is_active: true) }
+  scope :selected, -> { where(is_selected: true) }
 end

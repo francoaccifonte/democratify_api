@@ -14,10 +14,10 @@ module Spotify
     end
 
     def list_devices
-      get("#{self.class::SPOTIFY_URL}/me/player/devices")
+      get("#{self.class::SPOTIFY_URL}/me/player/devices").fetch(:devices)
     end
 
-    def add_to_playback_queue(uri:, device_id:)
+    def add_to_playback_queue(uri, device_id)
       post("#{self.class::SPOTIFY_URL}/me/player/queue?uri=#{uri}&device_id=#{device_id}", body: { uris: [uri] })
     end
   end
