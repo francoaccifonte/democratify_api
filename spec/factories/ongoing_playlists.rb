@@ -3,6 +3,7 @@
 # Table name: ongoing_playlists
 #
 #  id                       :bigint           not null, primary key
+#  pool_size                :integer
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  account_id               :bigint           not null

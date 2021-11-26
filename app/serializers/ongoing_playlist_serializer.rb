@@ -3,6 +3,7 @@
 # Table name: ongoing_playlists
 #
 #  id                       :bigint           not null, primary key
+#  pool_size                :integer
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  account_id               :bigint           not null
@@ -23,7 +24,7 @@
 #  fk_rails_...  (spotify_playlist_song_id => spotify_playlist_songs.id)
 #
 class OngoingPlaylistSerializer < Panko::Serializer
-  attributes :id, :created_at, :updated_at
+  attributes :id, :pool_size, :created_at, :updated_at
 
   has_one :account, serializer: AccountSerializer
   has_one :spotify_playlist, serializer: SpotifyPlaylistSerializer

@@ -3,6 +3,7 @@
 # Table name: ongoing_playlists
 #
 #  id                       :bigint           not null, primary key
+#  pool_size                :integer
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  account_id               :bigint           not null
@@ -25,6 +26,8 @@
 class OngoingPlaylist < ApplicationRecord
   attr_accessor :previous_playlist
 
+  DEFAULT_POOL_SIZE = 3
+
   belongs_to :account
   belongs_to :spotify_playlist
   belongs_to :playing_song, class_name: 'SpotifyPlaylistSong', optional: true, foreign_key: :spotify_playlist_song_id
@@ -33,6 +36,9 @@ class OngoingPlaylist < ApplicationRecord
   has_many :spotify_playlist_songs, through: :spotify_playlist
   has_many :votations, dependent: :destroy
   has_many :votation_candidates, through: :votations
+
+  before_validation :set_pool_size, on: :create
+  before_validation :start_votation, on: :create
 
   validate :playing_song_is_in_playlist
 
@@ -45,6 +51,12 @@ class OngoingPlaylist < ApplicationRecord
     return if spotify_playlist_songs.exists?(playing_song.id)
 
     errors.add(:playing_song, 'is not in the playlist')
+  end
+
+  def set_pool_size
+    return if pool_size.present?
+
+    self.pool_size = DEFAULT_POOL_SIZE
   end
 
   def launch_main_worker

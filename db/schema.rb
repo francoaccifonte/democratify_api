@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2021_11_25_233216) do
   end
 
   create_table "ongoing_playlists", force: :cascade do |t|
+    t.integer "pool_size"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "account_id", null: false

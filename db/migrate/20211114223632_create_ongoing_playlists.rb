@@ -1,6 +1,8 @@
 class CreateOngoingPlaylists < ActiveRecord::Migration[6.1]
   def change
     create_table :ongoing_playlists do |t|
+      t.integer :pool_size
+
       t.timestamps
     end
 
