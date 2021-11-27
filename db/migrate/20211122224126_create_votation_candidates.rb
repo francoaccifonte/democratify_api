@@ -7,7 +7,7 @@ class CreateVotationCandidates < ActiveRecord::Migration[6.1]
     end
 
     add_reference :votation_candidates, :accounts, foreign_key: true
-    add_reference :votation_candidates, :votations, foreign_key: true
+    add_reference :votation_candidates, :votation, foreign_key: true
     add_reference :votation_candidates, :spotify_playlist_songs, foreign_key: true
     add_reference :votation_candidates, :ongoing_playlist, foreign_key: true
   end

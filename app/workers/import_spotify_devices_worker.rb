@@ -18,7 +18,8 @@ class ImportSpotifyDevicesWorker
           is_restricted: remote_device.fetch(:is_restricted),
           name: remote_device.fetch(:name),
           device_type: remote_device.fetch(:type),
-          external_id: remote_device.fetch(:id)
+          external_id: remote_device.fetch(:id),
+          is_selected: remote_device.fetch(:is_active)
         )
       end
     end

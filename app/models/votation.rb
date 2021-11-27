@@ -32,7 +32,7 @@ class Votation < ApplicationRecord
   belongs_to :account
   belongs_to :ongoing_playlist
 
-  has_many :votation_candidates, dependent: :destroy
+  has_many :votation_candidates, dependent: :destroy, foreign_key: :votation_id
 
   before_validation :set_queued, on: :create
   before_validation :set_timestamps, on: :create

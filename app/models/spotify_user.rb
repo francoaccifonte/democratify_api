@@ -51,8 +51,10 @@ class SpotifyUser < ApplicationRecord
     refresh_access_token!
   end
 
-  def sync_devices
-    ImportSpotifyDevicesWorker.perform_async(id)
+  def sync_devices(async: false)
+    return ImportSpotifyDevicesWorker.perform_async(id) if async
+
+    ImportSpotifyDevicesWorker.new.perform(id)
   end
 
   def access_token_expired?

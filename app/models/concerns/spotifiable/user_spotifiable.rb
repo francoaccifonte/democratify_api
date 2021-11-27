@@ -9,9 +9,7 @@ module Spotifiable
     end
 
     def list_devices
-      devices = spotify_client.list_devices
-      puts devices
-      devices
+      spotify_client.list_devices
     end
   end
 end
