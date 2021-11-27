@@ -15,7 +15,7 @@ class CreateVotations < ActiveRecord::Migration[6.1]
     end
 
     add_reference :votations, :ongoing_playlist, foreign_key: true, null: false
-    add_reference :votations, :accounts, foreign_key: true, null: false
-    add_index :votations, %i[accounts_id ongoing_playlist_id], unique: false
+    add_reference :votations, :account, foreign_key: true, null: false
+    add_index :votations, %i[account_id ongoing_playlist_id], unique: false
   end
 end

@@ -26,6 +26,8 @@
 class OngoingPlaylist < ApplicationRecord
   attr_accessor :previous_playlist
 
+  delegate :spotify_users, to: :account
+
   DEFAULT_POOL_SIZE = 3
 
   belongs_to :account
@@ -38,10 +40,11 @@ class OngoingPlaylist < ApplicationRecord
   has_many :votation_candidates, through: :votations
 
   before_validation :set_pool_size, on: :create
-  before_validation :start_votation, on: :create
+  before_validation :set_playing_song, on: :create
 
   validate :playing_song_is_in_playlist
 
+  after_create :start_votation
   after_create :launch_main_worker
 
   private
@@ -57,6 +60,22 @@ class OngoingPlaylist < ApplicationRecord
     return if pool_size.present?
 
     self.pool_size = DEFAULT_POOL_SIZE
+  end
+
+  def set_playing_song
+    return if playing_song.present?
+
+    self.playing_song = spotify_playlist_songs.first
+  end
+
+  def start_votation
+    return if votations.in_progress.first.present?
+
+    votations.create!(
+      ongoing_playlist: self,
+      in_progress: true,
+      account: account
+    )
   end
 
   def launch_main_worker

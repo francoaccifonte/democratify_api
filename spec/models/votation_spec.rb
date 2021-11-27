@@ -12,18 +12,18 @@
 #  started_at          :datetime
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
-#  accounts_id         :bigint           not null
+#  account_id          :bigint           not null
 #  ongoing_playlist_id :bigint           not null
 #
 # Indexes
 #
-#  index_votations_on_accounts_id                          (accounts_id)
-#  index_votations_on_accounts_id_and_ongoing_playlist_id  (accounts_id,ongoing_playlist_id)
-#  index_votations_on_ongoing_playlist_id                  (ongoing_playlist_id)
+#  index_votations_on_account_id                          (account_id)
+#  index_votations_on_account_id_and_ongoing_playlist_id  (account_id,ongoing_playlist_id)
+#  index_votations_on_ongoing_playlist_id                 (ongoing_playlist_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (accounts_id => accounts.id)
+#  fk_rails_...  (account_id => accounts.id)
 #  fk_rails_...  (ongoing_playlist_id => ongoing_playlists.id)
 #
 require 'rails_helper'

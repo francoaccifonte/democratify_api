@@ -27,7 +27,11 @@ class OngoingPlaylistSerializer < Panko::Serializer
   attributes :id, :pool_size, :created_at, :updated_at
 
   has_one :account, serializer: AccountSerializer
-  has_one :spotify_playlist, serializer: SpotifyPlaylistSerializer
-  has_one :playing_song, serializer: SpotifySongSerializer, only: %i[id title artist album duration]
+  has_one :spotify_playlist, serializer: SpotifyPlaylistSerializer, only: %i[id name description cover_art_url]
+  has_one :playing_song, serializer: SpotifyPlaylistSongSerializer#, only: %i[id title artist album duration]
   has_many :spotify_songs, serializer: SpotifySongSerializer
+
+  def playing_song
+    object.playing_song.spotify_song
+  end
 end

@@ -129,11 +129,11 @@ ActiveRecord::Schema.define(version: 2021_11_25_233216) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "accounts_id"
     t.bigint "votations_id"
-    t.bigint "spotify_songs_id"
-    t.bigint "spotify_playlists_id"
+    t.bigint "spotify_playlist_songs_id"
+    t.bigint "ongoing_playlist_id"
     t.index ["accounts_id"], name: "index_votation_candidates_on_accounts_id"
-    t.index ["spotify_playlists_id"], name: "index_votation_candidates_on_spotify_playlists_id"
-    t.index ["spotify_songs_id"], name: "index_votation_candidates_on_spotify_songs_id"
+    t.index ["ongoing_playlist_id"], name: "index_votation_candidates_on_ongoing_playlist_id"
+    t.index ["spotify_playlist_songs_id"], name: "index_votation_candidates_on_spotify_playlist_songs_id"
     t.index ["votations_id"], name: "index_votation_candidates_on_votations_id"
   end
 
@@ -148,9 +148,9 @@ ActiveRecord::Schema.define(version: 2021_11_25_233216) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "ongoing_playlist_id", null: false
-    t.bigint "accounts_id", null: false
-    t.index ["accounts_id", "ongoing_playlist_id"], name: "index_votations_on_accounts_id_and_ongoing_playlist_id"
-    t.index ["accounts_id"], name: "index_votations_on_accounts_id"
+    t.bigint "account_id", null: false
+    t.index ["account_id", "ongoing_playlist_id"], name: "index_votations_on_account_id_and_ongoing_playlist_id"
+    t.index ["account_id"], name: "index_votations_on_account_id"
     t.index ["ongoing_playlist_id"], name: "index_votations_on_ongoing_playlist_id"
   end
 
@@ -164,9 +164,9 @@ ActiveRecord::Schema.define(version: 2021_11_25_233216) do
   add_foreign_key "spotify_playlists", "spotify_users"
   add_foreign_key "spotify_users", "accounts"
   add_foreign_key "votation_candidates", "accounts", column: "accounts_id"
-  add_foreign_key "votation_candidates", "spotify_playlists", column: "spotify_playlists_id"
-  add_foreign_key "votation_candidates", "spotify_songs", column: "spotify_songs_id"
+  add_foreign_key "votation_candidates", "ongoing_playlists"
+  add_foreign_key "votation_candidates", "spotify_playlist_songs", column: "spotify_playlist_songs_id"
   add_foreign_key "votation_candidates", "votations", column: "votations_id"
-  add_foreign_key "votations", "accounts", column: "accounts_id"
+  add_foreign_key "votations", "accounts"
   add_foreign_key "votations", "ongoing_playlists"
 end
