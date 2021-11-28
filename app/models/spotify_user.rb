@@ -26,7 +26,13 @@
 #  fk_rails_...  (account_id => accounts.id)
 #
 class SpotifyUser < ApplicationRecord
+  include Spotifiable
+  include Spotifiable::UserSpotifiable
+
   has_many :spotify_playlists, dependent: :destroy
+  has_many :spotify_devices, dependent: :destroy
+
+  belongs_to :account
 
   delegate :playlists, to: :client
 
@@ -45,6 +51,16 @@ class SpotifyUser < ApplicationRecord
     refresh_access_token!
   end
 
+  def sync_devices(async: false)
+    return ImportSpotifyDevicesWorker.perform_async(id) if async
+
+    ImportSpotifyDevicesWorker.new.perform(id)
+  end
+
+  def access_token_expired?
+    access_token_expires_at < Time.now - 5.minutes
+  end
+
   private
 
   def refresh_access_token!
@@ -54,10 +70,6 @@ class SpotifyUser < ApplicationRecord
     self.access_token = response.fetch(:access_token)
     self.access_token_expires_at = Time.now + response.fetch(:expires_in).seconds
     save!
-  end
-
-  def access_token_expired?
-    access_token_expires_at < Time.now - 5.minutes
   end
 
   def import_playlists

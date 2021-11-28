@@ -42,9 +42,9 @@ class OngoingPlaylistsController < ApplicationController
 
   def playing_song
     @playing_song ||= if params.permit(:playing_song_id).present?
-                        SpotifySong.find(params.permit(:playing_song_id))
+                        spotify_playlist.spotify_playlist_songs.find(params.require(:playing_song_id))
                       else
-                        spotify_playlist.spotify_songs.first
+                        spotify_playlist.spotify_playlist_songs.first
                       end
   end
 end

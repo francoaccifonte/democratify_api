@@ -1,108 +1,37 @@
+# frozen_string_literal: true
+
 module Spotify
   class Client
+    include HttpRequests
+    include Credentials
+    include Users
+    include Playlists
+    include RemotePlayer
+
     CLIENT_SECRET = ENV['SPOTIFY_SECRET'].freeze
     CLIENT_ID = ENV['SPOTIFY_CLIENT_ID'].freeze
     REDIRECT_URI = ENV['SPOTIFY_REDIRECT_URL'].freeze
 
-    SPOTIFY_URL = 'https://api.spotify.com/v1'.freeze
+    SPOTIFY_URL = 'https://api.spotify.com/v1'
 
     attr_accessor :access_token, :login_token, :refresh_token
 
-    def initialize(login_token: nil, access_token: nil, refresh_token: nil)
+    def initialize(user: nil, login_token: nil, access_token: nil, refresh_token: nil)
+      @user = user
       @access_token = access_token
       @login_token = login_token
       @refresh_token = refresh_token
     end
 
-    def playlists
-      response = Typhoeus.get("#{SPOTIFY_URL}/me/playlists",
-                              headers: {
-                                Authorization: "Bearer #{access_token}",
-                                'Content-Type' => 'application/json'
-                              })
-      JSON.parse(response.body, symbolize_names: true)
-    end
+    def handle_error(response)
+      return unless response.success?
 
-    def playlist(playlist_id)
-      response = Typhoeus.get(
-        "#{SPOTIFY_URL}/playlists/#{playlist_id}",
-        headers: {
-          Authorization: "Bearer #{access_token}",
-          'Content-Type' => 'application/json'
-        }
-      )
-      JSON.parse(response.body, symbolize_names: true)
-    end
-
-    def playlist_cover_art(playlist_id)
-      response = Typhoeus.get(
-        "#{SPOTIFY_URL}/playlists/#{playlist_id}/images",
-        headers: {
-          Authorization: "Bearer #{access_token}",
-          'Content-Type' => 'application/json'
-        }
-      )
-      JSON.parse(response.body, symbolize_names: true)
-    end
-
-    def playlist_tracks(playlist_id)
-      fields = 'items(track(id,name,artists,duration_ms,album(id,name,images))),description,id,images'
-      response = Typhoeus.get(
-        "#{SPOTIFY_URL}/playlists/#{playlist_id}/tracks?fields=#{fields}",
-        # "#{SPOTIFY_URL}/playlists/#{playlist_id}/tracks",
-        headers: {
-          Authorization: "Bearer #{access_token}",
-          'Content-Type' => 'application/json'
-        }
-      )
-      JSON.parse(response.body, symbolize_names: true)
-    end
-
-    def authorize
-      response = Typhoeus.post(
-        'https://accounts.spotify.com/api/token',
-        {
-          body: {
-            grant_type: 'authorization_code',
-            code: login_token,
-            redirect_uri: REDIRECT_URI,
-            client_id: CLIENT_ID,
-            client_secret: CLIENT_SECRET
-          },
-          headers: {
-            'Content-Type' => 'application/x-www-form-urlencoded'
-          }
-        }
-      )
-      JSON.parse(response.body, symbolize_names: true)
-    end
-
-    def user
-      response = Typhoeus.get("#{SPOTIFY_URL}/me",
-                              headers: {
-                                Authorization: "Bearer #{access_token}",
-                                'Content-Type' => 'application/json'
-                              })
-      JSON.parse response.body, symbolize_names: true
-    end
-
-    def refresh_access_token!
-      response = Typhoeus.post(
-        'https://accounts.spotify.com/api/token',
-        {
-          body: {
-            grant_type: 'refresh_token',
-            refresh_token: refresh_token,
-            client_id: CLIENT_ID
-            # client_secret: CLIENT_SECRET
-          },
-          headers: {
-            'Content-Type' => 'application/x-www-form-urlencoded',
-            Authorization: "Basic #{Base64.strict_encode64("#{CLIENT_ID}:#{CLIENT_SECRET}")}"
-          }
-        }
-      )
-      JSON.parse(response.body, symbolize_names: true)
+      case response.code
+      when 401
+        puts response
+      when 404
+        puts response
+      end
     end
   end
 end
