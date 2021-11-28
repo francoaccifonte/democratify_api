@@ -27,6 +27,7 @@ class SpotifyPlaylistSong < ApplicationRecord
   belongs_to :spotify_song
 
   delegate :account, to: :spotify_playlist
+  delegate :spotify_users, to: :account
   delegate :album, :artist, :cover_art, :duration, :genre, :metadata, :title, :uri, :year, :created_at, :updated_at,
            :external_id, to: :spotify_song
 end

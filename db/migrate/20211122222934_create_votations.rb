@@ -8,6 +8,7 @@ class CreateVotations < ActiveRecord::Migration[6.1]
       t.datetime :scheduled_start_at, null: false
       t.datetime :scheduled_end_for, null: false
       t.datetime :scheduled_end_at, null: false
+      t.datetime :scheduled_close_for, null: false
 
       t.datetime :started_at
 

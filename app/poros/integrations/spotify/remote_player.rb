@@ -9,6 +9,16 @@ module Spotify
       get("#{self.class::SPOTIFY_URL}/me/player?fields=#{fields}")
     end
 
+    def playing_song_remaining_time
+      state = playback_state
+      return 0.seconds if state == ''
+
+      song_duration = state&.dig(:item, :duration_ms) || 0
+      elapsed_time = state&.dig(:progress_ms) || 0
+      remaining_time = (song_duration - elapsed_time) / 1000
+      remaining_time.positive? ? remaining_time.seconds : 0.seconds
+    end
+
     def transfer_playback(device_id)
       put("#{self.class::SPOTIFY_URL}/me/player", body: { device_ids: [device_id] })
     end

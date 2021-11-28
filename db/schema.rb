@@ -127,13 +127,13 @@ ActiveRecord::Schema.define(version: 2021_11_25_233216) do
     t.bigint "votes", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "accounts_id"
+    t.bigint "account_id"
     t.bigint "votation_id"
-    t.bigint "spotify_playlist_songs_id"
+    t.bigint "spotify_playlist_song_id"
     t.bigint "ongoing_playlist_id"
-    t.index ["accounts_id"], name: "index_votation_candidates_on_accounts_id"
+    t.index ["account_id"], name: "index_votation_candidates_on_account_id"
     t.index ["ongoing_playlist_id"], name: "index_votation_candidates_on_ongoing_playlist_id"
-    t.index ["spotify_playlist_songs_id"], name: "index_votation_candidates_on_spotify_playlist_songs_id"
+    t.index ["spotify_playlist_song_id"], name: "index_votation_candidates_on_spotify_playlist_song_id"
     t.index ["votation_id"], name: "index_votation_candidates_on_votation_id"
   end
 
@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(version: 2021_11_25_233216) do
     t.datetime "scheduled_start_at", null: false
     t.datetime "scheduled_end_for", null: false
     t.datetime "scheduled_end_at", null: false
+    t.datetime "scheduled_close_for", null: false
     t.datetime "started_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -163,9 +164,9 @@ ActiveRecord::Schema.define(version: 2021_11_25_233216) do
   add_foreign_key "spotify_playlists", "accounts"
   add_foreign_key "spotify_playlists", "spotify_users"
   add_foreign_key "spotify_users", "accounts"
-  add_foreign_key "votation_candidates", "accounts", column: "accounts_id"
+  add_foreign_key "votation_candidates", "accounts"
   add_foreign_key "votation_candidates", "ongoing_playlists"
-  add_foreign_key "votation_candidates", "spotify_playlist_songs", column: "spotify_playlist_songs_id"
+  add_foreign_key "votation_candidates", "spotify_playlist_songs"
   add_foreign_key "votation_candidates", "votations"
   add_foreign_key "votations", "accounts"
   add_foreign_key "votations", "ongoing_playlists"

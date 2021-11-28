@@ -44,8 +44,17 @@ class OngoingPlaylist < ApplicationRecord
 
   validate :playing_song_is_in_playlist
 
-  after_create :start_votation
-  after_create :launch_main_worker
+  after_create :start_initial_votation
+
+  def start_initial_votation(async: false)
+    return InitialVotationStartWorker.perform_async(id) if async
+
+    InitialVotationStartWorker.new.perform(id)
+  end
+
+  def playing_song_remaining_time
+    account.spotify_users.first.client.playing_song_remaining_time
+  end
 
   private
 
@@ -66,19 +75,5 @@ class OngoingPlaylist < ApplicationRecord
     return if playing_song.present?
 
     self.playing_song = spotify_playlist_songs.first
-  end
-
-  def start_votation
-    return if votations.in_progress.first.present?
-
-    votations.create!(
-      ongoing_playlist: self,
-      in_progress: true,
-      account: account
-    )
-  end
-
-  def launch_main_worker
-    OngoingPlaylistTrackingWorker.perform_async(id)
   end
 end

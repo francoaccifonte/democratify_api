@@ -5,6 +5,7 @@
 #  id                  :bigint           not null, primary key
 #  in_progress         :boolean          not null
 #  queued              :boolean          not null
+#  scheduled_close_for :datetime         not null
 #  scheduled_end_at    :datetime         not null
 #  scheduled_end_for   :datetime         not null
 #  scheduled_start_at  :datetime         not null
