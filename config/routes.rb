@@ -19,7 +19,4 @@ Rails.application.routes.draw do
   end
   resources :ongoing_playlists, only: %i[update create destroy index]
   resources :spotify_playlists, only: %i[show index]
-  # resources :votations, only: %i[show] do
-  #   put 'vote', on: :member
-  # end
 end
