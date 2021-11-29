@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: votation_candidates
@@ -25,15 +27,13 @@
 #  fk_rails_...  (spotify_playlist_song_id => spotify_playlist_songs.id)
 #  fk_rails_...  (votation_id => votations.id)
 #
-class VotationCandidate < ApplicationRecord
-  belongs_to :account
-  belongs_to :ongoing_playlist
-  belongs_to :spotify_playlist_song
-  belongs_to :votation
+class VotationCandidateSerializer < Panko::Serializer
+  attributes :id, :votes, :created_at, :updated_at,
+             :account_id, :ongoing_playlist_id, :spotify_playlist_song_id, :votation_id
 
-  delegate :spotify_song, to: :spotify_playlist_song
+  has_one :spotify_song, serializer: SpotifySongSerializer, only: %i[id album artist cover_art title]
 
-  def vote!
-    update!(votes: votes + 1)
+  def spotify_song
+    object.spotify_song
   end
 end
