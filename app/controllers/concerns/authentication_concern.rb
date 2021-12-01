@@ -2,7 +2,10 @@ module AuthenticationConcern
   extend ActiveSupport::Concern
 
   def authenticate!
-    @current_account = Account.find_by!(token: parse_authentication_token!)
+    token = parse_authentication_token!
+    @current_account = Account.find_by!(token: token)
+  rescue ActiveRecord::RecordNotFound
+    raise AuthenticationError.new(token: token)
   end
 
   def parse_authentication_token!

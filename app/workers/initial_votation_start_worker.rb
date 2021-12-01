@@ -7,12 +7,18 @@ class InitialVotationStartWorker
   def perform(playlist_id)
     playlist = OngoingPlaylist.find(playlist_id)
 
-    playlist.playing_song.send_to_active_remote
+    send_to_active_remote(playlist.playing_song)
     remaining_time = playlist.playing_song_remaining_time
 
     playlist.votations.create!(
       in_progress: true,
       scheduled_start_for: Time.zone.now + remaining_time.seconds
     )
+  end
+
+  def send_to_active_remote(song)
+    song.spotify_users.first.sync_devices
+    song.send_to_active_remote
+    song.update!(enqueued_at: Time.zone.now)
   end
 end

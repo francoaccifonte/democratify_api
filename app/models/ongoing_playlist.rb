@@ -46,6 +46,8 @@ class OngoingPlaylist < ApplicationRecord
 
   after_create :start_initial_votation
 
+  accepts_nested_attributes_for :spotify_playlist_songs
+
   def start_initial_votation(async: false)
     return InitialVotationStartWorker.perform_async(id) if async
 
@@ -53,7 +55,19 @@ class OngoingPlaylist < ApplicationRecord
   end
 
   def playing_song_remaining_time
-    account.spotify_users.first.client.playing_song_remaining_time
+    user.client.playing_song_remaining_time
+  end
+
+  def user
+    account.spotify_users.first
+  end
+
+  def voting_songs
+    votations.in_progress.first.spotify_playlist_songs.order(index: :desc)
+  end
+
+  def remaining_songs
+    spotify_playlist_songs.where.not(id: [playing_song.id, *voting_songs.pluck(:id)]).order(index: :asc)
   end
 
   private

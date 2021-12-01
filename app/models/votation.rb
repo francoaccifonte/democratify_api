@@ -50,6 +50,8 @@ class Votation < ApplicationRecord
   scope :in_progress, -> { where(in_progress: true) }
   scope :queued, -> { where(queued: true) }
 
+  delegate :pool_size, to: :ongoing_playlist
+
   def winner
     votation_candidates.max_by(&:votes)
   end
@@ -57,13 +59,17 @@ class Votation < ApplicationRecord
   private
 
   def set_candidates
-    ongoing_playlist.spotify_playlist_songs.sample(pool_size).each do |spotify_playlist_song|
+    next_votation_songs.each do |spotify_playlist_song|
       votation_candidates.create!(
         spotify_playlist_song: spotify_playlist_song,
         account: account,
         ongoing_playlist: ongoing_playlist
       )
     end
+  end
+
+  def next_votation_songs
+    ongoing_playlist.spotify_playlist_songs.order(index: :asc).first(pool_size)
   end
 
   def set_queued

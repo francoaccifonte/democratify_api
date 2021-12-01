@@ -54,10 +54,12 @@ ActiveRecord::Schema.define(version: 2021_11_25_233216) do
 
   create_table "spotify_playlist_songs", force: :cascade do |t|
     t.datetime "enqueued_at"
+    t.integer "index"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "spotify_playlist_id", null: false
     t.bigint "spotify_song_id", null: false
+    t.index ["spotify_playlist_id", "index"], name: "index_spotify_playlist_songs_on_spotify_playlist_id_and_index"
     t.index ["spotify_playlist_id"], name: "index_spotify_playlist_songs_on_spotify_playlist_id"
     t.index ["spotify_song_id"], name: "index_spotify_playlist_songs_on_spotify_song_id"
   end

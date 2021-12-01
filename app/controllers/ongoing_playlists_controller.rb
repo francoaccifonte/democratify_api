@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class OngoingPlaylistsController < ApplicationController
   before_action :authenticate!
   before_action :set_ongoing_playlist, only: %i[index update destroy create]
 
   def update
-    nil
+    @ongoing_playlist.update!(update_params)
   end
 
   def create
@@ -46,5 +48,16 @@ class OngoingPlaylistsController < ApplicationController
                       else
                         spotify_playlist.spotify_playlist_songs.first
                       end
+  end
+
+  def update_params
+    params.permit(:pool_size).to_h
+          .merge!(spotify_playlist_songs_attributes)
+  end
+
+  def spotify_playlist_songs_attributes
+    {
+      spotify_playlist_songs_attributes: params.permit(spotify_playlist_songs: %i[id index]).to_h[:spotify_playlist_songs]
+    }
   end
 end
