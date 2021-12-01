@@ -16,15 +16,15 @@ module Spotify
 
     attr_accessor :access_token, :login_token, :refresh_token
 
-    def initialize(user: nil, login_token: nil, access_token: nil, refresh_token: nil)
+    def initialize(user: nil, login_token: nil, **_other)
       @user = user
-      @access_token = access_token
+      @access_token = @user.access_token
+      @refresh_token = @user.refresh_token
       @login_token = login_token
-      @refresh_token = refresh_token
     end
 
     def handle_error(response)
-      return unless response.success?
+      return if response.success?
 
       case response.code
       when 401
@@ -32,6 +32,8 @@ module Spotify
       when 404
         puts response
       end
+
+      raise StandardError, response.body
     end
   end
 end

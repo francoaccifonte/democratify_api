@@ -4,7 +4,7 @@ module Spotifiable
   extend ActiveSupport::Concern
 
   def spotify_client
-    @spotify_client ||= fetch_client
+    fetch_client
   end
 
   def active_device
@@ -18,10 +18,6 @@ module Spotifiable
   end
 
   def fetch_client
-    Spotify::Client.new(
-      user: active_spotify_user,
-      access_token: active_spotify_user.access_token,
-      refresh_token: active_spotify_user.refresh_token
-    )
+    active_spotify_user.client
   end
 end

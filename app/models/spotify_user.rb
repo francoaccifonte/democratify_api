@@ -40,9 +40,12 @@ class SpotifyUser < ApplicationRecord
 
   def client
     @client ||= Spotify::Client.new(
+      user: self,
       access_token: access_token,
       refresh_token: refresh_token,
     )
+    refresh_access_token
+    @client
   end
 
   def refresh_access_token
@@ -64,8 +67,7 @@ class SpotifyUser < ApplicationRecord
   private
 
   def refresh_access_token!
-    client.refresh_access_token!
-    response = client.refresh_access_token!
+    response = @client.refresh_access_token!
 
     self.access_token = response.fetch(:access_token)
     self.access_token_expires_at = Time.now + response.fetch(:expires_in).seconds
@@ -74,5 +76,9 @@ class SpotifyUser < ApplicationRecord
 
   def import_playlists
     PlaylistImportWorker.perform_async(id)
+  end
+
+  def fetch_client
+    client
   end
 end
