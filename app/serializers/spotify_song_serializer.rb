@@ -25,5 +25,5 @@
 #
 class SpotifySongSerializer < Panko::Serializer
   attributes :id, :uri, :album, :artist, :cover_art, :duration, :genre, :metadata, :title, :year,
-             :created_at, :updated_at, :external_id, :spotify_playlist_id
+             :created_at, :updated_at, :external_id
 end

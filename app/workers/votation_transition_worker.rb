@@ -15,6 +15,7 @@ class VotationTransitionWorker
 
       @playlist.update!(playing_song: winner_candidate.spotify_playlist_song)
 
+      send_candidates_to_end_of_queue
       @playlist.votations.in_progress.first.destroy!
       # TODO: check if a scheduled votation exists and use that one.
       @playlist.votations.create!(
@@ -28,5 +29,12 @@ class VotationTransitionWorker
     song.spotify_users.first.sync_devices
     song.send_to_active_remote
     song.update!(enqueued_at: Time.zone.now)
+  end
+
+  def send_candidates_to_end_of_queue
+    index = @playlist.remaining_songs.last.index
+    @playlist.voting_songs.each do |song|
+      song.update!(index: (song.index || 0) + index)
+    end
   end
 end

@@ -33,6 +33,8 @@ class SpotifyPlaylist < ApplicationRecord
 
   after_create :import_songs
 
+  accepts_nested_attributes_for :spotify_playlist_songs
+
   def sample_songs
     spotify_songs.first(4)
   end
