@@ -5,7 +5,9 @@ class VotationTransitionWorker
   sidekiq_options queue: :spotify_ongoing_playlist_sync
 
   def perform(ongoing_playlist_id)
-    @playlist = OngoingPlaylist.find(ongoing_playlist_id)
+    @playlist = OngoingPlaylist.find_by(id: ongoing_playlist_id)
+    return unless @playlist.present?
+
     current_votation = @playlist.votations.in_progress.first
     queued_votation = @playlist.votations.queued.first
     winner_candidate = current_votation.winner
