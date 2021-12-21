@@ -7,7 +7,7 @@ class ImportSpotifySongsIntoPlaylistWorker
   def perform(playlist_id)
     playlist = SpotifyPlaylist.find(playlist_id)
 
-    client = Spotify::Client.new(access_token: playlist.spotify_user.access_token)
+    client = playlist.spotify_user.client
     songs = client.playlist_tracks(playlist.external_id).fetch(:items)
 
     songs.each do |song|

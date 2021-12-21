@@ -28,12 +28,12 @@ module Spotify
 
       case response.code
       when 401
-        puts response
+        puts response.body
       when 404
-        puts response
+        puts response.body
       end
 
-      raise StandardError, response.body
+      raise Errors::SpotifyError.new(response.body, response)
     end
   end
 end
