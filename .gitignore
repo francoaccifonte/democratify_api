@@ -26,3 +26,4 @@
 
 /storage
 .env
+/vendor

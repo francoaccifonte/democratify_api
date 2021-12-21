@@ -1,19 +1,12 @@
-# docker build ./ --rm -t accifontefranco/democratify:latest
-FROM ruby:3.0.3-alpine
+# docker build ./ --rm -t accifontefranco/democratify_api:latest
+# docker push accifontefranco/democratify_api:latest
+FROM ruby:3.0.3-alpine as builder
 
-ARG BUNDLE_GITLAB__COM
 ARG bundler_ignored_groups="development test"
 ARG commit_sha
 ARG port=3000
-ARG sidekiq_env=production
 
-ENV BUNDLE_WITHOUT=$bundler_ignored_groups
-# ENV LANG=C.UTF-8
-# ENV LC_ALL=C.UTF-8
-# ENV IMAGE_TAG=$commit_sha
-ENV SIDEKIQ_ENV=$sidekiq_env
-
-RUN apk add --update --no-cache bash build-base libcurl git tzdata shared-mime-info postgresql-client postgresql-dev \
+RUN apk add --update --no-cache bash build-base libcurl tzdata shared-mime-info postgresql-client postgresql-dev \
                                 imagemagick ttf-liberation curl
 
 RUN addgroup democratify
@@ -24,8 +17,11 @@ RUN mkdir $HOME/app
 WORKDIR /home/democratify/app
 
 COPY --chown=democratify:democratify Gemfile Gemfile.lock ./
-RUN  bundle install
+# RUN bundle config set --local path 'vendor/bundle'
+RUN bundle config set without $bundler_ignored_groups
+RUN bundle install
 
 COPY --chown=democratify:democratify . .
 
+ARG port=3000
 EXPOSE $port

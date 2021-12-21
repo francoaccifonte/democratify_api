@@ -1,7 +1,11 @@
-# DEV
 version: '3'
 
 services:
+    frontend:
+        container_name: frontend
+        image:  accifontefranco/democratify:latest
+        ports:
+            - 80:80
     redis:
         image: redis:4-alpine
         ports:
@@ -9,10 +13,6 @@ services:
     app:
         container_name: backend_server
         image: accifontefranco/democratify_api:latest
-        build:
-            context: .
-            args:
-                port: 3001
         environment:
             - CONTAINER=APP
             - DEMOCRATIFYAPI_DATABASE_DB_NAME="${DEMOCRATIFYAPI_DATABASE_DB_NAME}"
@@ -20,28 +20,34 @@ services:
             - DEMOCRATIFYAPI_DATABASE_PASSWORD="${DEMOCRATIFYAPI_DATABASE_PASSWORD}"
             - DEMOCRATIFYAPI_DATABASE_HOSTNAME="${DEMOCRATIFYAPI_DATABASE_HOSTNAME}"
             - DEMOCRATIFYAPI_DATABASE_PORT="${DEMOCRATIFYAPI_DATABASE_PORT}"
-        depends_on:
-            - redis
+            - SPOTIFY_SECRET=${SPOTIFY_SECRET}
+            - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
+            - SPOTIFY_REDIRECT_URL=${SPOTIFY_REDIRECT_URL}
+            - RAILS_ENV=production
+            - REDIS_HOSTNAME=redis
+            - REDIS_PORT=6379
         ports:
             - 3001:3000
-        volumes:
-            - .:/home/democratify/app
-            - /home/democratify/app/log
+        depends_on:
+            - redis
         tty: true
         stdin_open: true
-        # network_mode: "host"
         command: "bundle exec rails s -p 3000 -b 0.0.0.0 -e production"
     sidekiq:
         container_name: backend_sidekiq
         image: accifontefranco/democratify_api:latest
         environment:
+            - DEMOCRATIFYAPI_DATABASE_DB_NAME="${DEMOCRATIFYAPI_DATABASE_DB_NAME}"
+            - DEMOCRATIFYAPI_DATABASE_USERNAME="${DEMOCRATIFYAPI_DATABASE_USERNAME}"
+            - DEMOCRATIFYAPI_DATABASE_PASSWORD="${DEMOCRATIFYAPI_DATABASE_PASSWORD}"
+            - DEMOCRATIFYAPI_DATABASE_HOSTNAME="${DEMOCRATIFYAPI_DATABASE_HOSTNAME}"
+            - DEMOCRATIFYAPI_DATABASE_PORT="${DEMOCRATIFYAPI_DATABASE_PORT}"
+            - SPOTIFY_SECRET=${SPOTIFY_SECRET}
+            - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
+            - SPOTIFY_REDIRECT_URL=${SPOTIFY_REDIRECT_URL}
             - CONTAINER=SIDEKIQ
             - REDIS_HOSTNAME=redis
             - REDIS_PORT=6379
         depends_on:
             - redis
-        volumes:
-            - .:/home/democratify/app
-            - /home/democratify/app/log
-        # network_mode: "host"
         command: "bundle exec sidekiq -e production -C config/sidekiq.yml"
