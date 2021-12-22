@@ -24,14 +24,17 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 5.0.0'
   gem 'rubocop-rails'
-  gem 'solargraph'
 end
 
 group :development do
   gem 'annotate'
   gem 'listen', '~> 3.3'
+end
+
+group :test do
+  gem 'webmock'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

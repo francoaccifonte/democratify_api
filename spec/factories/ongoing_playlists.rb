@@ -25,6 +25,11 @@
 #
 FactoryBot.define do
   factory :ongoing_playlist do
-    
+    pool_size { 3 }
+
+    association :account, factory: :account
+    association :spotify_playlist, factory: :spotify_playlist
+    association :playing_song, factory: :spotify_playlist_song
+    # spotify_playlist_song_id {}
   end
 end

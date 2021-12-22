@@ -39,11 +39,7 @@ class SpotifyUser < ApplicationRecord
   after_create :import_playlists
 
   def client
-    @client ||= Spotify::Client.new(
-      user: self,
-      access_token: access_token,
-      refresh_token: refresh_token,
-    )
+    @client ||= Spotify::Client.new(user: self)
     refresh_access_token
     @client
   end

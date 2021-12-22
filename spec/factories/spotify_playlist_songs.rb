@@ -23,6 +23,7 @@
 #
 FactoryBot.define do
   factory :spotify_playlist_song do
-    
+    association :spotify_playlist, factory: :spotify_playlist
+    association :spotify_song, factory: :spotify_song
   end
 end

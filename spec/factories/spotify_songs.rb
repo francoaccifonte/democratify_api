@@ -25,6 +25,21 @@
 #
 FactoryBot.define do
   factory :spotify_song do
-    
+    album { Faker::Music.album }
+    artist { Faker::Music.band }
+    cover_art do
+      [64, 300, 640].map do |size|
+        {
+          url: Faker::Internet.url,
+          width: size,
+          height: size,
+        }
+      end
+    end
+    duration { Faker::Number.number(digits: 3).to_i }
+    genre { Faker::Music.genre }
+    title { Faker::Music::RockBand.song }
+    uri { Faker::Internet.url }
+    external_id { Faker::Number.number(digits: 10).to_s }
   end
 end
