@@ -2,26 +2,26 @@
 #
 # Table name: ongoing_playlists
 #
-#  id                       :bigint           not null, primary key
-#  pool_size                :integer
-#  created_at               :datetime         not null
-#  updated_at               :datetime         not null
-#  account_id               :bigint           not null
-#  spotify_playlist_id      :bigint           not null
-#  spotify_playlist_song_id :bigint
+#  id                  :bigint           not null, primary key
+#  pool_size           :integer
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  account_id          :bigint           not null
+#  playing_song_id     :bigint           not null
+#  spotify_playlist_id :bigint           not null
 #
 # Indexes
 #
 #  index_ongoing_playlists_on_account_id                          (account_id)
 #  index_ongoing_playlists_on_account_id_and_spotify_playlist_id  (account_id,spotify_playlist_id) UNIQUE
+#  index_ongoing_playlists_on_playing_song_id                     (playing_song_id)
 #  index_ongoing_playlists_on_spotify_playlist_id                 (spotify_playlist_id)
-#  index_ongoing_playlists_on_spotify_playlist_song_id            (spotify_playlist_song_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (account_id => accounts.id)
+#  fk_rails_...  (playing_song_id => spotify_playlist_songs.id)
 #  fk_rails_...  (spotify_playlist_id => spotify_playlists.id)
-#  fk_rails_...  (spotify_playlist_song_id => spotify_playlist_songs.id)
 #
 class OngoingPlaylist < ApplicationRecord
   attr_accessor :previous_playlist
@@ -32,7 +32,6 @@ class OngoingPlaylist < ApplicationRecord
 
   belongs_to :account
   belongs_to :spotify_playlist
-  belongs_to :playing_song, class_name: 'SpotifyPlaylistSong', optional: true, foreign_key: :spotify_playlist_song_id
 
   has_many :spotify_songs, through: :spotify_playlist
   has_many :spotify_playlist_songs, through: :spotify_playlist
@@ -46,7 +45,9 @@ class OngoingPlaylist < ApplicationRecord
 
   after_create :start_initial_votation
 
-  accepts_nested_attributes_for :spotify_playlist_songs
+  delegate :spotify_playlist_songs, to: :spotify_playlist
+
+  alias voting_songs votation_candidates
 
   def start_initial_votation(async: false)
     return InitialVotationStartWorker.perform_async(id) if async
@@ -62,12 +63,14 @@ class OngoingPlaylist < ApplicationRecord
     account.spotify_users.first
   end
 
-  def voting_songs
-    votations.in_progress.first.spotify_playlist_songs.order(index: :desc)
-  end
-
   def remaining_songs
     spotify_playlist_songs.where.not(id: [playing_song.id, *voting_songs.pluck(:id)]).order(index: :asc)
+  end
+
+  def playing_song
+    return unless playing_song_id
+
+    spotify_playlist_songs.find(playing_song_id)
   end
 
   private
@@ -86,8 +89,8 @@ class OngoingPlaylist < ApplicationRecord
   end
 
   def set_playing_song
-    return if playing_song.present?
+    return if playing_song_id
 
-    self.playing_song = spotify_playlist_songs.first
+    self.playing_song_id = spotify_playlist_songs.sample.id
   end
 end

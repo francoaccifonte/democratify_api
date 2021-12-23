@@ -27,3 +27,4 @@
 /storage
 .env
 /vendor
+/coverage

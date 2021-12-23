@@ -34,6 +34,9 @@ group :development do
 end
 
 group :test do
+  gem 'database_cleaner-active_record'
+  gem 'database_cleaner-redis'
+  gem 'simplecov', require: false
   gem 'webmock'
 end
 
