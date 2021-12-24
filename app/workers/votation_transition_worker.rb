@@ -13,9 +13,11 @@ class VotationTransitionWorker
     winner_candidate = current_votation.winner
 
     ActiveRecord::Base.transaction do
+      # TODO: split into two separate workers so the song is enqued in spotify only once.
+      #       there should also be some management to drop the playlist if one of them fails
       send_to_active_remote(winner_candidate.spotify_playlist_song)
 
-      @playlist.update!(playing_song: winner_candidate.spotify_playlist_song)
+      @playlist.update!(playing_song_id: winner_candidate.spotify_playlist_song.id)
 
       send_candidates_to_end_of_queue
       @playlist.votations.in_progress.first.destroy!

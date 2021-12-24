@@ -32,4 +32,14 @@ class SpotifyPlaylistSong < ApplicationRecord
   delegate :spotify_users, to: :account
   delegate :album, :artist, :cover_art, :duration, :genre, :metadata, :title, :uri, :year, :created_at, :updated_at,
            :external_id, to: :spotify_song
+
+  before_validation :set_index, on: :create
+
+  private
+
+  def set_index
+    return if index
+
+    self.index = spotify_playlist.spotify_playlist_songs.count
+  end
 end

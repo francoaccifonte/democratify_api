@@ -18,8 +18,8 @@ module Spotify
 
     def initialize(user: nil, login_token: nil, **_other)
       @user = user
-      @access_token = @user.access_token
-      @refresh_token = @user.refresh_token
+      @access_token = @user&.access_token
+      @refresh_token = @user&.refresh_token
       @login_token = login_token
     end
 

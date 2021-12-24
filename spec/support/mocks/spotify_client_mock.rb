@@ -12,16 +12,19 @@ end
 
 RSpec.shared_context 'with mocked spotify client', shared_context: :metadata do
   before { @some_var = :some_value }
-  def mock_user
-    allow(Spotify::Client).to receive(:new).and_return(mocked_client)
+  def mock_user(client = nil)
+    allow(Spotify::Client).to receive(:new).and_return(client || mocked_client)
   end
 
-  def mocked_client
-    instance_double(
-      Spotify::Client,
+  def mocked_client(response = {})
+    defaults = {
       list_devices: list_devices,
       add_to_playback_queue: '',
       playing_song_remaining_time: 30.seconds
+    }.merge!(response).compact
+    instance_double(
+      Spotify::Client,
+      **defaults
     )
   end
 

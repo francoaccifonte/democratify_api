@@ -47,8 +47,6 @@ class OngoingPlaylist < ApplicationRecord
 
   delegate :spotify_playlist_songs, to: :spotify_playlist
 
-  alias voting_songs votation_candidates
-
   def start_initial_votation(async: false)
     return InitialVotationStartWorker.perform_async(id) if async
 
@@ -61,6 +59,10 @@ class OngoingPlaylist < ApplicationRecord
 
   def user
     account.spotify_users.first
+  end
+
+  def voting_songs
+    votations.in_progress.first.spotify_playlist_songs.order(index: :desc)
   end
 
   def remaining_songs

@@ -5,6 +5,7 @@ require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+require 'sidekiq/testing'
 require 'database_cleaner/active_record'
 
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -40,6 +41,7 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.strategy = :deletion
     DatabaseCleaner.clean_with(:deletion)
+    Sidekiq::Testing.fake!
   end
 
   config.around(:each) do |example|
