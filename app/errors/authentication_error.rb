@@ -1,8 +1,9 @@
 class AuthenticationError < ControllerError
-  attr_reader :message, :token
+  attr_reader :message, :token, :type
 
-  def initialize(message: nil, token: nil)
+  def initialize(type:, message: nil, token: nil)
     super(message: message)
     @token = token
+    @type = type
   end
 end
