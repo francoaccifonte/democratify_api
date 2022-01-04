@@ -16,7 +16,7 @@
 # Indexes
 #
 #  index_spotify_playlists_on_account_id       (account_id)
-#  index_spotify_playlists_on_external_id      (external_id) UNIQUE
+#  index_spotify_playlists_on_external_id      (external_id)
 #  index_spotify_playlists_on_spotify_user_id  (spotify_user_id)
 #
 # Foreign Keys
