@@ -24,8 +24,6 @@
 #  fk_rails_...  (spotify_playlist_id => spotify_playlists.id)
 #
 require 'rails_helper'
-# require './app/models/concerns/spotifiable/song_spotifiable.rb'
-# require './app/models/concerns/spotifiable/user_spotifiable.rb'
 
 RSpec.describe OngoingPlaylist, type: :model do
   include_context 'with mocked spotify client'

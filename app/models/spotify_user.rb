@@ -26,9 +26,6 @@
 #  fk_rails_...  (account_id => accounts.id)
 #
 class SpotifyUser < ApplicationRecord
-  include Spotifiable
-  include Spotifiable::UserSpotifiable
-
   has_many :spotify_playlists, dependent: :destroy
   has_many :spotify_devices, dependent: :destroy
 
@@ -38,10 +35,14 @@ class SpotifyUser < ApplicationRecord
 
   after_create :import_playlists
 
-  def client
+  def client # TODO: remove this method and keep spotify_client
     @client ||= Spotify::Client.new(user: self)
     refresh_access_token
     @client
+  end
+
+  def spotify_client
+    client
   end
 
   def refresh_access_token

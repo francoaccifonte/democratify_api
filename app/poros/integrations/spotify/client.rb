@@ -14,13 +14,19 @@ module Spotify
 
     SPOTIFY_URL = 'https://api.spotify.com/v1'
 
-    attr_accessor :access_token, :login_token, :refresh_token
+    attr_accessor :login_token
 
     def initialize(user: nil, login_token: nil, **_other)
       @user = user
-      @access_token = @user&.access_token
-      @refresh_token = @user&.refresh_token
       @login_token = login_token
+    end
+
+    def access_token
+      @user&.access_token
+    end
+
+    def refresh_token
+      @user&.refresh_token
     end
 
     def handle_error(response)

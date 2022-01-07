@@ -17,7 +17,6 @@ class InitialVotationStartWorker
   end
 
   def send_to_active_remote(song)
-    song.spotify_users.first.sync_devices
     song.send_to_active_remote
     song.update!(enqueued_at: Time.zone.now)
   end
