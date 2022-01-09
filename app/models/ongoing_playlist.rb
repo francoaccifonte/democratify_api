@@ -34,7 +34,6 @@ class OngoingPlaylist < ApplicationRecord
   belongs_to :spotify_playlist
 
   has_many :spotify_songs, through: :spotify_playlist
-  has_many :spotify_playlist_songs, through: :spotify_playlist
   has_many :votations, dependent: :destroy
   has_many :votation_candidates, through: :votations
 
@@ -73,6 +72,15 @@ class OngoingPlaylist < ApplicationRecord
     return unless playing_song_id
 
     spotify_playlist_songs.find(playing_song_id)
+  end
+
+  def reorder_songs(song_indexes)
+    songs = spotify_playlist_songs
+    transaction do
+      song_indexes.each do |song_index|
+        songs.find(song_index.fetch(:id)).update!(index: song_index.fetch(:index))
+      end
+    end
   end
 
   private

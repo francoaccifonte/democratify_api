@@ -5,7 +5,10 @@ class OngoingPlaylistsController < ApplicationController
   before_action :set_ongoing_playlist, only: %i[index update destroy create]
 
   def update
-    @ongoing_playlist.update!(update_params)
+    ActiveRecord::Base.transaction do
+      @ongoing_playlist.update!(update_params)
+      @ongoing_playlist.reorder_songs(song_order) if song_order
+    end
   end
 
   def create
@@ -50,12 +53,9 @@ class OngoingPlaylistsController < ApplicationController
 
   def update_params
     params.permit(:pool_size).to_h
-          .merge!(spotify_playlist_songs_attributes)
   end
 
-  def spotify_playlist_songs_attributes
-    {
-      spotify_playlist_songs_attributes: params.permit(spotify_playlist_songs: %i[id index]).to_h[:spotify_playlist_songs]
-    }
+  def song_order
+    @song_order ||= params.permit(spotify_playlist_songs: %i[id index]).to_h[:spotify_playlist_songs]
   end
 end
