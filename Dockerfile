@@ -1,3 +1,5 @@
+# docker build ./ --rm -t accifontefranco/democratify_api:latest && docker push accifontefranco/democratify_api:latest
+
 # docker build ./ --rm -t accifontefranco/democratify_api:latest
 # docker push accifontefranco/democratify_api:latest
 FROM ruby:3.0.3-alpine as builder
