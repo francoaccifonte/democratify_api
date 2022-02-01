@@ -19,7 +19,7 @@ RSpec.shared_context 'with mocked spotify client', shared_context: :metadata do
     defaults = {
       list_devices: list_devices,
       add_to_playback_queue: '',
-      add_to_active_playback_queue: '',
+      add_to_active_playback_queue!: '',
       playing_song_remaining_time: 30.seconds
     }.merge!(response).compact
     instance_double(

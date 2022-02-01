@@ -34,7 +34,7 @@ class SpotifyPlaylistSong < ApplicationRecord
 
   # Spotify Methods:
   def send_to_active_remote
-    spotify_client.add_to_active_playback_queue(uri)
+    spotify_client.add_to_active_playback_queue!(uri)
   end
 
   private
