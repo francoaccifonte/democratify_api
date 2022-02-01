@@ -22,9 +22,6 @@
 #  fk_rails_...  (spotify_song_id => spotify_songs.id)
 #
 class SpotifyPlaylistSong < ApplicationRecord
-  include Spotifiable
-  include Spotifiable::SongSpotifiable
-
   belongs_to :spotify_playlist
   belongs_to :spotify_song
 
@@ -32,4 +29,23 @@ class SpotifyPlaylistSong < ApplicationRecord
   delegate :spotify_users, to: :account
   delegate :album, :artist, :cover_art, :duration, :genre, :metadata, :title, :uri, :year, :created_at, :updated_at,
            :external_id, to: :spotify_song
+
+  before_validation :set_index, on: :create
+
+  # Spotify Methods:
+  def send_to_active_remote
+    spotify_client.add_to_active_playback_queue!(uri)
+  end
+
+  private
+
+  def set_index
+    return if index
+
+    self.index = spotify_playlist.spotify_playlist_songs.count
+  end
+
+  def spotify_client
+    spotify_users.first.client
+  end
 end

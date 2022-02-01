@@ -4,15 +4,19 @@ class ImportSpotifySongsIntoPlaylistWorker
   include Sidekiq::Worker
   sidekiq_options queue: :spotify_import
 
+  # TODO: remove songs if they were removed from the spotfify playlist (from the api response)
   def perform(playlist_id)
     playlist = SpotifyPlaylist.find(playlist_id)
 
-    client = Spotify::Client.new(access_token: playlist.spotify_user.access_token)
+    client = playlist.spotify_user.client
     songs = client.playlist_tracks(playlist.external_id).fetch(:items)
+    initial_index = playlist.spotify_playlist_songs.count
 
-    songs.each do |song|
+    songs.each_with_index do |song, index|
       spotify_song = find_or_create_song(song.fetch(:track))
-      playlist.spotify_playlist_songs.create!(spotify_song: spotify_song)
+      sps = playlist.spotify_playlist_songs.find_or_initialize_by(spotify_song: spotify_song)
+      sps.assign_attributes(index: index + initial_index)
+      sps.save!
     end
   end
 

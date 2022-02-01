@@ -30,5 +30,10 @@ module Spotify
     def add_to_playback_queue(uri, device_id)
       post("#{self.class::SPOTIFY_URL}/me/player/queue?uri=#{uri}&device_id=#{device_id}", body: { uris: [uri] })
     end
+
+    def add_to_active_playback_queue!(uri)
+      device_id = list_devices.detect { |device| device.fetch(:is_active) }.fetch(:id)
+      add_to_playback_queue(uri, device_id) if device_id
+    end
   end
 end

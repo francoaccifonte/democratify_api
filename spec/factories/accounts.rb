@@ -15,8 +15,11 @@
 #  index_accounts_on_email  (email) UNIQUE
 #  index_accounts_on_name   (name) UNIQUE
 #
-require 'rails_helper'
-
-RSpec.describe Account, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+FactoryBot.define do
+  factory :account do
+    email { Faker::Internet.email }
+    name { Faker::Name.name }
+    token { Faker::Lorem.characters(number: 50) }
+    password { Faker::Lorem.characters(number: 15) }
+  end
 end

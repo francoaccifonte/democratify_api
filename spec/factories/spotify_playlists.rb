@@ -24,24 +24,15 @@
 #  fk_rails_...  (account_id => accounts.id)
 #  fk_rails_...  (spotify_user_id => spotify_users.id)
 #
-class SpotifyPlaylist < ApplicationRecord
-  has_many :spotify_playlist_songs, dependent: :destroy
-  has_many :spotify_songs, through: :spotify_playlist_songs
+FactoryBot.define do
+  factory :spotify_playlist do
+    cover_art_url { Faker::Internet.url }
+    description { Faker::Lorem.paragraph }
+    external_url { Faker::Internet.url }
+    name { Faker::Music.genre }
+    external_id { Faker::Number.number(digits: 10).to_s }
 
-  belongs_to :account
-  belongs_to :spotify_user, optional: false
-
-  after_create :import_songs
-
-  accepts_nested_attributes_for :spotify_playlist_songs
-
-  def sample_songs
-    spotify_songs.first(4)
-  end
-
-  private
-
-  def import_songs
-    ImportSpotifySongsIntoPlaylistWorker.perform_async(id)
+    association :account, factory: :account
+    association :spotify_user, factory: :spotify_user
   end
 end

@@ -14,24 +14,32 @@ module Spotify
 
     SPOTIFY_URL = 'https://api.spotify.com/v1'
 
-    attr_accessor :access_token, :login_token, :refresh_token
+    attr_accessor :login_token
 
-    def initialize(user: nil, login_token: nil, access_token: nil, refresh_token: nil)
+    def initialize(user: nil, login_token: nil, **_other)
       @user = user
-      @access_token = access_token
       @login_token = login_token
-      @refresh_token = refresh_token
+    end
+
+    def access_token
+      @user&.access_token
+    end
+
+    def refresh_token
+      @user&.refresh_token
     end
 
     def handle_error(response)
-      return unless response.success?
+      return if response.success?
 
       case response.code
       when 401
-        puts response
+        puts response.body
       when 404
-        puts response
+        puts response.body
       end
+
+      raise Errors::SpotifyError.new(response.body, response)
     end
   end
 end

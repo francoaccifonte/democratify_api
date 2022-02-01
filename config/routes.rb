@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
   post '/accounts/login', to: 'accounts#login'
+  post '/accounts/signup', to: 'accounts#signup'
   get '/accounts/me', to: 'accounts#me'
   get '/spotify_login', to: 'webhook#spotify_login'
 

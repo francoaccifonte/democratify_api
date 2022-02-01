@@ -14,7 +14,14 @@ module ErrorHandlingConcern
   end
 
   def authentication_error(error)
-    body = error.token ? { error: 'Invalid token' } : { error: 'Authentication token required' }
+    body = {
+      invalid_token:
+             { error: 'Invalid token' },
+      missing_token:
+             { error: 'Authentication token required' },
+      invalid_password:
+             { error: 'Password is invalid' }
+    }.fetch(error.type)
 
     render json: body, status: :unauthorized
   end
