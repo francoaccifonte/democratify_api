@@ -71,7 +71,7 @@ jobs:
   run_tests:
     executor:
       name: default
-    working_directory: /mnt/ramsdisk/democratify
+    # working_directory: /mnt/ramsdisk/democratify
     steps:
         - get_code
         - install_ruby
