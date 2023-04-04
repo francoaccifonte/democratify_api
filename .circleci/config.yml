@@ -6,7 +6,7 @@ executors:
   default:
     resource_class: small
     docker:
-      - image: cimg/ruby:3.2.1
+      - image: cimg/ruby:3.0.3
 
 commands:
   get_code:
