@@ -2,6 +2,57 @@
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
+executors:
+  default:
+    resource_class: small
+    docker:
+      - image: cimg/ruby:3.2.1
+
+commands:
+  get_code:
+    steps:
+      - restore_cache:
+          name: Restoring source code cache
+          key: $CACHE_VERSION-source_code-CIRCLE_SHA1
+      - checkout
+      - save_cache:
+          name: Saving source code cache
+          paths:
+            - ".git"
+          key: $CACHE_VERSION-source_code-CIRCLE_SHA1
+
+  restore_gems:
+    steps:
+      restore_cache:
+        name: Restore saved gems
+        key: $CACHE_VERSION-ruby-gems-{{ checksum "Gemfile.lock" }}
+
+  cache_gems:
+    steps:
+      - save_cache:
+        name: Saving installed gems
+        paths:
+          - vendor/bundle
+        key: $CACHE_VERSION-ruby-gems-{{ checksum "Gemfile.lock" }}
+
+  install_ruby:
+    steps:
+      - restore_gems
+
+      - run:
+        name: Install bundler
+        command: gem install bundler -v $(tail -n1 Gemfile.lock)
+
+      - run:
+        name: Install gems
+        command: bundle install --path vendor/bundle
+
+      - save_cache
+    
+  run_tests:
+    name: Run specs
+    command: bundle exec rspec
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
@@ -17,6 +68,15 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+
+  test:
+    executor:
+      name: default
+    working_directory: /mnt/ramsdisk/democratify
+    steps:
+      - get_code
+      - install_ruby
+      - run_tests
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows

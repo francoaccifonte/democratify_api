@@ -28,3 +28,5 @@
 .env
 /vendor
 /coverage
+
+/node_modules
