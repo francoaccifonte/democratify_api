@@ -14,6 +14,7 @@ test:
   database: democratifyAPI_test
   port: <%= ENV['DEMOCRATIFYAPI_DATABASE_PORT'] %>
   host: <%= ENV['DEMOCRATIFYAPI_DATABASE_HOSTNAME'] %>
+  username: <%= ENV['DEMOCRATIFYAPI_DATABASE_USERNAME'] %>
 
 production:
   <<: *default
