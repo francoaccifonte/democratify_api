@@ -57,7 +57,8 @@ class SpotifyUser < ApplicationRecord
     new_user.save!
   end
 
-  def client # TODO: remove this method and keep spotify_client
+  # TODO: remove this method and keep spotify_client
+  def client
     @client ||= Spotify::Client.new(user: self)
     refresh_access_token
     @client
