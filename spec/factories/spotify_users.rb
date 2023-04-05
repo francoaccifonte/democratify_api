@@ -33,7 +33,7 @@ FactoryBot.define do
     href { Faker::Internet.url }
     name { Faker::Name.name }
     refresh_token { Faker::Lorem.characters(number: 50) }
-    scope { 'playlist-read-private playlist-read-collaborative user-modify-playback-state user-read-playback-state user-read-currently-playing user-read-email'}
+    scope { 'playlist-read-private playlist-read-collaborative user-modify-playback-state user-read-playback-state user-read-currently-playing user-read-email' }
     uri { Faker::Internet.url }
     spotify_id { Faker::Number.number(digits: 10).to_s }
 

@@ -61,9 +61,9 @@ class Votation < ApplicationRecord
   def set_candidates
     next_votation_songs.each do |spotify_playlist_song|
       votation_candidates.create!(
-        spotify_playlist_song: spotify_playlist_song,
-        account: account,
-        ongoing_playlist: ongoing_playlist
+        spotify_playlist_song:,
+        account:,
+        ongoing_playlist:
       )
     end
   end

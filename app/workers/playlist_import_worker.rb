@@ -15,7 +15,7 @@ class PlaylistImportWorker
         external_id: api_playlist.fetch(:id),
         name: api_playlist.fetch(:name),
         description: api_playlist.fetch(:description),
-        cover_art_url: cover_art,
+        cover_art_url: cover_art
       )
     end
   end

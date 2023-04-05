@@ -13,17 +13,17 @@ module Spotify
         client_secret: self.class::CLIENT_SECRET
       }
 
-      post('https://accounts.spotify.com/api/token', body: body, headers: _url_encoded_content_type)
+      post('https://accounts.spotify.com/api/token', body:, headers: _url_encoded_content_type)
     end
 
     def refresh_access_token!
       body = {
         grant_type: 'refresh_token',
-        refresh_token: refresh_token,
+        refresh_token:,
         client_id: self.class::CLIENT_ID
       }
       headers = _url_encoded_content_type.merge(_encoded_credentials)
-      post('https://accounts.spotify.com/api/token', body: body, headers: headers)
+      post('https://accounts.spotify.com/api/token', body:, headers:)
     end
 
     private

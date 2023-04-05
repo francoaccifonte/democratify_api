@@ -32,7 +32,7 @@ FactoryBot.define do
         {
           url: Faker::Internet.url,
           width: size,
-          height: size,
+          height: size
         }
       end
     end

@@ -9,19 +9,19 @@ RSpec.describe 'OngoingPlaylists', type: :request do
     before { mock_user(mock) }
 
     let!(:account) { create(:account) }
-    let!(:user) { create(:spotify_user, account: account) }
+    let!(:user) { create(:spotify_user, account:) }
 
-    let!(:playlist) { create(:spotify_playlist, account: account, spotify_user: user) }
+    let!(:playlist) { create(:spotify_playlist, account:, spotify_user: user) }
     let!(:songs) { create_list(:spotify_playlist_song, 10, spotify_playlist: playlist) }
     let!(:ongoing_playlist) do
       create(:ongoing_playlist,
-             account: account,
+             account:,
              spotify_playlist: playlist)
     end
 
     let(:auth_headers) { { Authorization: "Bearer #{account.token}" } }
 
-    subject { put(ongoing_playlist_path(ongoing_playlist.id), params: params, headers: auth_headers) }
+    subject { put(ongoing_playlist_path(ongoing_playlist.id), params:, headers: auth_headers) }
 
     shared_examples_for 'returns no content' do
       it 'has status code no content' do
@@ -45,7 +45,7 @@ RSpec.describe 'OngoingPlaylists', type: :request do
         {
           spotify_playlist_songs:
           ongoing_playlist.spotify_playlist_songs.pluck(:id).shuffle.each_with_index.map do |id, index|
-            { id: id, index: index }
+            { id:, index: }
           end
         }
       end

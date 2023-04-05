@@ -24,6 +24,5 @@
 #
 FactoryBot.define do
   factory :spotify_device do
-    
   end
 end

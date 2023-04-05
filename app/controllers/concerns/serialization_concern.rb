@@ -7,7 +7,7 @@ module SerializationConcern
     serializer = serializer_class&.new(**options) ||
                  guess_serializer(object.class).new(**options)
     json = serializer.serialize_to_json(object)
-    render json: json, status: status
+    render json:, status:
   end
 
   def render_many(resources, serializer_class: nil, status: :ok, options: {})
@@ -19,7 +19,7 @@ module SerializationConcern
     )
 
     json = serializer.to_json
-    render json: json, status: status
+    render json:, status:
   end
 
   def render_no_content

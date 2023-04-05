@@ -27,6 +27,5 @@
 #
 FactoryBot.define do
   factory :votation_candidate do
-    
   end
 end

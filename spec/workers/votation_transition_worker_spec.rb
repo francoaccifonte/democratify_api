@@ -8,14 +8,14 @@ RSpec.describe VotationTransitionWorker, type: :worker do
     before { mock_user(mock) }
 
     let!(:account) { create(:account) }
-    let!(:user) { create(:spotify_user, account: account) }
+    let!(:user) { create(:spotify_user, account:) }
 
     let!(:songs) { create_list(:spotify_playlist_song, 10, spotify_playlist: playlist) }
-    let!(:playlist) { create(:spotify_playlist, account: account, spotify_user: user) }
+    let!(:playlist) { create(:spotify_playlist, account:, spotify_user: user) }
 
     let!(:ongoing_playlist) do
       create(:ongoing_playlist,
-             account: account,
+             account:,
              spotify_playlist: playlist)
     end
     let!(:candidates_before_tally) { ongoing_playlist.votations.first.spotify_playlist_songs }

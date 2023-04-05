@@ -34,14 +34,14 @@ RSpec.describe OngoingPlaylist, type: :model do
     end
 
     let!(:account) { create(:account) }
-    let!(:user) { create(:spotify_user, account: account) }
+    let!(:user) { create(:spotify_user, account:) }
 
     let!(:songs) { create_list(:spotify_playlist_song, 10, spotify_playlist: playlist) }
-    let!(:playlist) { create(:spotify_playlist, account: account, spotify_user: user) }
+    let!(:playlist) { create(:spotify_playlist, account:, spotify_user: user) }
 
     subject do
       create(:ongoing_playlist,
-             account: account,
+             account:,
              spotify_playlist: playlist)
     end
 

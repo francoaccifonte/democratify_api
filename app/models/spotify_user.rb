@@ -36,7 +36,7 @@ class SpotifyUser < ApplicationRecord
   after_create :import_playlists
 
   def self.authorize_and_create(account_id:, code:)
-    new_user = new(account_id: account_id)
+    new_user = new(account_id:)
     new_user.spotify_client.login_token = code
     auth_response = new_user.spotify_client.authorize
     new_user.access_token = auth_response[:access_token]
