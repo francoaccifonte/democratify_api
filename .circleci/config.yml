@@ -85,7 +85,7 @@ jobs:
     steps:
         - get_code
         - install_ruby
-        # - run_tests
+        - run_tests
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
