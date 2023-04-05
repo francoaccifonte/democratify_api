@@ -6,7 +6,7 @@ executors:
   default:
     resource_class: small
     docker:
-      - image: cimg/ruby:3.0.3
+      - image: cimg/ruby:3.2.1
       - image: cimg/postgres:14.0
         environment:
           POSTGRES_USER: postgres
