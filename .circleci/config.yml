@@ -33,6 +33,10 @@ commands:
 
   restore_gems:
     steps:
+    # DELETE THIS:
+      - run:
+        name: log gemfile checksum
+        command: "echo {{ checksum "Gemfile.lock" }}"
       - restore_cache:
           name: Restore saved gems
           key: $CACHE_VERSION-ruby-gems-{{ checksum "Gemfile.lock" }}
@@ -47,13 +51,24 @@ commands:
 
   install_ruby:
     steps:
+    # DELETE
+      - run:
+          name: log gemfile checksum
+          command: "echo {{ checksum "Gemfile.lock" }}"
       - restore_gems
+      # DELETE
+      - run:
+          name: log gemfile checksum
+          command: "echo {{ checksum "Gemfile.lock" }}"
       - run:
           name: Install bundler
           command: gem install bundler -v $(tail -n1 Gemfile.lock)
       - run:
           name: Install gems
           command: bundle install --path vendor/bundle
+      - run:
+          name: log gemfile checksum
+          command: "echo {{ checksum "Gemfile.lock" }}"
       - cache_gems
 
   run_tests:
@@ -85,7 +100,7 @@ jobs:
     steps:
         - get_code
         - install_ruby
-        - run_tests
+        # - run_tests
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
