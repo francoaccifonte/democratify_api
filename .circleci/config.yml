@@ -14,9 +14,6 @@ executors:
       - image: cimg/postgres:14.0
         environment:
           POSTGRES_USER: postgres
-        # auth:
-        #   username: mydockerhub-user
-        #   password: $DOCKERHUB_PASSWORD 
 
 commands:
   get_code:
@@ -56,11 +53,18 @@ commands:
           command: bundle install --path vendor/bundle
       - cache_gems
 
+  setup_db:
+    steps:
+      - run:
+          name: Create DB and migrate
+          command: bundle exec rails db:create db:schema:load
+
   run_tests:
     steps:
-    - run:
-        name: Run specs
-        command: bundle exec rspec
+      - setup_db
+      - run:
+          name: Run specs
+          command: bundle exec rspec
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
