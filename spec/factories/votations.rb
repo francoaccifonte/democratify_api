@@ -29,5 +29,6 @@
 #
 FactoryBot.define do
   factory :votation do
+    pending
   end
 end

@@ -46,7 +46,6 @@ RSpec.describe SpotifyUser do
 
     before { mock_user }
 
-    it 'refreshes the token' do
-    end
+    xit 'refreshes the token'
   end
 end
