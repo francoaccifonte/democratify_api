@@ -49,14 +49,14 @@ commands:
           command: bundle install --path vendor/bundle
       - cache_gems
 
-  setup_db:
+  setup_test_db:
     steps:
       - run:
           name: Replace database.yml
           command: cp config/database.yml.ci config/database.yml
       - run:
           name: Create DB and migrate
-          command: bundle exec rails db:create db:schema:load
+          command: bundle exec rails db:create db:schema:load -e test
 
   run_tests:
     steps:
@@ -87,7 +87,7 @@ jobs:
     steps:
         - get_code
         - install_ruby
-        - setup_db
+        - setup_test_db
         - run_tests
 
 # Orchestrate jobs using workflows
