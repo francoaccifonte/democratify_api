@@ -2,7 +2,7 @@ module SerializationConcern
   extend ActiveSupport::Concern
 
   def render_one(object, serializer_class: nil, status: :ok, options: {})
-    return render_no_content unless object.present?
+    return render_no_content if object.blank?
 
     serializer = serializer_class&.new(**options) ||
                  guess_serializer(object.class).new(**options)

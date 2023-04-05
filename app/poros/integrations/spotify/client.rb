@@ -34,9 +34,9 @@ module Spotify
 
       case response.code
       when 401
-        puts response.body
+        Rails.logger.debug response.body
       when 404
-        puts response.body
+        Rails.logger.debug response.body
       end
 
       raise Errors::SpotifyError.new(response.body, response)

@@ -25,7 +25,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe OngoingPlaylist, type: :model do
+RSpec.describe OngoingPlaylist do
   include_context 'with mocked spotify client'
 
   context 'when all is correct,' do

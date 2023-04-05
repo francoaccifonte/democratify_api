@@ -27,7 +27,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe SpotifyUser, type: :model do
+RSpec.describe SpotifyUser do
   include_context 'with mocked spotify client'
 
   context 'when a user is created' do

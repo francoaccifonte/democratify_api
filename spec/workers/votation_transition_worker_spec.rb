@@ -4,7 +4,7 @@ RSpec.describe VotationTransitionWorker, type: :worker do
   include_context 'with mocked spotify client'
 
   context 'when ending a votation' do
-    subject { VotationTransitionWorker.new.perform(ongoing_playlist.id) }
+    subject { described_class.new.perform(ongoing_playlist.id) }
 
     let!(:mock) { mocked_client }
     let!(:account) { create(:account) }
@@ -50,7 +50,7 @@ RSpec.describe VotationTransitionWorker, type: :worker do
       end
 
       it 'deletes the old votation' do
-        expect { subject }.not_to(change { Votation.count })
+        expect { subject }.not_to(change(Votation, :count))
       end
     end
   end
