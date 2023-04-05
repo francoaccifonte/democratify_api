@@ -1,5 +1,3 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
 executors:
@@ -12,6 +10,7 @@ executors:
         environment:
           POSTGRES_USER: postgres
 
+# -------------------------=== COMMANDS ===------------------------- #
 commands:
   get_code:
     steps:
@@ -54,7 +53,7 @@ commands:
     steps:
       - run:
           name: Replace database.yml
-          command: cp config/database.yml.ci config/database.yml
+          command: cp config/database.ci.yml config/database.yml
       - run:
           name: Create DB and migrate
           command: RAILS_ENV=test bundle exec rails db:create db:schema:load
@@ -65,34 +64,18 @@ commands:
           name: Run specs
           command: bundle exec rspec
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/configuration-reference/#jobs
+# -------------------------=== JOBS ===------------------------- #
 jobs:
-  say-hello2:
-    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/configuration-reference/#executor-job
-    docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/configuration-reference/#steps
-    steps:
-      - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
-
   run_tests:
     executor:
       name: default
-    # working_directory: /mnt/ramsdisk/democratify
     steps:
         - get_code
         - install_ruby
         - setup_test_db
         - run_tests
 
-# Orchestrate jobs using workflows
-# See: https://circleci.com/docs/configuration-reference/#workflows
+# -------------------------=== WORKFLOWS ===------------------------- #
 workflows:
   say-hello-workflow:
     jobs:
