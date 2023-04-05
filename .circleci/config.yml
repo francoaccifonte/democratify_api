@@ -35,7 +35,7 @@ commands:
     steps:
       - run: # DELETE THIS:
           name: log gemfile checksum
-          command: "echo {{ checksum \"Gemfile.lock\" }}"
+          command: "echo$(cksum Gemfile.lock)"
       - restore_cache:
           name: Restore saved gems
           key: $CACHE_VERSION-ruby-gems-{{ checksum "Gemfile.lock" }}
@@ -53,21 +53,23 @@ commands:
     # DELETE
       - run:
           name: log gemfile checksum
-          command: "echo {{ checksum \"Gemfile.lock\" }}"
+          command: "echo$(cksum Gemfile.lock)"
       - restore_gems
       # DELETE
       - run:
           name: log gemfile checksum
-          command: "echo {{ checksum \"Gemfile.lock\" }}"
+          command: "echo$(cksum Gemfile.lock)"
       - run:
           name: Install bundler
           command: gem install bundler -v $(tail -n1 Gemfile.lock)
       - run:
           name: Install gems
-          command: bundle install --path vendor/bundle
+          command: |
+            echo $(bundler -v)
+            bundle install --path vendor/bundle
       - run:
           name: log gemfile checksum
-          command: "echo {{ checksum \"Gemfile.lock\" }}"
+          command: "echo$(cksum Gemfile.lock)"
       - cache_gems
 
   run_tests:
