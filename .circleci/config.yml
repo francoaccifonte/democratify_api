@@ -7,10 +7,6 @@ executors:
     resource_class: small
     docker:
       - image: cimg/ruby:3.2.1
-        environment:
-          DEMOCRATIFYAPI_DATABASE_PORT: 5432
-          DEMOCRATIFYAPI_DATABASE_USERNAME: postgres
-          DEMOCRATIFYAPI_DATABASE_HOSTNAME: 0.0.0.0
       - image: cimg/postgres:14.0
         environment:
           POSTGRES_USER: postgres
@@ -56,12 +52,14 @@ commands:
   setup_db:
     steps:
       - run:
+          name: Replace database.yml
+          command: cp config/database.yml.ci config/database.yml
+      - run:
           name: Create DB and migrate
           command: bundle exec rails db:create db:schema:load
 
   run_tests:
     steps:
-      - setup_db
       - run:
           name: Run specs
           command: bundle exec rspec
@@ -89,6 +87,7 @@ jobs:
     steps:
         - get_code
         - install_ruby
+        - setup_db
         - run_tests
 
 # Orchestrate jobs using workflows
