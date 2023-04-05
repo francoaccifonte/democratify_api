@@ -34,6 +34,7 @@ end
 
 group :development do
   gem 'annotate'
+  gem 'rubocop', '~> 1.49', require: false
   gem 'listen', '~> 3.3'
 end
 

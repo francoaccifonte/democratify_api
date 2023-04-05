@@ -277,6 +277,7 @@ DEPENDENCIES
   rails (~> 6.1.4, >= 6.1.4.1)
   redis
   rspec-rails (~> 5.0.0)
+  rubocop (~> 1.49)
   rubocop-rails
   sidekiq
   simplecov
