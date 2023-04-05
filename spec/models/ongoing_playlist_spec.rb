@@ -29,6 +29,12 @@ RSpec.describe OngoingPlaylist, type: :model do
   include_context 'with mocked spotify client'
 
   context 'when all is correct,' do
+    subject do
+      create(:ongoing_playlist,
+             account:,
+             spotify_playlist: playlist)
+    end
+
     before do
       mock_user
     end
@@ -38,12 +44,6 @@ RSpec.describe OngoingPlaylist, type: :model do
 
     let!(:songs) { create_list(:spotify_playlist_song, 10, spotify_playlist: playlist) }
     let!(:playlist) { create(:spotify_playlist, account:, spotify_user: user) }
-
-    subject do
-      create(:ongoing_playlist,
-             account:,
-             spotify_playlist: playlist)
-    end
 
     it 'is valid' do
       expect(subject).to be_valid

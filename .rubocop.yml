@@ -1,8 +1,17 @@
 inherit_from: .rubocop_todo.yml
 
+require: 
+  - rubocop-rails
+  - rubocop-rspec
+
 AllCops:
+  NewCops: enable
   Exclude:
     - 'config/environments/development.rb'
     - 'config/environments/production.rb'
     - 'lib/tasks/auto_annotate_models.rake'
     - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
+
+Style/Documentation:
+  Enabled: false
