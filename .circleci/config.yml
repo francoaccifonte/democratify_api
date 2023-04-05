@@ -7,6 +7,10 @@ executors:
     resource_class: small
     docker:
       - image: cimg/ruby:3.2.1
+        environment:
+          DEMOCRATIFYAPI_DATABASE_PORT: 5432
+          DEMOCRATIFYAPI_DATABASE_USERNAME: postgres
+          DEMOCRATIFYAPI_DATABASE_HOSTNAME: 0.0.0.0
       - image: cimg/postgres:14.0
         environment:
           POSTGRES_USER: postgres
