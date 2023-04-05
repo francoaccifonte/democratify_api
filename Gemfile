@@ -29,13 +29,14 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails', '~> 5.0.0'
+  gem 'rubocop', '~> 1.49', require: false
   gem 'rubocop-rails'
+  gem 'rubocop-rspec'
 end
 
 group :development do
   gem 'annotate'
   gem 'listen', '~> 3.3'
-  gem 'rubocop', '~> 1.49', require: false
 end
 
 group :test do

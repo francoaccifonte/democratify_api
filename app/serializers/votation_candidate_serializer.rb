@@ -33,7 +33,5 @@ class VotationCandidateSerializer < Panko::Serializer
 
   has_one :spotify_song, serializer: SpotifySongSerializer, only: %i[id album artist cover_art title]
 
-  def spotify_song
-    object.spotify_song
-  end
+  delegate :spotify_song, to: :object
 end

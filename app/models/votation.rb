@@ -33,7 +33,7 @@ class Votation < ApplicationRecord
   belongs_to :account
   belongs_to :ongoing_playlist
 
-  has_many :votation_candidates, dependent: :destroy, foreign_key: :votation_id
+  has_many :votation_candidates, dependent: :destroy
   has_many :spotify_playlist_songs, through: :votation_candidates
   has_many :spotify_songs, through: :spotify_playlist_songs
 

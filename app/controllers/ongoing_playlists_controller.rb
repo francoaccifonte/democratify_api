@@ -4,11 +4,8 @@ class OngoingPlaylistsController < ApplicationController
   before_action :authenticate!
   before_action :set_ongoing_playlist, only: %i[index update destroy create]
 
-  def update
-    ActiveRecord::Base.transaction do
-      @ongoing_playlist.update!(update_params)
-      @ongoing_playlist.reorder_songs(song_order) if song_order
-    end
+  def index
+    render_one @ongoing_playlist
   end
 
   def create
@@ -18,8 +15,11 @@ class OngoingPlaylistsController < ApplicationController
     render_one ongoing_playlist
   end
 
-  def index
-    render_one @ongoing_playlist
+  def update
+    ActiveRecord::Base.transaction do
+      @ongoing_playlist.update!(update_params)
+      @ongoing_playlist.reorder_songs(song_order) if song_order
+    end
   end
 
   def destroy

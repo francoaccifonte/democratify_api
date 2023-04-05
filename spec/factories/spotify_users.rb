@@ -28,7 +28,7 @@
 FactoryBot.define do
   factory :spotify_user do
     access_token { Faker::Lorem.characters(number: 50) }
-    access_token_expires_at { Time.zone.now + 30.minutes }
+    access_token_expires_at { 30.minutes.from_now }
     email { Faker::Internet.email }
     href { Faker::Internet.url }
     name { Faker::Name.name }

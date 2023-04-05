@@ -44,7 +44,7 @@ RSpec.describe SpotifyUser, type: :model do
   context 'when token is expired' do
     before { mock_user }
 
-    subject { create(:spotify_user, access_token_expires_at: Time.zone.now - 1.days) }
+    subject { create(:spotify_user, access_token_expires_at: 1.day.ago) }
 
     it 'refreshes the token' do
     end
