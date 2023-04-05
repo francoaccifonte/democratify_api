@@ -1,0 +1,82 @@
+version: 2.1
+
+executors:
+  default:
+    resource_class: small
+    docker:
+      - image: cimg/ruby:3.2.1
+      - image: cimg/redis:7.0.10
+      - image: cimg/postgres:14.0
+        environment:
+          POSTGRES_USER: postgres
+
+# -------------------------=== COMMANDS ===------------------------- #
+commands:
+  get_code:
+    steps:
+      - restore_cache:
+          name: Restoring source code cache
+          key: $CACHE_VERSION-source_code-CIRCLE_SHA1
+      - checkout
+      - save_cache:
+          name: Saving source code cache
+          paths:
+            - ".git"
+          key: $CACHE_VERSION-source_code-CIRCLE_SHA1
+
+  restore_gems:
+    steps:
+      - restore_cache:
+          name: Restore saved gems
+          key: $CACHE_VERSION-ruby-gems-{{ checksum "Gemfile.lock" }}
+
+  cache_gems:
+    steps:
+      - save_cache:
+          name: Saving installed gems
+          paths:
+            - vendor/bundle
+          key: $CACHE_VERSION-ruby-gems-{{ checksum "Gemfile.lock" }}
+
+  install_ruby:
+    steps:
+      - restore_gems
+      - run:
+          name: Install bundler
+          command: gem install bundler -v $(tail -n1 Gemfile.lock)
+      - run:
+          name: Install gems
+          command: bundle install --path vendor/bundle
+      - cache_gems
+
+  setup_test_db:
+    steps:
+      - run:
+          name: Replace database.yml
+          command: cp config/database.ci.yml config/database.yml
+      - run:
+          name: Create DB and migrate
+          command: RAILS_ENV=test bundle exec rails db:create db:schema:load
+
+  run_tests:
+    steps:
+      - run:
+          name: Run specs
+          command: bundle exec rspec
+
+# -------------------------=== JOBS ===------------------------- #
+jobs:
+  run_tests:
+    executor:
+      name: default
+    steps:
+        - get_code
+        - install_ruby
+        - setup_test_db
+        - run_tests
+
+# -------------------------=== WORKFLOWS ===------------------------- #
+workflows:
+  say-hello-workflow:
+    jobs:
+      - run_tests
