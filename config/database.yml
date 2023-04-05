@@ -12,6 +12,8 @@ development:
 test:
   <<: *default
   database: democratifyAPI_test
+  port: <%= ENV['DEMOCRATIFYAPI_DATABASE_PORT'] %>
+  host: <%= ENV['DEMOCRATIFYAPI_DATABASE_HOSTNAME'] %>
 
 production:
   <<: *default
@@ -21,8 +23,3 @@ production:
   host: <%= ENV['DEMOCRATIFYAPI_DATABASE_HOSTNAME'] %>
   port: <%= ENV['DEMOCRATIFYAPI_DATABASE_PORT'] %>
   pool: <%= ENV['DB_POOL'] || ENV['RAILS_MAX_THREADS'] || 5 %>
-
-ci:
-  <<: *default
-  port: <%= ENV['DEMOCRATIFYAPI_DATABASE_PORT'] %>
-  host: <%= ENV['DEMOCRATIFYAPI_DATABASE_HOSTNAME'] %>
