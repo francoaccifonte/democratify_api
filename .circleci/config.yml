@@ -56,7 +56,7 @@ commands:
           command: cp config/database.yml.ci config/database.yml
       - run:
           name: Create DB and migrate
-          command: bundle exec rails db:create db:schema:load -e test
+          command: RAILS_ENV=test bundle exec rails db:create db:schema:load
 
   run_tests:
     steps:
