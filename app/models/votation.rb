@@ -79,7 +79,7 @@ class Votation < ApplicationRecord
     self.in_progress = !queued
   end
 
-  def set_timestamps(current_time: Time.zone.now)
+  def set_timestamps(current_time: Time.zone.now) # rubocop:disable Metrics/AbcSize
     self.scheduled_end_at = current_time
     self.scheduled_start_at = current_time
     self.scheduled_start_for ||= current_time

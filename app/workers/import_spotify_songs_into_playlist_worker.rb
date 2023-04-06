@@ -5,7 +5,7 @@ class ImportSpotifySongsIntoPlaylistWorker
   sidekiq_options queue: :spotify_import
 
   # TODO: remove songs if they were removed from the spotfify playlist (from the api response)
-  def perform(playlist_id)
+  def perform(playlist_id) # rubocop:disable Metrics/AbcSize
     playlist = SpotifyPlaylist.find(playlist_id)
 
     client = playlist.spotify_user.client

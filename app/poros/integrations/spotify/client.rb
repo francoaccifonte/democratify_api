@@ -33,9 +33,7 @@ module Spotify
       return if response.success?
 
       case response.code
-      when 401
-        Rails.logger.debug response.body
-      when 404
+      when 401, 404
         Rails.logger.debug response.body
       end
 

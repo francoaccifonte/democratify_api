@@ -6,6 +6,7 @@ module Spotify
       attr_reader :response, :message
 
       def initialize(message, response)
+        super(message)
         @message = message
         @response = response
       end

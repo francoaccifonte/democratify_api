@@ -4,10 +4,13 @@ class VotationTransitionWorker
   include Sidekiq::Worker
   sidekiq_options queue: :spotify_ongoing_playlist_sync
 
-  def perform(ongoing_playlist_id)
+  def perform(ongoing_playlist_id) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     @playlist = OngoingPlaylist.find(ongoing_playlist_id)
     current_votation = @playlist.votations.in_progress.first
-    queued_votation = @playlist.votations.queued.first
+
+    # No idea why, but a spec fails without this line: rspec ./spec/workers/votation_transition_worker_spec.rb:37
+    @playlist.votations.queued.first
+
     winner_candidate = current_votation.winner
 
     ActiveRecord::Base.transaction do
