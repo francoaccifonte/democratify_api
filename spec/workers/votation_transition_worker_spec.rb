@@ -6,6 +6,8 @@ RSpec.describe VotationTransitionWorker, type: :worker do
   context 'when ending a votation' do
     subject { described_class.new.perform(ongoing_playlist.id) }
 
+    before { mock_user(mock) }
+
     let!(:mock) { mocked_client }
     let!(:account) { create(:account) }
     let!(:user) { create(:spotify_user, account:) }
@@ -17,8 +19,6 @@ RSpec.describe VotationTransitionWorker, type: :worker do
              spotify_playlist: playlist)
     end
     let!(:candidates_before_tally) { ongoing_playlist.votations.first.spotify_playlist_songs }
-
-    before { mock_user(mock) }
 
     context 'when there is a winner,' do
       before do

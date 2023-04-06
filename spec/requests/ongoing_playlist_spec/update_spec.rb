@@ -6,6 +6,8 @@ RSpec.describe 'OngoingPlaylists' do
   describe 'PUT /ongoing_playlists' do
     subject { put(ongoing_playlist_path(ongoing_playlist.id), params:, headers: auth_headers) }
 
+    before { mock_user(mock) }
+
     include_context 'with mocked spotify client'
     let!(:mock) { mocked_client }
     let!(:account) { create(:account) }
@@ -18,8 +20,6 @@ RSpec.describe 'OngoingPlaylists' do
              spotify_playlist: playlist)
     end
     let(:auth_headers) { { Authorization: "Bearer #{account.token}" } }
-
-    before { mock_user(mock) }
 
     shared_examples_for 'returns no content' do
       it 'has status code no content' do
