@@ -97,3 +97,4 @@ workflows:
   say-hello-workflow:
     jobs:
       - run_tests
+      - rubocop
