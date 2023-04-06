@@ -58,8 +58,9 @@ RSpec.describe OngoingPlaylist do
     end
 
     it 'calls the initial votation worker' do
-      expect_any_instance_of(InitialVotationStartWorker).to receive(:perform).once
+      allow(InitialVotationStartWorker).to receive(:new).and_call_original
       subject
+      expect(InitialVotationStartWorker).to have_received(:new).once
     end
   end
 end
