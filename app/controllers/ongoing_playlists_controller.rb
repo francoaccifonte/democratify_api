@@ -4,11 +4,8 @@ class OngoingPlaylistsController < ApplicationController
   before_action :authenticate!
   before_action :set_ongoing_playlist, only: %i[index update destroy create]
 
-  def update
-    ActiveRecord::Base.transaction do
-      @ongoing_playlist.update!(update_params)
-      @ongoing_playlist.reorder_songs(song_order) if song_order
-    end
+  def index
+    render_one @ongoing_playlist
   end
 
   def create
@@ -18,8 +15,11 @@ class OngoingPlaylistsController < ApplicationController
     render_one ongoing_playlist
   end
 
-  def index
-    render_one @ongoing_playlist
+  def update
+    ActiveRecord::Base.transaction do
+      @ongoing_playlist.update!(update_params)
+      @ongoing_playlist.reorder_songs(song_order) if song_order
+    end
   end
 
   def destroy
@@ -32,7 +32,7 @@ class OngoingPlaylistsController < ApplicationController
   def creation_params
     {
       account: @current_account,
-      spotify_playlist: spotify_playlist,
+      spotify_playlist:,
       playing_song_id: playing_song&.id
     }
   end
@@ -46,9 +46,7 @@ class OngoingPlaylistsController < ApplicationController
   end
 
   def playing_song
-    @playing_song ||= if params.permit(:playing_song_id).present?
-                        spotify_playlist.spotify_playlist_songs.find(params.require(:playing_song_id))
-                      end
+    @playing_song ||= (spotify_playlist.spotify_playlist_songs.find(params.require(:playing_song_id)) if params.permit(:playing_song_id).present?)
   end
 
   def update_params

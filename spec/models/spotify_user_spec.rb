@@ -27,13 +27,13 @@
 #
 require 'rails_helper'
 
-RSpec.describe SpotifyUser, type: :model do
+RSpec.describe SpotifyUser do
   include_context 'with mocked spotify client'
 
   context 'when a user is created' do
-    before { mock_user }
-
     subject { create(:spotify_user) }
+
+    before { mock_user }
 
     it 'enqueues an import job' do
       subject
@@ -42,12 +42,10 @@ RSpec.describe SpotifyUser, type: :model do
   end
 
   context 'when token is expired' do
+    subject { create(:spotify_user, access_token_expires_at: 1.day.ago) }
+
     before { mock_user }
 
-    subject { create(:spotify_user, access_token_expires_at: Time.zone.now - 1.days) }
-
-    it 'refreshes the token' do
-      
-    end
+    xit 'refreshes the token'
   end
 end

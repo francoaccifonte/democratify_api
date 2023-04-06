@@ -1,0 +1,44 @@
+inherit_from: .rubocop_todo.yml
+
+require: 
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - vendor/bundle/**/*
+    - 'config/environments/development.rb'
+    - 'config/environments/production.rb'
+    - 'lib/tasks/auto_annotate_models.rake'
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
+    - 'db/seeds.rb'
+    - 'db/migrate/20211026024345_create_spotify_users.rb'
+    - 'db/migrate/20211031201456_create_spotify_songs.rb'
+    - 'db/migrate/20211122222934_create_votations.rb'
+    - 'db/migrate/20211222234035_change_ongoing_playlist_current_song.rb'
+    - 'db/migrate/20220103142044_change_spotify_playlist_index.rb'
+    - 'db/schema.rb'
+
+Style/Documentation:
+  Enabled: false
+
+# I personally don't like the following ones:
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/LetSetup:
+  Enabled: false
+
+# This one makes no sense to me. I want a record save to fail if one of the fields is missing, putting a default is idiotic
+Rails/NotNullColumn:
+  Enabled: false
+
+# Another silly one: "use a limited ammount of lets just because"
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+# It's a hugh effort to fix all this offenses right now, id rather turn it off and fix them when i have a strategy
+RSpec/PendingWithoutReason:
+  Enabled: false

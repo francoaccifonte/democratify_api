@@ -7,19 +7,19 @@ module Spotify
     SUPPORTED_METHODS = %i[get post put delete].freeze
 
     def get(url, query_params: nil, body: nil, headers: {})
-      http_request(url, :get, query_params: query_params, body: body, headers: headers)
+      http_request(url, :get, query_params:, body:, headers:)
     end
 
     def post(url, query_params: nil, body: nil, headers: {})
-      http_request(url, :post, query_params: query_params, body: body, headers: headers)
+      http_request(url, :post, query_params:, body:, headers:)
     end
 
     def put(url, query_params: nil, body: nil, headers: {})
-      http_request(url, :put, query_params: query_params, body: body, headers: headers)
+      http_request(url, :put, query_params:, body:, headers:)
     end
 
     def delete(url, query_params: nil, body: nil, headers: {})
-      http_request(url, :delete, query_params: query_params, body: body, headers: headers)
+      http_request(url, :delete, query_params:, body:, headers:)
     end
 
     private
@@ -30,8 +30,8 @@ module Spotify
 
       request = Typhoeus::Request.new(
         url,
-        method: method,
-        body: body,
+        method:,
+        body:,
         params: query_params,
         headers: default_headers.merge(headers.deep_stringify_keys)
       )

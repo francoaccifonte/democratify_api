@@ -3,9 +3,9 @@ module AuthenticationConcern
 
   def authenticate!
     token = parse_authentication_token!
-    @current_account = Account.find_by!(token: token)
+    @current_account = Account.find_by!(token:)
   rescue ActiveRecord::RecordNotFound
-    raise AuthenticationError.new(type: :invalid_token, token: token)
+    raise AuthenticationError.new(type: :invalid_token, token:)
   end
 
   def parse_authentication_token!

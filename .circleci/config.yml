@@ -1,7 +1,7 @@
 version: 2.1
 
 executors:
-  default:
+  with_db_and_redis:
     resource_class: small
     docker:
       - image: cimg/ruby:3.2.1
@@ -9,6 +9,10 @@ executors:
       - image: cimg/postgres:14.0
         environment:
           POSTGRES_USER: postgres
+  just_ruby:
+    resource_class: small
+    docker:
+      - image: cimg/ruby:3.2.1
 
 # -------------------------=== COMMANDS ===------------------------- #
 commands:
@@ -64,19 +68,33 @@ commands:
           name: Run specs
           command: bundle exec rspec
 
+  run_rubocop:
+    steps:
+      - run:
+          name: Run rubocop
+          command: bundle exec rubocop
+
 # -------------------------=== JOBS ===------------------------- #
 jobs:
   run_tests:
     executor:
-      name: default
+      name: with_db_and_redis
     steps:
         - get_code
         - install_ruby
         - setup_test_db
         - run_tests
+  rubocop:
+    executor:
+      name: just_ruby
+    steps:
+        - get_code
+        - install_ruby
+        - run_rubocop
 
 # -------------------------=== WORKFLOWS ===------------------------- #
 workflows:
   say-hello-workflow:
     jobs:
       - run_tests
+      - rubocop

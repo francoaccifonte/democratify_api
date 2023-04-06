@@ -25,25 +25,25 @@
 #
 require 'rails_helper'
 
-RSpec.describe OngoingPlaylist, type: :model do
+RSpec.describe OngoingPlaylist do
   include_context 'with mocked spotify client'
 
   context 'when all is correct,' do
+    subject do
+      create(:ongoing_playlist,
+             account:,
+             spotify_playlist: playlist)
+    end
+
     before do
       mock_user
     end
 
     let!(:account) { create(:account) }
-    let!(:user) { create(:spotify_user, account: account) }
+    let!(:user) { create(:spotify_user, account:) }
 
     let!(:songs) { create_list(:spotify_playlist_song, 10, spotify_playlist: playlist) }
-    let!(:playlist) { create(:spotify_playlist, account: account, spotify_user: user) }
-
-    subject do
-      create(:ongoing_playlist,
-             account: account,
-             spotify_playlist: playlist)
-    end
+    let!(:playlist) { create(:spotify_playlist, account:, spotify_user: user) }
 
     it 'is valid' do
       expect(subject).to be_valid
@@ -58,8 +58,9 @@ RSpec.describe OngoingPlaylist, type: :model do
     end
 
     it 'calls the initial votation worker' do
-      expect_any_instance_of(InitialVotationStartWorker).to receive(:perform).once
+      allow(InitialVotationStartWorker).to receive(:new).and_call_original
       subject
+      expect(InitialVotationStartWorker).to have_received(:new).once
     end
   end
 end

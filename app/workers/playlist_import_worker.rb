@@ -2,7 +2,7 @@ class PlaylistImportWorker
   include Sidekiq::Worker
   sidekiq_options queue: :spotify_import
 
-  def perform(user_id)
+  def perform(user_id) # rubocop:disable Metrics/AbcSize
     user = SpotifyUser.find(user_id)
 
     user.playlists.fetch(:items).each do |api_playlist|
@@ -15,7 +15,7 @@ class PlaylistImportWorker
         external_id: api_playlist.fetch(:id),
         name: api_playlist.fetch(:name),
         description: api_playlist.fetch(:description),
-        cover_art_url: cover_art,
+        cover_art_url: cover_art
       )
     end
   end

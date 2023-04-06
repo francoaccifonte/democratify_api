@@ -33,7 +33,7 @@ class Votation < ApplicationRecord
   belongs_to :account
   belongs_to :ongoing_playlist
 
-  has_many :votation_candidates, dependent: :destroy, foreign_key: :votation_id
+  has_many :votation_candidates, dependent: :destroy
   has_many :spotify_playlist_songs, through: :votation_candidates
   has_many :spotify_songs, through: :spotify_playlist_songs
 
@@ -61,9 +61,9 @@ class Votation < ApplicationRecord
   def set_candidates
     next_votation_songs.each do |spotify_playlist_song|
       votation_candidates.create!(
-        spotify_playlist_song: spotify_playlist_song,
-        account: account,
-        ongoing_playlist: ongoing_playlist
+        spotify_playlist_song:,
+        account:,
+        ongoing_playlist:
       )
     end
   end
@@ -79,7 +79,7 @@ class Votation < ApplicationRecord
     self.in_progress = !queued
   end
 
-  def set_timestamps(current_time: Time.zone.now)
+  def set_timestamps(current_time: Time.zone.now) # rubocop:disable Metrics/AbcSize
     self.scheduled_end_at = current_time
     self.scheduled_start_at = current_time
     self.scheduled_start_for ||= current_time

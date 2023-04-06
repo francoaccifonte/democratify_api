@@ -40,7 +40,5 @@ class OngoingPlaylistSerializer < Panko::Serializer
     object.votations.in_progress
   end
 
-  def remaining_songs
-    object.remaining_songs
-  end
+  delegate :remaining_songs, to: :object
 end

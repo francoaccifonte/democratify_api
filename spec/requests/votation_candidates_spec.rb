@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "VotationCandidates", type: :request do
+RSpec.describe "VotationCandidates" do
   describe "GET /index" do
     pending "add some examples (or delete) #{__FILE__}"
   end

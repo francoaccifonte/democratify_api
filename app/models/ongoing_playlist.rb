@@ -86,7 +86,7 @@ class OngoingPlaylist < ApplicationRecord
   private
 
   def playing_song_is_in_playlist
-    return unless playing_song.present?
+    return if playing_song.blank?
     return if spotify_playlist_songs.exists?(playing_song.id)
 
     errors.add(:playing_song, 'is not in the playlist')

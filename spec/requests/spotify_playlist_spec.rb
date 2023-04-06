@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "SpotifyPlaylists", type: :request do
+RSpec.describe "SpotifyPlaylists" do
   describe "GET /index" do
     pending "add some examples (or delete) #{__FILE__}"
   end
