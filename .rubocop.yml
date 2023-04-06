@@ -21,6 +21,7 @@ AllCops:
     - 'db/migrate/20220103142044_change_spotify_playlist_index.rb'
     - 'db/schema.rb'
     - 'config/initializers/new_framework_defaults_7_0.rb'
+    - 'bin/bundle'
 
 Style/Documentation:
   Enabled: false

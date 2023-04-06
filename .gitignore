@@ -18,15 +18,21 @@
 !/tmp/pids/
 !/tmp/pids/.keep
 
-.byebug_history
-.solargraph.yml
+# Ignore uploaded files in development.
+/storage/*
+!/storage/.keep
+/tmp/storage/*
+!/tmp/storage/
+!/tmp/storage/.keep
+
+/public/assets
 
 # Ignore master key for decrypting credentials and more.
-# /config/master.key
 
-/storage
-.env
-/vendor
-/coverage
-
+/public/packs
+/public/packs-test
 /node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+/coverage
