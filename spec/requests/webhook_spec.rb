@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Webhooks', type: :request do
+RSpec.describe 'Webhooks' do
   include_context 'with mocked spotify client'
 
   describe 'GET /index' do
     subject do
-      get('/spotify_login', params: params)
+      get('/spotify_login', params:)
     end
 
     let(:params) { nil }
@@ -37,7 +37,7 @@ RSpec.describe 'Webhooks', type: :request do
       before { mock_user(mock) }
 
       it 'creates the spotify user' do
-        expect { subject }.to change { SpotifyUser.count }.by(1)
+        expect { subject }.to change(SpotifyUser, :count).by(1)
       end
     end
   end

@@ -28,12 +28,12 @@
 FactoryBot.define do
   factory :spotify_user do
     access_token { Faker::Lorem.characters(number: 50) }
-    access_token_expires_at { Time.zone.now + 30.minutes }
+    access_token_expires_at { 30.minutes.from_now }
     email { Faker::Internet.email }
     href { Faker::Internet.url }
     name { Faker::Name.name }
     refresh_token { Faker::Lorem.characters(number: 50) }
-    scope { 'playlist-read-private playlist-read-collaborative user-modify-playback-state user-read-playback-state user-read-currently-playing user-read-email'}
+    scope { 'playlist-read-private playlist-read-collaborative user-modify-playback-state user-read-playback-state user-read-currently-playing user-read-email' }
     uri { Faker::Internet.url }
     spotify_id { Faker::Number.number(digits: 10).to_s }
 

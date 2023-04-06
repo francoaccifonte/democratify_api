@@ -23,6 +23,6 @@
 #
 require 'rails_helper'
 
-RSpec.describe SpotifyPlaylistSong, type: :model do
+RSpec.describe SpotifyPlaylistSong do
   pending "add some examples to (or delete) #{__FILE__}"
 end

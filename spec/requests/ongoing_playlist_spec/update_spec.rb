@@ -45,7 +45,7 @@ RSpec.describe 'OngoingPlaylists', type: :request do
         {
           spotify_playlist_songs:
           ongoing_playlist.spotify_playlist_songs.pluck(:id).shuffle.each_with_index.map do |id, index|
-            { id: id, index: index }
+            { id:, index: }
           end
         }
       end

@@ -35,8 +35,8 @@ class SpotifyUser < ApplicationRecord
 
   after_create :import_playlists
 
-  def self.authorize_and_create(account_id:, code:)
-    new_user = new(account_id: account_id)
+  def self.authorize_and_create(account_id:, code:) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    new_user = new(account_id:)
     new_user.spotify_client.login_token = code
     auth_response = new_user.spotify_client.authorize
     new_user.access_token = auth_response[:access_token]
@@ -57,7 +57,8 @@ class SpotifyUser < ApplicationRecord
     new_user.save!
   end
 
-  def client # TODO: remove this method and keep spotify_client
+  # TODO: remove this method and keep spotify_client
+  def client
     @client ||= Spotify::Client.new(user: self)
     refresh_access_token
     @client
@@ -82,7 +83,7 @@ class SpotifyUser < ApplicationRecord
   def access_token_expired?
     return false unless access_token_expires_at
 
-    access_token_expires_at < Time.now - 5.minutes
+    access_token_expires_at < 5.minutes.ago
   end
 
   private
@@ -91,7 +92,7 @@ class SpotifyUser < ApplicationRecord
     response = @client.refresh_access_token!
 
     self.access_token = response.fetch(:access_token)
-    self.access_token_expires_at = Time.now + response.fetch(:expires_in).seconds
+    self.access_token_expires_at = Time.zone.now + response.fetch(:expires_in).seconds
     save!
   end
 

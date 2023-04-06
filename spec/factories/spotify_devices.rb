@@ -24,6 +24,6 @@
 #
 FactoryBot.define do
   factory :spotify_device do
-    
+    pending
   end
 end
