@@ -125,9 +125,6 @@ GEM
     importmap-rails (1.1.5)
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
-    jbuilder (2.11.5)
-      actionview (>= 5.0.0)
-      activesupport (>= 5.0.0)
     json (2.6.3)
     listen (3.8.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -326,7 +323,6 @@ DEPENDENCIES
   factory_bot_rails
   faker
   importmap-rails
-  jbuilder
   listen (~> 3.3)
   panko_serializer
   pg (~> 1.1)
