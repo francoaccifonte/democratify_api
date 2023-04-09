@@ -1,4 +1,4 @@
-class AccountsController < ApplicationController
+class ApiController < ApplicationController
   before_action :authenticate!, only: %i[me]
 
   def me

@@ -1,5 +1,2 @@
-class ApplicationController < ActionController::API
-  include SerializationConcern
-  include AuthenticationConcern
-  include ErrorHandlingConcern
+class ApplicationController < ActionController::Base
 end
