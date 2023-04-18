@@ -1,5 +1,6 @@
 version: 2.1
-
+orbs:
+  node: circleci/node@5.1.0
 executors:
   with_db_and_redis:
     resource_class: small
@@ -51,7 +52,16 @@ commands:
       - run:
           name: Install gems
           command: bundle install --path vendor/bundle
+      - store_artifacts:
+          path: ./Gemfile.lock
       - cache_gems
+
+  install_node:
+    steps:
+      - node/install:
+          install-yarn: true
+          node-version: '16.14.2'
+      - run: yarn install
 
   setup_test_db:
     steps:

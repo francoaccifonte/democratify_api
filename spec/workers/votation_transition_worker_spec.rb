@@ -34,7 +34,7 @@ RSpec.describe VotationTransitionWorker, type: :worker do
         subject
       end
 
-      it 'updates the ongoing playlist with the winner' do
+      it 'FLAKY: updates the ongoing playlist with the winner' do
         expect { subject }.to change { ongoing_playlist.reload.playing_song_id }.to(winner.spotify_playlist_song.id)
       end
 
