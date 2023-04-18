@@ -1,4 +1,4 @@
-class SpotifyPlaylistsController < ApplicationController
+class SpotifyPlaylistsController < ApiController
   before_action :authenticate!, :set_playlists
   before_action :set_playlist, only: %i[update show]
 

@@ -1,5 +1,6 @@
 version: 2.1
-
+orbs:
+  node: circleci/node@16.4
 executors:
   with_db_and_redis:
     resource_class: small
