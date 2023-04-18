@@ -53,7 +53,7 @@ commands:
           name: Install gems
           command: bundle install --path vendor/bundle
       - store_artifacts:
-          ./Gemfile.lock
+          path: ./Gemfile.lock
       - cache_gems
 
   install_node:
