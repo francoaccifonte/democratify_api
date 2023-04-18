@@ -52,6 +52,8 @@ commands:
       - run:
           name: Install gems
           command: bundle install --path vendor/bundle
+      - store_artifacts:
+          ./Gemfile.lock
       - cache_gems
 
   install_node:
