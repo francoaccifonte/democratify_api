@@ -1,0 +1,22 @@
+<svg width="512" height="512" version="1.1" viewBox="0 0 135.47 135.47" xmlns="http://www.w3.org/2000/svg" xmlnscc="http://creativecommons.org/ns#" xmlnsdc="http://purl.org/dc/elements/1.1/" xmlnsrdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <defs>
+  <filter id="filter875" x="-.00012561" y="-7.9271e-5" width="1.0003" height="1.0002" style="color-interpolation-filters:sRGB">
+   <feGaussianBlur stdDeviation="0.004474385"/>
+  </filter>
+  <clipPath id="clipPath897">
+   <path d="m135.47 135.47v-135.47h-67.733c-30.469 16.303-15.769 51.163 0 67.733s30.201 50.628 0 67.733z" style="fill:#00f;filter:url(#filter875);stroke-width:.26458px;stroke:#00f"/>
+  </clipPath>
+ </defs>
+ <metadata>
+  <rdfRDF>
+   <ccWork rdfabout="">
+    <dcFormat>image/svg+xml</dcFormat>
+    <dcType rdfresource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dcTitle/>
+   </ccWork>
+  </rdfRDF>
+ </metadata>
+ <rect x=".44703" y=".44703" width="134.57" height="134.57" ry="13.229" style="fill:#00f;stroke-width:.89406;stroke:#00f"/>
+ <rect x="9.082e-7" y="9.082e-7" width="135.47" height="135.47" ry="13.229" clip-path="url(#clipPath897)" style="fill:#f0f;stroke-width:.9"/>
+ <path transform="matrix(.96565 0 0 .96936 2.9749 1.2712)" d="m101.55 68.688-60.745 34.536 0.46292-69.874z" style="fill:#fff"/>
+</svg>
