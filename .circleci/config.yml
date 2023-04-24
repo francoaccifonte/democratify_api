@@ -92,6 +92,7 @@ jobs:
     steps:
         - get_code
         - install_ruby
+        - install_node
         - setup_test_db
         - run_tests
   rubocop:
