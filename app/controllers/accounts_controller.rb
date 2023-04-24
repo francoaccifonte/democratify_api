@@ -1,23 +1,19 @@
-class AccountsController < ApiController
+class AccountsController < ApplicationController
   before_action :authenticate!, only: %i[me]
 
-  def me
-    render_one @current_account
-  end
-
   def login
-    @account = Account.find_by!(login_params)
-    @account.authenticate!(params.require(:password))
+    # @account = Account.find_by!(login_params)
+    # @account.authenticate!(params.require(:password))
 
-    render_one @account
+    # render_one @account
   end
 
   def signup
-    @account = Account.new(signup_params)
-    @account.password = params.require(:password)
-    @account.save!
+    # @account = Account.new(signup_params)
+    # @account.password = params.require(:password)
+    # @account.save!
 
-    render_one @account
+    # render_one @account
   end
 
   private
