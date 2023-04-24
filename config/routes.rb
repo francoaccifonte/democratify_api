@@ -6,6 +6,7 @@ Sidekiq::Web.use ActionDispatch::Cookies
 Sidekiq::Web.use ActionDispatch::Session::CookieStore, key: '_interslice_session'
 
 Rails.application.routes.draw do
+  root 'welcome#index'
   mount Sidekiq::Web => '/sidekiq'
 
   post '/accounts/login', to: 'accounts#login'

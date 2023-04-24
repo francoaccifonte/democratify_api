@@ -13,3 +13,19 @@
  *= require_tree .
  *= require_self
  */
+
+.mainBody {
+  margin: 0px;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 400;
+  src: url('/assets/Poppins-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: local('Poppins-Semi-Bold'), url('/assets/Poppins-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+}

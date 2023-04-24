@@ -43,6 +43,20 @@ commands:
             - vendor/bundle
           key: $CACHE_VERSION-ruby-gems-{{ checksum "Gemfile.lock" }}
 
+  restore_node_modules:
+    steps:
+      - restore_cache:
+          name: Restore saved node modules
+          key: $CACHE_VERSION-node-modules-{{ checksum "yarn.lock" }}
+
+  cache_node_modules:
+    steps:
+      - save_cache:
+          name: Saving installed node modules
+          paths:
+            - ./node_modules
+          key: $CACHE_VERSION-node-modules-{{ checksum "yarn.lock" }}
+
   install_ruby:
     steps:
       - restore_gems
@@ -58,10 +72,14 @@ commands:
 
   install_node:
     steps:
+      - restore_node_modules
       - node/install:
           install-yarn: true
           node-version: '16.14.2'
       - run: yarn install
+      - store_artifacts:
+          path: ./yarn.lock
+      - cache_node_modules
 
   setup_test_db:
     steps:
@@ -92,6 +110,7 @@ jobs:
     steps:
         - get_code
         - install_ruby
+        - install_node
         - setup_test_db
         - run_tests
   rubocop:
