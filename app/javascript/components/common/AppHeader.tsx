@@ -25,8 +25,8 @@ const AppHeader = (props: HeaderProps) => {
   const LogInButtons = () => {
     return (
       <>
-        <Text type="link" color="White" className="pe-5" href="/login">Entrar</Text>
-        <Text type="link" color="White" href="/signup">Registrarse</Text>
+        <Text type="link" color="White" className="pe-5" href="/accounts/login">Entrar</Text>
+        <Text type="link" color="White" href="/accounts/signup">Registrarse</Text>
       </>
     )
   }
