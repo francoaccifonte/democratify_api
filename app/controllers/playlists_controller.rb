@@ -1,4 +1,4 @@
-class PlaylistsController < ApiController
+class PlaylistsController < Api::ApiController
   def index
     @playlists = Playlist.where(account_id: params.require(:account_id))
   end

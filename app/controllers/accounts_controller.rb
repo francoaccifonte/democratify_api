@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  before_action :authenticate!, only: %i[me]
+  # before_action :authenticate!, only: %i[me]
 
   def login
     # @account = Account.find_by!(login_params)
@@ -8,12 +8,14 @@ class AccountsController < ApplicationController
     # render_one @account
   end
 
-  def signup
-    # @account = Account.new(signup_params)
-    # @account.password = params.require(:password)
-    # @account.save!
+  def signup; end
 
-    # render_one @account
+  def signup_form
+    @account = Account.new(signup_params)
+    @account.password = params.require(:password)
+    @account.save!
+
+    render_one @account
   end
 
   private

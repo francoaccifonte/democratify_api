@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class VotationsController < ApiController
+class VotationsController < Api::ApiController
   before_action :set_votation, only: %i[show vote]
 
   def show

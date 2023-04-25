@@ -27,7 +27,8 @@ module DemocratifyAPI
 
     config.autoload_paths << Rails.root.join('app/poros/integrations')
     config.autoload_paths << Rails.root.join('app/models/concerns')
+    # config.autoload_paths << Rails.root.join('app/controllers/api')
 
-    config.assets.paths << Rails.root.join("app/assets/fonts")
+    config.assets.paths << Rails.root.join('app/assets/fonts')
   end
 end

@@ -1,2 +1,2 @@
-class SpotifySongsController < ApiController
+class SpotifySongsController < Api::ApiController
 end
