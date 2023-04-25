@@ -1,8 +1,9 @@
 import ReactOnRails from 'react-on-rails';
 
-import { HomeHoc, SignupHoc } from '../components/views';
+import { HomeHoc, SignupHoc, LoginViewHoc } from '../components/views';
 
 ReactOnRails.register({
   HomeHoc,
-  SignupHoc
+  SignupHoc,
+  LoginViewHoc
 });

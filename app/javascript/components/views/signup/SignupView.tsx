@@ -31,12 +31,4 @@ const SignupView = () => {
   )
 }
 
-const styles = (theme: any) => {
-  return {
-    farafa: {
-      backgroundColor: theme.Primary
-    }
-  }
-}
-
 export default SignupView

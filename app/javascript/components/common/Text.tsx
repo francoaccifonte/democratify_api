@@ -81,7 +81,7 @@ const Text = (props: TextProps) => {
   style.color = props.color
 
   if (props.type == 'link') {
-    return <a className ={props.className} style={style} onClick={props.onClick} href={props.href}>{props.children}</a>
+    return <span className ={props.className} style={style} onClick={() => window.location.href = props.href} >{props.children}</span>
   } else {
     return <span className ={props.className} style={style} onClick={props.onClick}>{props.children}</span>
   }

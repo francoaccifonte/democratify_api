@@ -54,6 +54,7 @@ type SignupCardProps = {
 
 const SignupCard = (props: SignupCardProps) => {
   const { classes } = props
+  const [requestState, setRequestState] = useState<'idle' | 'pending' | 'fulfilled' | 'rejected'>('idle')
 
   const [userValue, setUserValue] = useState<string>('')
   const handleUserChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,20 +85,25 @@ const SignupCard = (props: SignupCardProps) => {
     return true
   }
   const isDataValid = () => {
-    // if (!validPassword()) { return false }
-    // if (!emailValue.includes('@')) { return false }
+    if (!validPassword()) { return false }
+    if (!emailValue.includes('@')) { return false }
 
     return true
   }
   const handleSubmit = async (event: any) => {
     event.preventDefault()
     if (isDataValid()) {
+      setRequestState('pending')
       const {status, body} = await client.account.signUp(emailValue, passwordValue, userValue)
 
       if (status == 200) {
+        setRequestState('fulfilled')
         props.successfulSignupCallback()
-      }
+      } else { setRequestState('rejected') }
     }
+  }
+  const disableButton = ():boolean => {
+    return !isDataValid() || requestState !== 'idle'
   }
 
   return (
@@ -128,12 +134,13 @@ const SignupCard = (props: SignupCardProps) => {
           </form>
           </Card.Body>
           <Card.Body className="text-center">
-            <Button className={classes.submitButton} onClick={handleSubmit} disabled={false}>
-              <LoadingSpinner />
+            <Button className={classes.submitButton} onClick={handleSubmit} disabled={disableButton()}>
+              {requestState === 'idle' && <Text type="title" color="Black">Enviar</Text>}
+              {requestState !== 'idle' && <LoadingSpinner />}
             </Button>
             <br />
             <Text type="bodyRegular" color="White">Ya tenes cuenta? </Text>
-            <Text type="link" color="White" href="/account/login">Entrar</Text>
+            <Text type="link" color="White" href="/accounts/login">Entrar</Text>
           </Card.Body>
         </Card>
     </Container>
