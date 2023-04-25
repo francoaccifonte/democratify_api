@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   get '/accounts/login', to: 'accounts#login'
   get '/accounts/signup', to: 'accounts#signup'
-  post '/accounts/signup', to: 'accounts#signup_form'
+  post '/accounts/signup', to: 'api/accounts#signup'
   get '/accounts/me', to: 'accounts#me'
   get '/spotify_login', to: 'webhook#spotify_login'
 

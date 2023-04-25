@@ -1,24 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { FullHeightSkeleton } from '../../common/'
 import { SignupCard, SignupSuccessCard } from '.'
 
 const SignupView = () => {
+  const [signupStatus, setSignupStatus] = useState('pending')
 
   const Content = () => {
-    // switch (signUpState) {
-    //   case 'idle':
-    //   case 'pending':
-    //     return <SignupCard />
-    //   case 'fulfilled':
-    //     return <SignupSuccessCard />
-    //   case 'rejected':
-    //     return <></>
-    //     // TODO: Show error message
-    //   default:
-    //     return <></>
-    // }
-    return <SignupCard />
+    switch (signupStatus) {
+      case 'idle':
+      case 'pending':
+        return <SignupCard successfulSignupCallback={() => setSignupStatus('fulfilled')} />
+      case 'fulfilled':
+        return <SignupSuccessCard />
+      case 'rejected':
+        return <></>
+        // TODO: Show error message
+      default:
+        return <></>
+    }
   }
   return (
     <FullHeightSkeleton header palette='admin' overflowY="hidden">

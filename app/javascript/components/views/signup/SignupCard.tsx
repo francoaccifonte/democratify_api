@@ -5,9 +5,9 @@ import Button from 'react-bootstrap/Button'
 import withStyles from 'react-jss'
 
 import { LoadingSpinner, Text } from '../../common/'
+import client from '../../../requests/'
 
 const styles = (theme: any) => {
-  console.log(theme)
   return {
     container: {
       width: '380px'
@@ -47,7 +47,10 @@ const styles = (theme: any) => {
   }
 }
 
-type SignupCardProps = { classes: any };
+type SignupCardProps = {
+  classes: any;
+  successfulSignupCallback: Function;
+};
 
 const SignupCard = (props: SignupCardProps) => {
   const { classes } = props
@@ -81,15 +84,19 @@ const SignupCard = (props: SignupCardProps) => {
     return true
   }
   const isDataValid = () => {
-    if (!validPassword()) { return false }
-    if (!emailValue.includes('@')) { return false }
+    // if (!validPassword()) { return false }
+    // if (!emailValue.includes('@')) { return false }
 
     return true
   }
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault()
     if (isDataValid()) {
-      // signUp({ email: emailValue, password: passwordValue, name: userValue })
+      const {status, body} = await client.account.signUp(emailValue, passwordValue, userValue)
+
+      if (status == 200) {
+        props.successfulSignupCallback()
+      }
     }
   }
 
