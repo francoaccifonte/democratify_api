@@ -7,7 +7,7 @@ RSpec.describe 'Webhooks' do
 
   describe 'GET /index' do
     subject do
-      get('/spotify_login', params:)
+      get(api_spotify_login_path, params:)
     end
 
     let(:params) { nil }
