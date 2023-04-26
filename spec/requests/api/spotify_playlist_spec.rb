@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Votations" do
+RSpec.describe Api::SpotifyPlaylistsController do
   describe "GET /index" do
     pending "add some examples (or delete) #{__FILE__}"
   end

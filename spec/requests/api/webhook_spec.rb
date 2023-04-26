@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Webhooks' do
+RSpec.describe Api::WebhookController do
   include_context 'with mocked spotify client'
 
   describe 'GET /index' do
     subject do
-      get('/spotify_login', params:)
+      get(api_spotify_login_path, params:)
     end
 
     let(:params) { nil }
