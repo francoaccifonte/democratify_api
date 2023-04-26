@@ -7,46 +7,6 @@ import withStyles from 'react-jss'
 import { LoadingSpinner, Text } from '../../common/'
 import client from '../../../requests/'
 
-const styles = (theme: any) => {
-  return {
-    container: {
-      width: '380px'
-    },
-    card: {
-      backgroundColor: theme.Muted,
-      padding: '28px',
-      borderRadius: '6px'
-    },
-    formInput: {
-      backgroundColor: theme.Muted,
-      border: 'none',
-      borderBottom: '1px solid white',
-      color: theme.White,
-      fontFamily: 'Poppins',
-      fontWeight: '400',
-      width: '100%',
-      '&:focus': {
-        outline: 'none',
-        borderBottom: `1px solid ${theme.Primary}`,
-        color: theme.Primary
-      }
-    },
-    formInputDanger: {
-      composes: '$formInput',
-      color: theme.Danger,
-      '&:focus': {
-        color: theme.Danger
-      }
-    },
-    submitButton: {
-      backgroundColor: theme.Info,
-      borderRadius: '12px',
-      border: 'none',
-      composes: 'px-5'
-    }
-  }
-}
-
 type SignupCardProps = {
   classes: any;
   successfulSignupCallback: Function;
@@ -145,6 +105,46 @@ const SignupCard = (props: SignupCardProps) => {
         </Card>
     </Container>
   )
+}
+
+const styles = (theme: any) => {
+  return {
+    container: {
+      width: '380px'
+    },
+    card: {
+      backgroundColor: theme.Muted,
+      padding: '28px',
+      borderRadius: '6px'
+    },
+    formInput: {
+      backgroundColor: theme.Muted,
+      border: 'none',
+      borderBottom: '1px solid white',
+      color: theme.White,
+      fontFamily: 'Poppins',
+      fontWeight: '400',
+      width: '100%',
+      '&:focus': {
+        outline: 'none',
+        borderBottom: `1px solid ${theme.Primary}`,
+        color: theme.Primary
+      }
+    },
+    formInputDanger: {
+      composes: '$formInput',
+      color: theme.Danger,
+      '&:focus': {
+        color: theme.Danger
+      }
+    },
+    submitButton: {
+      backgroundColor: theme.Info,
+      borderRadius: '12px',
+      border: 'none',
+      composes: 'px-5'
+    }
+  }
 }
 
 export default withStyles(styles)(SignupCard)

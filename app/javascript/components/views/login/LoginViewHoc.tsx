@@ -4,7 +4,7 @@ import withStyles, { ThemeProvider } from 'react-jss'
 import { LoginView } from './'
 import { adminPalette } from '../../ColorPalette'
 
-const HomeHoc = () => {
+const LoginViewHoc = () => {
   return (
     <ThemeProvider theme={adminPalette}>
       <LoginView />
@@ -12,4 +12,4 @@ const HomeHoc = () => {
   )
 }
 
-export default HomeHoc
+export default LoginViewHoc

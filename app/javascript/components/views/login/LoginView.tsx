@@ -11,8 +11,8 @@ type LogInViewProps = { classes: any };
 const LoginView = (props: LogInViewProps) => {
   const classes = props.classes
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
   const [logInState, setLogInState] = useState<'idle' | 'pending' | 'fulfilled' | 'rejected'>('idle')
 
   const handleLogIn = async (event: React.MouseEvent<HTMLInputElement>) => {

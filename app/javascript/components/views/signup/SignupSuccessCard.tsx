@@ -7,6 +7,26 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
 import { Text } from '../../common/'
 
+type SignupSuccessCardProps = { classes: any };
+
+const SignupSuccessCard = (props: SignupSuccessCardProps) => {
+  const classes = props.classes
+
+  return (
+    <Container className={classes.container}>
+      <Card className={classes.card}>
+        <Card.Body className="text-left">
+          <div className={classes.iconContainer}>
+            <FontAwesomeIcon icon={faCheckCircle} className={classes.icon}/>
+            <Text type="bodyCaption" color="White">¡Listo! Ya podes loguearte con tu cuenta.</Text>
+            <Text type="link" color="White" href="/accounts/login">Entrar</Text>
+          </div>
+        </Card.Body>
+      </Card>
+    </Container>
+  )
+}
+
 const styles = (theme: any) => {
   return {
     container: {
@@ -30,26 +50,6 @@ const styles = (theme: any) => {
       composes: 'mb-5'
     }
   }
-}
-
-type SignupSuccessCardProps = { classes: any };
-
-const SignupSuccessCard = (props: SignupSuccessCardProps) => {
-  const classes = props.classes
-
-  return (
-    <Container className={classes.container}>
-      <Card className={classes.card}>
-        <Card.Body className="text-left">
-          <div className={classes.iconContainer}>
-            <FontAwesomeIcon icon={faCheckCircle} className={classes.icon}/>
-            <Text type="bodyCaption" color="White">¡Listo! Ya podes loguearte con tu cuenta.</Text>
-            <Text type="link" color="White" href="/accounts/login">Entrar</Text>
-          </div>
-        </Card.Body>
-      </Card>
-    </Container>
-  )
 }
 
 export default withStyles(styles)(SignupSuccessCard)
