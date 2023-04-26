@@ -1,4 +1,5 @@
 export { default as Loading } from './Loading'
+export { default as LoadingSpinner } from './LoadingSpinner'
 export { default as Text } from './Text'
 // export { default as QR } from './qr'
 export { default as FullHeightSkeleton } from './FullHeightSkeleton'

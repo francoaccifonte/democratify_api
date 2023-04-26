@@ -9,8 +9,10 @@ Rails.application.routes.draw do
   root 'welcome#index'
   mount Sidekiq::Web => '/sidekiq'
 
-  post '/accounts/login', to: 'accounts#login'
-  post '/accounts/signup', to: 'accounts#signup'
+  get '/accounts/login', to: 'accounts#login'
+  get '/accounts/signup', to: 'accounts#signup'
+  post '/accounts/signup', to: 'api/accounts#signup'
+  post '/accounts/login', to: 'api/accounts#login'
   get '/accounts/me', to: 'accounts#me'
   get '/spotify_login', to: 'webhook#spotify_login'
 

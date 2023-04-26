@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class OngoingPlaylistsController < ApiController
+class OngoingPlaylistsController < Api::ApiController
   before_action :authenticate!
   before_action :set_ongoing_playlist, only: %i[index update destroy create]
 
