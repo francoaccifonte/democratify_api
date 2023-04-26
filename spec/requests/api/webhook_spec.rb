@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Webhooks' do
+RSpec.describe Api::WebhookController do
   include_context 'with mocked spotify client'
 
   describe 'GET /index' do

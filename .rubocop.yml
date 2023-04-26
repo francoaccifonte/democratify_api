@@ -23,6 +23,11 @@ AllCops:
     - 'config/initializers/new_framework_defaults_7_0.rb'
     - 'bin/*'
 
+# TODO: id like to have this one on, but not sure why it confuses requests with controllers
+RSpec/FilePath:
+  Exclude:
+    - 'spec/requests/api/**/*'
+
 Style/Documentation:
   Enabled: false
 

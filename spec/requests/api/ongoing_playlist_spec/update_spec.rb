@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'OngoingPlaylists' do
+RSpec.describe Api::OngoingPlaylistsController do
   describe 'PUT /ongoing_playlists' do
     subject { put(api_ongoing_playlist_path(ongoing_playlist.id), params:, headers: auth_headers) }
 
