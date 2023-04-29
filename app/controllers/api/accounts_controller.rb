@@ -9,6 +9,7 @@ module Api
     def login
       @account = Account.find_by!(login_params)
       @account.authenticate!(params.require(:password))
+      set_account_cookie
 
       render_one @account
     end
