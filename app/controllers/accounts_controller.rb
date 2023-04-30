@@ -17,7 +17,7 @@ class AccountsController < ApplicationController
     @account.authenticate!(params.require(:password))
     set_account_cookies
 
-    redirect_to root_path
+    redirect_to spotify_playlists_url
   rescue AuthenticationError => e
     @failed_auth = true
     redirect_to accounts_login_url

@@ -3,7 +3,7 @@ class SpotifyPlaylistsController < ApplicationController
 
   # GET /spotify_playlists
   def index
-    @spotify_playlists = SpotifyPlaylist.all
+    @spotify_playlists = @account.spotify_playlists.all
   end
 
   # GET /spotify_playlists/1
@@ -13,6 +13,6 @@ class SpotifyPlaylistsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_spotify_playlist
-    @spotify_playlist = SpotifyPlaylist.find(params[:id])
+    @spotify_playlist = @account.spotify_playlists.find(params[:id])
   end
 end
