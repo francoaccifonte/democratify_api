@@ -1,1 +1,7 @@
-<%= react_component("LoginViewHoc", prerender: false) %>
+<%= react_component(
+  "LoginViewHoc",
+  props: {
+    failedAuth: !!@failed_auth
+  },
+  prerender: false
+  ) %>

@@ -7,7 +7,10 @@ import withStyles from 'react-jss'
 import { FullHeightSkeleton, LoadingSpinner, Text } from '../../common'
 import client from '../../../requests'
 
-type LogInViewProps = { classes: any };
+type LogInViewProps = { 
+  classes: any;
+  failedAuth: Boolean
+};
 const LoginView = (props: LogInViewProps) => {
   const classes = props.classes
 
@@ -16,16 +19,7 @@ const LoginView = (props: LogInViewProps) => {
   const [logInState, setLogInState] = useState<'idle' | 'pending' | 'fulfilled' | 'rejected'>('idle')
 
   const handleLogIn = async (event: React.MouseEvent<HTMLInputElement>) => {
-    event.preventDefault()
-
     setLogInState('pending')
-    const { status, body } = await client.account.authenticate(email, password)
-    if (status === 200) {
-      setLogInState('fulfilled')
-      // TODO: redirect somewhere after 5 seconds or so
-    } else {
-      setLogInState('rejected')
-    }
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +37,7 @@ const LoginView = (props: LogInViewProps) => {
   }
 
   const ErrorMessage = () => {
-    if (logInState === 'rejected') return (<Text type="title" color="Danger">Usuario o contraseña incorrectos</Text>)
+    if (props.failedAuth) return (<Text type="title" color="Danger">Usuario o contraseña incorrectos</Text>)
     return null
   }
 
@@ -52,26 +46,26 @@ const LoginView = (props: LogInViewProps) => {
       <Container className={classes.container}>
         <Card className={classes.card}>
           <Card.Body className="text-left">
-            <form>
-              <input type="email" value={email} onChange={handleChange} className={classes.formInput} spellCheck="false" id="email"/>
+            <form id="login" action="/accounts/login" method="post">
+              <input name="email" type="email" value={email} onChange={handleChange} className={classes.formInput} spellCheck="false" id="email"/>
               <br />
-              <Text type="bodyCaption" color="White">
+              <label >
                 EMAIL
-              </Text>
-              <input type="password" value={password} onChange={handleChange} className={classes.formInput} id="password"/>
+              </label>
+              <input name="password" type="password" value={password} onChange={handleChange} className={classes.formInput} id="password"/>
               <br />
-              <Text type="bodyCaption" color="White">
+              <label >
                 CONTRASEÑA
-              </Text>
-            </form>
+              </label>
 
-            <div className={classes.messageContainer}>
-              <ErrorMessage />
-              <Button className={classes.submitButton} onClick={handleLogIn} disabled={!isDataValid() && logInState !== 'pending'}>
-                { logInState !== 'pending' && <Text type="title" color="Black">Enviar</Text>}
-                { logInState === 'pending' && <LoadingSpinner />}
-              </Button>
-            </div>
+              <div className={classes.messageContainer}>
+                <ErrorMessage />
+                <Button type="submit" className={classes.submitButton} onClick={handleLogIn} disabled={!isDataValid() && logInState !== 'pending'}>
+                  { logInState !== 'pending' && <Text type="title" color="Black">Enviar</Text>}
+                  { logInState === 'pending' && <LoadingSpinner />}
+                </Button>
+              </div>
+            </form>
             <Text type="bodyRegular" color="White">No tenés cuenta? </Text>
             <Text type="link" color="White" href='/accounts/signup'>Registrate</Text>
           </Card.Body>

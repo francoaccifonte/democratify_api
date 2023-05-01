@@ -6,13 +6,14 @@ Sidekiq::Web.use ActionDispatch::Cookies
 Sidekiq::Web.use ActionDispatch::Session::CookieStore, key: '_interslice_session'
 
 Rails.application.routes.draw do
+  resources :spotify_playlists, only: %i[show index]
   root 'welcome#index'
   mount Sidekiq::Web => '/sidekiq'
 
   get '/accounts/login', to: 'accounts#login'
   get '/accounts/signup', to: 'accounts#signup'
   post '/accounts/signup', to: 'api/accounts#signup'
-  post '/accounts/login', to: 'api/accounts#login'
+  post '/accounts/login', to: 'accounts#login_form'
   get '/accounts/me', to: 'accounts#me'
 
   resources :accounts, only: [] do

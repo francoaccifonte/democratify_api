@@ -4,10 +4,14 @@ import withStyles, { ThemeProvider } from 'react-jss'
 import { LoginView } from './'
 import { adminPalette } from '../../ColorPalette'
 
-const LoginViewHoc = () => {
+type LoginViewProps = {
+  failedAuth: Boolean
+}
+
+const LoginViewHoc = (props: LoginViewProps) => {
   return (
     <ThemeProvider theme={adminPalette}>
-      <LoginView />
+      <LoginView {...props}/>
     </ThemeProvider>
   )
 }
