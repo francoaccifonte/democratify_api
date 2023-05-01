@@ -2,13 +2,9 @@ class AccountsController < ApplicationController
   # before_action :authenticate!, only: %i[me]
   protect_from_forgery with: :null_session
   skip_before_action :proces_cookies, only: %i[login signup login_form]
+  before_action :redirect_if_already_loged_in, only: %i[login signup login_form]
 
-  def login
-    # @account = Account.find_by!(login_params)
-    # @account.authenticate!(params.require(:password))
-
-    # render_one @account
-  end
+  def login; end
 
   def signup; end
 
@@ -18,12 +14,18 @@ class AccountsController < ApplicationController
     set_account_cookies
 
     redirect_to spotify_playlists_url
-  rescue AuthenticationError => e
+  rescue AuthenticationError
     @failed_auth = true
     redirect_to accounts_login_url
   end
 
   private
+
+  def redirect_if_already_loged_in
+    process_account_cookies
+    redirect_to spotify_playlists_url if @account.present?
+  rescue InvalidAccountCookiesError # rubocop:disable Lint/SuppressedException
+  end
 
   def set_account_cookies
     cookies[:account_id] = @account.id
