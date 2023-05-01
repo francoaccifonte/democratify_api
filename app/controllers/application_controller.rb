@@ -1,5 +1,3 @@
-class InvalidAccountCookiesError < StandardError; end
-
 class ApplicationController < ActionController::Base
   attr_reader :account
 
@@ -11,7 +9,7 @@ class ApplicationController < ActionController::Base
     process_account_cookies
   end
 
-  protected
+  private
 
   def process_account_cookies
     found_account = Account.find(cookies[:account_id])

@@ -22,9 +22,7 @@ class AccountsController < ApplicationController
   private
 
   def redirect_if_already_loged_in
-    process_account_cookies
-    redirect_to spotify_playlists_url if @account.present?
-  rescue InvalidAccountCookiesError # rubocop:disable Lint/SuppressedException
+    redirect_to spotify_playlists_url if cookies[:account_id].present?
   end
 
   def set_account_cookies
