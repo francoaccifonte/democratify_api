@@ -16,7 +16,7 @@ class AccountsController < ApplicationController
     redirect_to spotify_playlists_url
   rescue AuthenticationError
     @failed_auth = true
-    redirect_to accounts_login_url
+    render :login, status: :unauthorized
   end
 
   private

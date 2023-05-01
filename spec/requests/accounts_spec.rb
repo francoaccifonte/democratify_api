@@ -55,5 +55,12 @@ RSpec.describe "Accounts" do
         expect(response).to redirect_to(spotify_playlists_url)
       end
     end
+
+    context 'when provided credentials are invalid' do
+      it 'returns unauthorized' do
+        post accounts_login_url, params: { email: account.email, password: "#{account.password}fakePW" }
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
   end
 end
