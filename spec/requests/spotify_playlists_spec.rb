@@ -20,7 +20,6 @@ RSpec.describe '/spotify_playlists' do
         expect(response.cookies[:token]).to be_nil
       end
     end
-
   end
 
   context 'when user is not logged in' do
