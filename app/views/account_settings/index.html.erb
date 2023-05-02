@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Account settings</h1>
+
+<div id="account_settings">
+  <% @account_settings.each do |account_setting| %>
+    <%= render account_setting %>
+    <p>
+      <%= link_to "Show this account setting", account_setting %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New account setting", new_account_setting_path %>

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_action :proces_cookies
 
-  rescue_from InvalidAccountCookiesError, with: -> { redirect_to root_path }
+  rescue_from InvalidAccountCookiesError, with: :handle_invalid_cookies
 
   def proces_cookies
     process_account_cookies
@@ -17,14 +17,21 @@ class ApplicationController < ActionController::Base
 
     @account = found_account
   rescue ActiveRecord::RecordNotFound
+    Rails.logger.debug { "Account not found for id #{cookies[:account_id]}" }
     raise InvalidAccountCookiesError, "invalid auth"
   end
 
   def validate_account_cookies!(found_account)
     return if found_account.token == cookies[:token]
 
+    Rails.logger.debug { 'Clearing account cookies' }
     cookies.delete(:account_id)
     cookies.delete(:token)
     raise InvalidAccountCookiesError, 'provided token is invalid'
+  end
+
+  def handle_invalid_cookies
+    Rails.logger.debug { 'Invalid cookies' }
+    redirect_to root_path
   end
 end

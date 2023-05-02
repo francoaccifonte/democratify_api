@@ -29,5 +29,8 @@ module DemocratifyAPI
     config.autoload_paths << Rails.root.join('app/models/concerns')
 
     config.assets.paths << Rails.root.join('app/assets/fonts')
+
+    # TODO: set default_protect_from_forgery to true! Do this before deploying to production!
+    config.action_controller.default_protect_from_forgery = false
   end
 end
