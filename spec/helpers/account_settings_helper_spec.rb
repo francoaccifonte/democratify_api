@@ -1,15 +1,17 @@
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the AccountSettingsHelper. For example:
-#
-# describe AccountSettingsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
+class DummyHelper
+  include AccountSettingsHelper
+end
+
 RSpec.describe AccountSettingsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:account) { create(:account) }
+
+  describe '.serialized_account' do
+    subject { DummyHelper.new.serialized_account(account) }
+
+    it 'provides a serialized account' do
+      expect(subject).to include("\"id\":#{account.id}")
+    end
+  end
 end
