@@ -2,3 +2,4 @@ export { default as StreamingAuthorizationView } from './StreamingAuthorizationV
 export { default as StreamingCard } from './StreamingCard'
 export { default as SpotifyLoginButton } from './SpotifyLoginButton'
 export { default as YoutubeLoginButton } from './YoutubeLoginButton'
+export { default as AccountConfigViewHoc } from './AccountConfigViewHoc'

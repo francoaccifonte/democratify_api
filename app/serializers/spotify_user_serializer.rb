@@ -28,5 +28,5 @@
 #  fk_rails_...  (account_id => accounts.id)
 #
 class SpotifyUserSerializer < Panko::Serializer
-  attributes :id, :email
+  attributes :id, :email, :created_at, :updated_at
 end

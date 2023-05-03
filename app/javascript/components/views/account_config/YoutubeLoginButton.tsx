@@ -4,9 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import withStyles from 'react-jss'
 
 import { Text } from '../../common'
+import { serialized_account } from '../../types'
 
 type YoutubeLoginButtonProps = {
-  classes: any
+  classes: any;
+  account: serialized_account
 }
 
 const YoutubeLoginButton = (props: YoutubeLoginButtonProps) => {
