@@ -15,6 +15,7 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 require 'webmock/rspec'
+require 'capybara/rspec'
 require 'simplecov'
 
 SimpleCov.start 'rails' do
@@ -105,5 +106,13 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 
-  WebMock.disable_net_connect!
+  WebMock.disable_net_connect!(allow_localhost: true)
+
+  config.before(:each, type: :system) do
+    driven_by :rack_test
+  end
+
+  config.before(:each, type: :system, js: true) do
+    driven_by :selenium_chrome_headless
+  end
 end

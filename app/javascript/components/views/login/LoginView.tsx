@@ -60,7 +60,7 @@ const LoginView = (props: LogInViewProps) => {
 
               <div className={classes.messageContainer}>
                 <ErrorMessage />
-                <Button type="submit" className={classes.submitButton} onClick={handleLogIn} disabled={!isDataValid() && logInState !== 'pending'}>
+                <Button id="loginButton" type="submit" className={classes.submitButton} onClick={handleLogIn} disabled={!isDataValid() && logInState !== 'pending'}>
                   { logInState !== 'pending' && <Text type="title" color="Black">Enviar</Text>}
                   { logInState === 'pending' && <LoadingSpinner />}
                 </Button>

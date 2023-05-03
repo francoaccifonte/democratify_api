@@ -12,7 +12,7 @@ class AccountsController < ApplicationController
     set_account_cookies
 
     redirect_to spotify_playlists_url
-  rescue AuthenticationError
+  rescue AuthenticationError, ActiveRecord::RecordNotFound
     Rails.logger.debug('login failed')
     @failed_auth = true
     render :login, status: :unauthorized
