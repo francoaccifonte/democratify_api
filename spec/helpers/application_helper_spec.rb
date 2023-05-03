@@ -20,7 +20,7 @@ RSpec.describe ApplicationHelper do
     end
 
     context 'with custom options' do
-      let(:options) { {except: %i[email]} }
+      let(:options) { { except: %i[email] } }
 
       it 'is customizable' do
         expect(subject).not_to include("email")
