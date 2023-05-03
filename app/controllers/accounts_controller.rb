@@ -1,6 +1,4 @@
 class AccountsController < ApplicationController
-  # before_action :authenticate!, only: %i[me]
-  protect_from_forgery with: :null_session
   skip_before_action :proces_cookies, only: %i[login signup login_form]
   before_action :redirect_if_already_loged_in, only: %i[login signup login_form]
 
@@ -15,6 +13,7 @@ class AccountsController < ApplicationController
 
     redirect_to spotify_playlists_url
   rescue AuthenticationError
+    Rails.logger.debug('login failed')
     @failed_auth = true
     render :login, status: :unauthorized
   end
