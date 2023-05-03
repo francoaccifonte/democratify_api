@@ -6,7 +6,7 @@ executors:
   with_db_and_redis:
     resource_class: small
     docker:
-      - image: cimg/ruby:3.2.1-node-browsers
+      - image: cimg/ruby:3.2.1-browsers
       - image: cimg/redis:7.0.10
       - image: cimg/postgres:14.0
         environment:
