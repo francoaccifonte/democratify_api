@@ -6,7 +6,7 @@ executors:
   with_db_and_redis:
     resource_class: small
     docker:
-      - image: cimg/ruby:3.2.1-browsers
+      # - image: cimg/ruby:3.2.1-browsers
       - image: cimg/redis:7.0.10
       - image: cimg/postgres:14.0
         environment:
@@ -14,7 +14,7 @@ executors:
   just_ruby:
     resource_class: small
     docker:
-      - image: cimg/ruby:3.2.1-browsers
+      - image: cimg/ruby:3.2.1
 
 # -------------------------=== COMMANDS ===------------------------- #
 commands:
@@ -91,9 +91,9 @@ commands:
           name: Create DB and migrate
           command: RAILS_ENV=test bundle exec rails db:create db:schema:load
 
-  install_selenium:
-    steps:
-      - browser-tools/install-chromedriver
+  # install_selenium:
+  #   steps:
+  #     - browser-tools/install-chromedriver
 
   run_tests:
     steps:
@@ -115,7 +115,7 @@ jobs:
     steps:
         - get_code
         - install_ruby
-        - install_selenium
+        # - install_selenium
         - install_node
         - setup_test_db
         - run_tests
