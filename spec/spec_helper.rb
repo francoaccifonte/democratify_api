@@ -106,7 +106,7 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 
-  WebMock.disable_net_connect!(allow_localhost: true)
+  WebMock.disable_net_connect!(allow_localhost: true, allow: 'chromedriver.storage.googleapis.com')
 
   config.before(:each, type: :system) do
     driven_by :selenium_chrome_headless
