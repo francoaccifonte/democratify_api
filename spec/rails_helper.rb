@@ -42,7 +42,8 @@ RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :deletion
+    DatabaseCleaner[:redis].strategy = :deletion
+    DatabaseCleaner[:active_record].strategy = :transaction
     DatabaseCleaner.clean_with(:deletion)
     Sidekiq::Testing.fake!
   end
@@ -84,4 +85,10 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+end
+
+module DatabaseCleaner
+  module Redis
+    Truncation = Deletion
+  end
 end

@@ -35,6 +35,9 @@ Style/Documentation:
 RSpec/NamedSubject:
   Enabled: false
 
+RSpec/ExampleLength:
+  Enabled: false
+
 RSpec/LetSetup:
   Enabled: false
 
