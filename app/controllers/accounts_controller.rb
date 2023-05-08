@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
-  skip_before_action :proces_cookies, only: %i[login signup login_form]
-  before_action :redirect_if_already_loged_in, only: %i[login signup login_form]
+  skip_before_action :proces_cookies, only: %i[login signup login_form signup_form]
+  before_action :redirect_if_already_loged_in, only: %i[login signup login_form signup_form]
 
   def login; end
 
@@ -16,6 +16,19 @@ class AccountsController < ApplicationController
     Rails.logger.debug('login failed')
     @failed_auth = true
     render :login, status: :unauthorized
+  end
+
+  def signup_form
+    @account = Account.new(signup_params)
+    @account.password = params.require(:password)
+    @account.save!
+
+    @signup_successful = true
+    render :signup
+  rescue ActiveRecord::ActiveRecordError => e
+    Rails.logger.debug(e)
+    @signup_successful = false
+    render :signup
   end
 
   private
