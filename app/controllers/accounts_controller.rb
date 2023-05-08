@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
   skip_before_action :proces_cookies, only: %i[login signup login_form signup_form]
-  before_action :redirect_if_already_loged_in, only: %i[login signup login_form]
+  before_action :redirect_if_already_loged_in, only: %i[login signup login_form signup_form]
 
   def login; end
 
