@@ -3,21 +3,21 @@ import React, { useState } from 'react'
 import { FullHeightSkeleton } from '../../common/'
 import { SignupCard, SignupSuccessCard } from '.'
 
-const SignupView = () => {
-  const [signupStatus, setSignupStatus] = useState('pending')
+type SignupViewProps = {
+  signupSuccessful?: Boolean
+}
+
+const SignupView = (props: SignupViewProps) => {
 
   const Content = () => {
-    switch (signupStatus) {
-      case 'idle':
-      case 'pending':
-        return <SignupCard successfulSignupCallback={() => setSignupStatus('fulfilled')} />
-      case 'fulfilled':
+    if (props.signupSuccessful !== undefined) {
+      if (props.signupSuccessful) {
         return <SignupSuccessCard />
-      case 'rejected':
-        return <></>
-        // TODO: Show error message
-      default:
-        return <></>
+      } else {
+        return <></> // TODO: Show some error
+      }
+    } else {
+      return <SignupCard />
     }
   }
   return (
