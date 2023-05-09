@@ -5,9 +5,11 @@ import Button from 'react-bootstrap/Button'
 import withStyles from 'react-jss'
 
 import { LoadingSpinner, Text } from '../../common/'
+import client from '../../../requests/'
 
 type SignupCardProps = {
   classes: any;
+  successfulSignupCallback: Function;
 };
 
 const SignupCard = (props: SignupCardProps) => {
@@ -49,7 +51,16 @@ const SignupCard = (props: SignupCardProps) => {
     return true
   }
   const handleSubmit = async (event: any) => {
-    setRequestState('pending')
+    event.preventDefault()
+    if (isDataValid()) {
+      setRequestState('pending')
+      const {status, body} = await client.account.signUp(emailValue, passwordValue, userValue)
+
+      if (status == 200) {
+        setRequestState('fulfilled')
+        props.successfulSignupCallback()
+      } else { setRequestState('rejected') }
+    }
   }
   const disableButton = ():boolean => {
     return !isDataValid() || requestState !== 'idle'
@@ -58,39 +69,39 @@ const SignupCard = (props: SignupCardProps) => {
   return (
     <Container className={classes.container}>
         <Card className={classes.card}>
-          <form id="signup" action="/accounts/signup" method="post">
-            <Card.Body className="text-left">
-              <input id="user" name="name" type="text" value={userValue} onChange={handleUserChange} className={classes.formInput} spellCheck="false"/>
-              <br />
-              <Text type="bodyCaption" color="White">
-                USUARIO
-              </Text>
-              <input id="password" name="password" type="password" value={passwordValue} onChange={handlePasswordChange} className={validPassword() ? classes.formInput : classes.formInputDanger}/>
-              <br />
-              <Text type="bodyCaption" color="White">
-                CONTRASEÑA
-              </Text>
-              <input id="repeatPassword" type="password" value={repeatPasswordValue} onChange={handleRepeatPasswordChange} className={validPassword() ? classes.formInput : classes.formInputDanger}/>
-              <br />
-              <Text type="bodyCaption" color="White">
-                CONFIRMAR CONTRASEÑA
-              </Text>
-              <input id="email" name="email" type="email" value={emailValue} onChange={handleEmailChange} className={classes.formInput} spellCheck="false"/>
-              <br />
-              <Text type="bodyCaption" color="White">
-                CORREO ELECTRÓNICO
-              </Text>
-            </Card.Body>
-            <Card.Body className="text-center">
-              <Button id="signupButton" type="submit" className={classes.submitButton} onClick={handleSubmit} disabled={disableButton()}>
-                {requestState === 'idle' && <Text type="title" color="Black">Enviar</Text>}
-                {requestState !== 'idle' && <LoadingSpinner />}
-              </Button>
-              <br />
-              <Text type="bodyRegular" color="White">Ya tenes cuenta? </Text>
-              <Text type="link" color="White" href="/accounts/login">Entrar</Text>
-            </Card.Body>
+          <Card.Body className="text-left">
+          <form>
+            <input type="text" value={userValue} onChange={handleUserChange} className={classes.formInput} spellCheck="false"/>
+            <br />
+            <Text type="bodyCaption" color="White">
+              USUARIO
+            </Text>
+            <input type="password" value={passwordValue} onChange={handlePasswordChange} className={validPassword() ? classes.formInput : classes.formInputDanger}/>
+            <br />
+            <Text type="bodyCaption" color="White">
+              CONTRASEÑA
+            </Text>
+            <input type="password" value={repeatPasswordValue} onChange={handleRepeatPasswordChange} className={validPassword() ? classes.formInput : classes.formInputDanger}/>
+            <br />
+            <Text type="bodyCaption" color="White">
+              CONFIRMAR CONTRASEÑA
+            </Text>
+            <input type="email" value={emailValue} onChange={handleEmailChange} className={classes.formInput} spellCheck="false"/>
+            <br />
+            <Text type="bodyCaption" color="White">
+              CORREO ELECTRÓNICO
+            </Text>
           </form>
+          </Card.Body>
+          <Card.Body className="text-center">
+            <Button className={classes.submitButton} onClick={handleSubmit} disabled={disableButton()}>
+              {requestState === 'idle' && <Text type="title" color="Black">Enviar</Text>}
+              {requestState !== 'idle' && <LoadingSpinner />}
+            </Button>
+            <br />
+            <Text type="bodyRegular" color="White">Ya tenes cuenta? </Text>
+            <Text type="link" color="White" href="/accounts/login">Entrar</Text>
+          </Card.Body>
         </Card>
     </Container>
   )

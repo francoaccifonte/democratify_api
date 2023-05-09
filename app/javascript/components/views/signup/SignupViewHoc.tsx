@@ -4,14 +4,10 @@ import withStyles, { ThemeProvider } from 'react-jss'
 import { SignupView, } from '.'
 import { adminPalette } from '../../ColorPalette'
 
-type SignupViewProps = {
-  signupSuccessful?: Boolean
-}
-
-const SignupViewHoc = (props: SignupViewProps) => {
+const SignupViewHoc = () => {
   return (
     <ThemeProvider theme={adminPalette}>
-      <SignupView {...props}/>
+      <SignupView />
     </ThemeProvider>
   )
 }

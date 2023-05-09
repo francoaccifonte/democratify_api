@@ -1,5 +1,5 @@
 # Blablabla
-bunch of introductory crap
+TODO: ask chatgpt to generate the introduction boilerplate
 
 # Developer Notes
 ## Useful Snippets
