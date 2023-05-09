@@ -42,10 +42,10 @@ class AccountModel extends BaseModel {
       password: password,
       name: name
     }
-    const account: any = await this.post(body, '/signup')
+    const account = await this.post(body, '/signup')
 
     return {
-      status: 200,
+      status: account.status,
       body: account.json()
     }
   }
