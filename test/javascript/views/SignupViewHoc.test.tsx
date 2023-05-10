@@ -9,5 +9,6 @@ describe('Message component', () => {
   it('renders the message prop', () => {
     const { getByText } = render(<SignupViewHoc />);
     expect(getByText('USUARIO')).toBeInTheDocument();
+    expect(getByText('farafa')).toBeInTheDocument();
   });
 });
