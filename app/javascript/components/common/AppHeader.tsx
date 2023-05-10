@@ -2,8 +2,7 @@ import React from 'react'
 import withStyles from 'react-jss'
 
 import { ColorProps } from '../ColorPalette'
-import { Text } from './'
-const logo = require("../../../assets/images/logo.svg") as string;
+import { AppLogo, Text } from './'
 
 export const useAppHeaderUtils = () => {
   return {
@@ -43,7 +42,7 @@ const AppHeader = (props: HeaderProps) => {
   return (
     <div className={props.classes.container}>
       <div className={props.classes.brand}>
-        <img src={logo} className={props.classes.logo}/>
+        <AppLogo />
         <Text type="header" color="white">Rokolify</Text>
       </div>
       <div className={props.classes.leftCluster}>
@@ -81,15 +80,8 @@ const styles = (theme: any) => {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center'
-    },
-    logo: {
-      height: '4rem',
-      width: '4rem',
-      composes: 'm-3',
-      '&:hover': {
-        cursor: 'pointer'
-      }
     }
   }
 }
+
 export default withStyles(styles)(AppHeader)
