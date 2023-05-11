@@ -9,7 +9,7 @@ import client from '../../../requests'
 
 type LogInViewProps = { 
   classes: any;
-  failedAuth: Boolean
+  failedAuth?: Boolean
 };
 const LoginView = (props: LogInViewProps) => {
   const classes = props.classes
@@ -49,12 +49,12 @@ const LoginView = (props: LogInViewProps) => {
             <form id="login" action="/accounts/login" method="post">
               <input name="email" type="email" value={email} onChange={handleChange} className={classes.formInput} spellCheck="false" id="email"/>
               <br />
-              <label >
-                EMAIL
+              <label htmlFor="email">
+                CORREO ELECTRÓNICO
               </label>
               <input name="password" type="password" value={password} onChange={handleChange} className={classes.formInput} id="password"/>
               <br />
-              <label >
+              <label htmlFor="password">
                 CONTRASEÑA
               </label>
 

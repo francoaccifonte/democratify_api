@@ -5,7 +5,7 @@ import { LoginView } from './'
 import { adminPalette } from '../../ColorPalette'
 
 type LoginViewProps = {
-  failedAuth: Boolean
+  failedAuth?: Boolean
 }
 
 const LoginViewHoc = (props: LoginViewProps) => {
