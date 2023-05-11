@@ -17,6 +17,11 @@ class Client {
     this.token = token
     this.reloadModels(token)
   }
+
+  reset () {
+    this.token = undefined;
+    this.reloadModels(this.token)
+  }
 }
 
 export { Client }
