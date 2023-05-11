@@ -90,11 +90,17 @@ commands:
           name: Create DB and migrate
           command: RAILS_ENV=test bundle exec rails db:create db:schema:load
 
-  run_tests:
+  run_backend_tests:
     steps:
       - run:
           name: Run specs
           command: bundle exec rspec
+
+  run_frontend_tests:
+    steps:
+      - run:
+          name: Run jest
+          command: yarn jest
 
   run_rubocop:
     steps:
@@ -104,7 +110,7 @@ commands:
 
 # -------------------------=== JOBS ===------------------------- #
 jobs:
-  run_tests:
+  backend_tests:
     executor:
       name: with_db_and_redis
     steps:
@@ -112,7 +118,15 @@ jobs:
         - install_ruby
         - install_node
         - setup_test_db
-        - run_tests
+        - run_backend_tests
+  frontend_tests:
+    executor:
+      name: just_ruby
+    steps:
+      - get_code
+      - install_ruby
+      - install_node
+      - run_frontend_tests
   rubocop:
     executor:
       name: just_ruby
@@ -123,7 +137,8 @@ jobs:
 
 # -------------------------=== WORKFLOWS ===------------------------- #
 workflows:
-  say-hello-workflow:
+  development:
     jobs:
-      - run_tests
+      - backend_tests
+      - frontend_tests
       - rubocop

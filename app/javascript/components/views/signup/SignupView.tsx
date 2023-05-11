@@ -10,11 +10,11 @@ const SignupView = () => {
     switch (signupStatus) {
       case 'idle':
       case 'pending':
-        return <SignupCard successfulSignupCallback={() => setSignupStatus('fulfilled')} />
+        return <SignupCard setSignupStatus={setSignupStatus} />
       case 'fulfilled':
         return <SignupSuccessCard />
       case 'rejected':
-        return <></>
+        return <>Ups, algo salio mal</>
         // TODO: Show error message
       default:
         return <></>

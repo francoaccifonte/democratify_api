@@ -9,7 +9,7 @@ import client from '../../../requests/'
 
 type SignupCardProps = {
   classes: any;
-  successfulSignupCallback: Function;
+  setSignupStatus: Function;
 };
 
 const SignupCard = (props: SignupCardProps) => {
@@ -58,8 +58,11 @@ const SignupCard = (props: SignupCardProps) => {
 
       if (status == 200) {
         setRequestState('fulfilled')
-        props.successfulSignupCallback()
-      } else { setRequestState('rejected') }
+        props.setSignupStatus('fulfilled')
+      } else {
+        setRequestState('rejected')
+        props.setSignupStatus('rejected')
+      }
     }
   }
   const disableButton = ():boolean => {
@@ -71,25 +74,25 @@ const SignupCard = (props: SignupCardProps) => {
         <Card className={classes.card}>
           <Card.Body className="text-left">
           <form>
-            <input type="text" value={userValue} onChange={handleUserChange} className={classes.formInput} spellCheck="false"/>
+            <input id="name" type="text" value={userValue} onChange={handleUserChange} className={classes.formInput} spellCheck="false"/>
             <br />
             <Text type="bodyCaption" color="White">
-              USUARIO
+              <label htmlFor="name">USUARIO</label>
             </Text>
-            <input type="password" value={passwordValue} onChange={handlePasswordChange} className={validPassword() ? classes.formInput : classes.formInputDanger}/>
+            <input id="password" type="password" value={passwordValue} onChange={handlePasswordChange} className={validPassword() ? classes.formInput : classes.formInputDanger}/>
             <br />
             <Text type="bodyCaption" color="White">
-              CONTRASEÑA
+              <label htmlFor="password">CONTRASEÑA</label>
             </Text>
-            <input type="password" value={repeatPasswordValue} onChange={handleRepeatPasswordChange} className={validPassword() ? classes.formInput : classes.formInputDanger}/>
+            <input id="repeatPassword" type="password" value={repeatPasswordValue} onChange={handleRepeatPasswordChange} className={validPassword() ? classes.formInput : classes.formInputDanger}/>
             <br />
             <Text type="bodyCaption" color="White">
-              CONFIRMAR CONTRASEÑA
+              <label htmlFor="repeatPassword">CONFIRMAR CONTRASEÑA</label>
             </Text>
-            <input type="email" value={emailValue} onChange={handleEmailChange} className={classes.formInput} spellCheck="false"/>
+            <input id="email" type="email" value={emailValue} onChange={handleEmailChange} className={classes.formInput} spellCheck="false"/>
             <br />
             <Text type="bodyCaption" color="White">
-              CORREO ELECTRÓNICO
+              <label htmlFor="email">CORREO ELECTRÓNICO</label>
             </Text>
           </form>
           </Card.Body>
