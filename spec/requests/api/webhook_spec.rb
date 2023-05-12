@@ -7,7 +7,7 @@ RSpec.describe Api::WebhookController do
 
   describe 'GET /index' do
     subject do
-      get(api_spotify_login_path, params:)
+      get(spotify_login_path, params:)
     end
 
     let(:params) { nil }
