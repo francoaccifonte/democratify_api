@@ -43,7 +43,7 @@ const AppHeader = (props: HeaderProps) => {
     <div className={props.classes.container}>
       <div className={props.classes.brand}>
         <AppLogo />
-        <Text type="header" color="white">Rokolify</Text>
+        <Text type="header" color="white">Rockolify</Text>
       </div>
       <div className={props.classes.leftCluster}>
         <RightCluster type={props.type} />

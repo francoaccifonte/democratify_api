@@ -8,6 +8,5 @@ export interface serialized_spotify_playlist {
   cover_art_url: string;
   created_at: Date;
   updated_at: Date;
-  sample_songs: serialized_spotify_song[];
   spotify_songs: serialized_spotify_song[];
 }

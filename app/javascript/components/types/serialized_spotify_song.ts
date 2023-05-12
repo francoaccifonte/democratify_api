@@ -3,10 +3,14 @@ export interface serialized_spotify_song {
   uri: string;
   album?: string;
   artist: string;
-  cover_art?: string; // It's actually a jsonb
+  cover_art?: {
+    url: string;
+    width: number;
+    height: number;
+  }[];
   duration?: number;
   genre?: string;
-  metadata?: string; // It's actually a jsonb
+  metadata?: object;
   title: string;
   year?: number;
   external_id: string;
