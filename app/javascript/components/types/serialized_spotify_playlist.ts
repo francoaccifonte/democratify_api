@@ -5,6 +5,7 @@ export interface serialized_spotify_playlist {
   description: string;
   name: string;
   external_url: string;
+  cover_art_url: string;
   created_at: Date;
   updated_at: Date;
   sample_songs: serialized_spotify_song[];
