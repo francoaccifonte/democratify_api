@@ -1,3 +1,8 @@
-<div>
-  hola!
-</div>
+<%= react_component(
+  'SpotifyPlaylistSelectionViewHoc',
+  props: {
+    account: serialized_account(@account),
+    playlists: serialized_spotify_playlists(@spotify_playlists, options: { except: %i[spotify_songs sample_songs] })
+  },
+  prerender: false
+  ) %>

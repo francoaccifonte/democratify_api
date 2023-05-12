@@ -1,5 +1,5 @@
 export interface serialized_spotify_user {
-  id: Number;
+  id: number;
   email?: String;
   created_at: Date;
   updated_at: Date;

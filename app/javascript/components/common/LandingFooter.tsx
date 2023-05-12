@@ -16,7 +16,7 @@ const LandingFooter = (props: PlayerFooterProps) => {
         <Text type='bodyRegular' color="White">Preguntas frecuentes</Text>
       </div>
       <div>
-        <Text type='bodyRegular' color="White">Rokolify © {String(new Date().getFullYear())}</Text>
+        <Text type='bodyRegular' color="White">Rockolify © {String(new Date().getFullYear())}</Text>
       </div>
     </div>
   )
