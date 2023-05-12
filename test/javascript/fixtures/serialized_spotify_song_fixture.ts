@@ -1,6 +1,6 @@
 import { serialized_spotify_song } from "../../../app/javascript/components/types"
 
-export const serialized_spotify_playlist_fixture: serialized_spotify_song ={
+export const serialized_spotify_song_fixture: serialized_spotify_song ={
 id: 816,
 title: "For Brassens",
 artist: "Romane - Stochelo Rosenberg",
