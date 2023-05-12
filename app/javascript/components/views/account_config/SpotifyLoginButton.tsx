@@ -7,14 +7,12 @@ import { Text } from '../../common'
 import { serialized_account } from '../../types/serialized_account'
 
 type SpotifyLoginButtonProps = {
-  classes: any;
+  classes?: any;
   account: serialized_account;
   authUri: string
 }
 
 const SpotifyLoginButton = (props: SpotifyLoginButtonProps) => {
-  const { classes } = props
-
   const alreadyLinked = (props.account.spotify_users?.length !== 0)
 
   const DisabledMessage = () => {
@@ -31,12 +29,12 @@ const SpotifyLoginButton = (props: SpotifyLoginButtonProps) => {
 
   return (
     <Button
-    variant="link"
-    href={props.authUri}
-    target="_blank"
-    disabled={alreadyLinked}
-  >
-    <FontAwesomeIcon icon={['fab', 'spotify']} className={classes.icon}/>
+      variant="link"
+      href={props.authUri}
+      target="_blank"
+      disabled={alreadyLinked}
+    >
+    <FontAwesomeIcon icon={['fab', 'spotify']} className={props.classes.icon}/>
     <DisabledMessage />
   </Button>
   )
