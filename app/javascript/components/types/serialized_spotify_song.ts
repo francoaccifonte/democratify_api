@@ -1,5 +1,5 @@
 export interface serialized_spotify_song {
-  id: Number;
+  id: number;
   uri: string;
   album?: string;
   artist: string;

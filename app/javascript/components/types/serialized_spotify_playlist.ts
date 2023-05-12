@@ -1,7 +1,7 @@
 import { serialized_spotify_song } from "./";
 
 export interface serialized_spotify_playlist {
-  id: Number;
+  id: number;
   description: string;
   name: string;
   external_url: string;

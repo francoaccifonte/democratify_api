@@ -22,7 +22,7 @@ describe('SignupViewHoc', () => {
     const subject = render(<SignupViewHoc />);
 
     expect(subject.getByText('USUARIO')).toBeInTheDocument();
-    
+
     act(() => {
       fireEvent.change(subject.getByLabelText('USUARIO'), { target: { value: 'testUser' } })
       fireEvent.change(subject.getByLabelText('CONTRASEÑA'), { target: { value: 'testPassword' } })

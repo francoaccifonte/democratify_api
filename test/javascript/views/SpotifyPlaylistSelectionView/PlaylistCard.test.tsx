@@ -7,16 +7,16 @@ import { serialized_spotify_playlist_fixture } from '../../fixtures/serialized_s
 
 describe('PlaylistCard', () => {
   it('when failedAuth is undefined shows the login form and sends the request', async () => {
-    const subject = render(<PlaylistCard playlist={serialized_spotify_playlist_fixture} />);
+    const subject = render(<PlaylistCard playlist={serialized_spotify_playlist_fixture()} />);
 
-    expect(subject.getByText(serialized_spotify_playlist_fixture.name)).toBeInTheDocument();
+    expect(subject.getByText(serialized_spotify_playlist_fixture().name)).toBeInTheDocument();
 
-    const link = subject.getByRole('link', { name: serialized_spotify_playlist_fixture.name })
+    const link = subject.getByRole('link', { name: serialized_spotify_playlist_fixture().name })
     expect(link).toBeInTheDocument;
-    expect(link).toHaveAttribute('href', `/playlists/${serialized_spotify_playlist_fixture.id}`);
+    expect(link).toHaveAttribute('href', `/playlists/${serialized_spotify_playlist_fixture().id}`);
 
     const img = subject.getByRole('img')
     expect(img).toBeInTheDocument();
-    expect(img).toHaveAttribute('src', serialized_spotify_playlist_fixture.cover_art_url)
+    expect(img).toHaveAttribute('src', serialized_spotify_playlist_fixture().cover_art_url)
   });
 });

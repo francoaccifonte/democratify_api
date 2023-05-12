@@ -1,7 +1,7 @@
 import { serialized_spotify_user } from "./";
 
 export interface serialized_account {
-  id: Number;
+  id: number;
   email?: String;
   name?: String;
   token?: String;
