@@ -7,7 +7,8 @@ import { serialized_account } from '../../types/serialized_account'
 
 type StreamingAuthorizationViewProps = {
   classes: any;
-  account: serialized_account
+  account: serialized_account;
+  spotifyAuthUri: string;
 }
 const StreamingAuthorizationView = (props: StreamingAuthorizationViewProps) => {
   const { classes } = props
@@ -15,7 +16,7 @@ const StreamingAuthorizationView = (props: StreamingAuthorizationViewProps) => {
     <FullHeightSkeleton flexDirectionColumn={true} header palette='admin' overflowY="hidden">
       <div className={classes.caption}><Text type="bodyRegular" color="White">Enlaza tu cuenta de Streaming</Text></div>
       <div className={classes.container}>
-        <StreamingCard account={props.account} service="Spotify"/>
+        <StreamingCard account={props.account} service="Spotify" authUri={props.spotifyAuthUri}/>
         <StreamingCard account={props.account} service="Youtube"/>
       </div>
     </FullHeightSkeleton>
