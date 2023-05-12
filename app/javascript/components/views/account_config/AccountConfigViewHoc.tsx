@@ -6,7 +6,8 @@ import { adminPalette } from '../../ColorPalette'
 import { serialized_account, json_to } from '../../types'
 
 type AccountConfigViewHocProps = {
-  account: string
+  account: string,
+  spotifyAuthUri: string
 }
 
 const AccountConfigViewHoc = (props: AccountConfigViewHocProps) => {
@@ -14,7 +15,7 @@ const AccountConfigViewHoc = (props: AccountConfigViewHocProps) => {
 
   return (
     <ThemeProvider theme={adminPalette}>
-      <StreamingAuthorizationView account={account}/>
+      <StreamingAuthorizationView account={account} spotifyAuthUri={props.spotifyAuthUri}/>
     </ThemeProvider>
   )
 }

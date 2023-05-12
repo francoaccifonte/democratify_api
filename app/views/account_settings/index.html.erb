@@ -1,5 +1,5 @@
 <%= react_component(
   'AccountConfigViewHoc',
-  props: { account: serialized_account(@account)},
+  props: { account: serialized_account(@account), spotifyAuthUri: spotify_redirect_uri(@account) },
   prerender: false
   ) %>

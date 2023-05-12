@@ -9,13 +9,14 @@ import { serialized_account } from '../../types'
 type StreamingCardProps = {
   classes: any;
   service: 'Spotify' | 'Youtube';
-  account: serialized_account
+  account: serialized_account;
+  authUri?: string
 }
 
 const StreamingCard = (props: StreamingCardProps) => {
   const { classes } = props
   const CardComponent = () => {
-    if (props.service === 'Spotify') { return <SpotifyLoginButton account={props.account}/> }
+    if (props.service === 'Spotify') { return <SpotifyLoginButton account={props.account} authUri={props.authUri} /> }
     if (props.service === 'Youtube') { return <YoutubeLoginButton account={props.account}/> }
     return <></>
   }

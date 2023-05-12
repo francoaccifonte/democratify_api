@@ -40,3 +40,4 @@ yarn-debug.log*
 /coverage
 .byebug_history
 .vscode
+.env

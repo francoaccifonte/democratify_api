@@ -35,8 +35,10 @@ module Spotify
         params: query_params,
         headers: default_headers.merge(headers.deep_stringify_keys)
       )
+      load_bredcrumb(request)
 
       response = request.run
+      load_bredcrumb(response)
 
       handle_error(response)
       begin
@@ -57,6 +59,15 @@ module Spotify
 
     def handle_error(_response)
       raise NotImplementedError, "handle_error method not implemented for #{self.class}"
+    end
+
+    def load_bredcrumb(request_or_response)
+      crumb = Sentry::Breadcrumb.new(
+        data: request_or_response.options,
+        category: "Typhoeus",
+        message: "#{request_or_response.class} Object"
+      )
+      Sentry.add_breadcrumb(crumb)
     end
   end
 end
