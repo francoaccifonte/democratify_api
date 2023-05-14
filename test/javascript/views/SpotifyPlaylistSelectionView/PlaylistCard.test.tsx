@@ -13,7 +13,7 @@ describe('PlaylistCard', () => {
 
     const link = subject.getByRole('link', { name: serialized_spotify_playlist_fixture().name })
     expect(link).toBeInTheDocument;
-    expect(link).toHaveAttribute('href', `/playlists/${serialized_spotify_playlist_fixture().id}`);
+    expect(link).toHaveAttribute('href', `/spotify_playlists/${serialized_spotify_playlist_fixture().id}`);
 
     const img = subject.getByRole('img')
     expect(img).toBeInTheDocument();

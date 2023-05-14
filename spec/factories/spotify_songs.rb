@@ -40,6 +40,7 @@ FactoryBot.define do
     genre { Faker::Music.genre }
     title { Faker::Music::RockBand.song }
     uri { Faker::Internet.url }
+    year { Faker::Date.backward.year }
     external_id { Faker::Number.number(digits: 10).to_s }
   end
 end

@@ -35,11 +35,6 @@ class SpotifyPlaylist < ApplicationRecord
 
   accepts_nested_attributes_for :spotify_playlist_songs
 
-  def sample_songs
-    # TODO: Why do I need this? remove if not used
-    spotify_songs.first(4)
-  end
-
   private
 
   def import_songs

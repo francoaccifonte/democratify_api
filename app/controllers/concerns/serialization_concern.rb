@@ -4,26 +4,30 @@ module SerializationConcern
   def render_one(object, serializer_class: nil, status: :ok, options: {})
     return render_no_content if object.blank?
 
-    serializer = serializer_class&.new(**options) ||
-                 guess_serializer(object.class).new(**options)
-    json = serializer.serialize_to_json(object)
-    render json:, status:
+    render json: serialize_one(object, options:, serializer_class:), status:
   end
 
   def render_many(resources, serializer_class: nil, status: :ok, options: {})
     return render_no_content unless resources.any?
 
-    serializer = Panko::ArraySerializer.new(
-      resources,
-      **options.merge(each_serializer: serializer_class || guess_serializer(resources.first.class))
-    )
-
-    json = serializer.to_json
-    render json:, status:
+    render json: serialize_many(resources, options:, serializer_class:), status:
   end
 
   def render_no_content
     render json: {}, status: :no_content
+  end
+
+  def serialize_one(object, options: {}, serializer_class: nil)
+    serializer = serializer_class&.new(**options) ||
+                 guess_serializer(object.class).new(**options)
+    serializer.serialize_to_json(object)
+  end
+
+  def serialize_many(resources, options: {}, serializer_class: nil)
+    Panko::ArraySerializer.new(
+      resources,
+      **options.merge(each_serializer: serializer_class || guess_serializer(resources.first.class))
+    ).to_json
   end
 
   private

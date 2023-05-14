@@ -25,9 +25,17 @@
 #  fk_rails_...  (spotify_user_id => spotify_users.id)
 #
 class SpotifyPlaylistSerializer < Panko::Serializer
-  attributes :id, :description, :name, :created_at, :updated_at, :account_id, :external_id, :spotify_user_id,
-             :songs_sample, :cover_art_url
+  attributes(
+    :id,
+    :cover_art_url,
+    :description,
+    :name,
+    :created_at,
+    :updated_at,
+    :account_id,
+    :external_id,
+    :spotify_user_id
+  )
 
-  has_many :sample_songs, serializer: SpotifySongSerializer
   has_many :spotify_songs, serializer: SpotifySongSerializer
 end
