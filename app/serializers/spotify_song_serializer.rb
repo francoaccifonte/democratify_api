@@ -24,6 +24,19 @@
 #  index_spotify_songs_on_title        (title)
 #
 class SpotifySongSerializer < Panko::Serializer
-  attributes :id, :uri, :album, :artist, :cover_art, :duration, :genre, :metadata, :title, :year,
-             :created_at, :updated_at, :external_id
+  attributes(
+    :id,
+    :album,
+    :artist,
+    :cover_art,
+    :duration,
+    :genre,
+    :metadata,
+    :title,
+    :uri,
+    :year,
+    :created_at,
+    :updated_at,
+    :external_id
+  )
 end

@@ -7,7 +7,9 @@ class SpotifyPlaylistsController < ApplicationController
   end
 
   # GET /spotify_playlists/1
-  def show; end
+  def show
+    @spotify_playlist = @account.spotify_playlists.find(params.fetch(:id))
+  end
 
   private
 
