@@ -8,7 +8,6 @@ import { FullHeightSkeleton } from '../../../common'
 import { serialized_account, serialized_spotify_playlist } from '../../../types'
 
 type SpotifyPlaylistShowViewProps = {
-  classes: any,
   playlist: serialized_spotify_playlist,
   account: serialized_account
 }

@@ -11,8 +11,6 @@ type SpotifyPlaylistShowViewHocProps = {
 }
 
 const SpotifyPlaylistShowViewHoc = (props: SpotifyPlaylistShowViewHocProps) => {
-  console.log(props.account)
-  console.log(props.playlist)
   const account: serialized_account = json_to<serialized_account>(props.account)
   const playlist: serialized_spotify_playlist = json_to<serialized_spotify_playlist>(props.playlist)
 
