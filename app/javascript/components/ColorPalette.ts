@@ -12,7 +12,7 @@ export type Palette = {
   Black: string;
 }
 
-const adminPalette = {
+const adminPalette: Palette = {
   Primary: '#0B2355',
   Secondary: '#021335',
   Success: '#80C999',
@@ -23,7 +23,7 @@ const adminPalette = {
   Dark: '#000000',
   Muted: '#5571AA',
   White: '#FFFFFF',
-  Black: '#000000'
+  Black: '#000000',
 }
 
 const userPalette: Palette = {
@@ -37,7 +37,7 @@ const userPalette: Palette = {
   Dark: '#000000',
   Muted: '#AA1E8B',
   White: '#FFFFFF',
-  Black: '#000000'
+  Black: '#000000',
 }
 
 type Palettes = 'admin' | 'user';

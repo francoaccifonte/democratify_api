@@ -9,7 +9,6 @@ describe SerializationConcern do
     let!(:accounts) { create_list(:account, 2) }
 
     describe '.serialize_one' do
-      # (object, options: {}, serializer_class: nil)
       it 'just works' do
         response = DummyHelper.new.serialize_one(Account.first)
         expect(response).to include("\"id\":#{Account.first.id}")
