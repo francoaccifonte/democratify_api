@@ -1,1 +1,8 @@
-<%= react_component("LoginViewHoc", prerender: false) %>
+<%= react_component(
+  'SpotifyPlaylistShowViewHoc',
+  props: {
+    account: serialized_account(@account),
+    playlist: serialize_one(@spotify_playlist)
+  },
+  prerender: false
+  ) %>

@@ -13,7 +13,7 @@ type PlaylistCardProps = {
 
 const PlaylistCard = (props: PlaylistCardProps) => {
   const { playlist } = props;
-  const href = `/playlists/${playlist.id}`
+  const href = `/spotify_playlists/${playlist.id}`
   return (
     <Card className={`mb-3 mt-3 ${props.classes.card}`}>
       <a className={props.classes.title} href={href}>
