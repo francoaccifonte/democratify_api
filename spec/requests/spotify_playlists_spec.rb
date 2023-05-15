@@ -6,9 +6,20 @@ RSpec.describe '/spotify_playlists' do
   context 'when user is logged in' do
     before { WithAccountCookies.set_account_cookie(cookies, account) }
 
-    it 'returns http success' do
-      get spotify_playlists_url
-      expect(response).to have_http_status(:success)
+    context 'with existing spotify_playlists' do
+      let!(:spotify_playlists) { create(:spotify_playlist, account:) }
+
+      it 'returns http success' do
+        get spotify_playlists_url
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    context 'without existing spotify_playlists' do
+      it 'returns http success' do
+        get spotify_playlists_url
+        expect(response).to have_http_status(:success)
+      end
     end
 
     context 'with invalid cookies' do
