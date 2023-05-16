@@ -155,3 +155,4 @@ workflows:
       - backend_tests
       - frontend_tests
       - rubocop
+      - eslint
