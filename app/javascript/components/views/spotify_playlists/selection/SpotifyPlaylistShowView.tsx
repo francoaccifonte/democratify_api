@@ -13,7 +13,7 @@ type SpotifyPlaylistShowViewProps = {
 }
 
 const SpotifyPlaylistShowView = (props: SpotifyPlaylistShowViewProps) => {
-  const { playlist, account } = props
+  const { playlist } = props
   return (
     <FullHeightSkeleton header footer palette='admin'>
       <Container className="d-flex flex-row justify-content-between">

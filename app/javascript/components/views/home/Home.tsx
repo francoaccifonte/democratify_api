@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
-import withStyles, { ThemeProvider } from 'react-jss'
+import React from 'react'
+import withStyles from 'react-jss'
 
-import { Loading, FullHeightSkeleton, useAppHeaderUtils } from '../../common'
+import { FullHeightSkeleton } from '../../common'
 import { VotingBox } from './'
-import { adminPalette } from '../../ColorPalette'
 
 type HomeProps = {
   classes: any

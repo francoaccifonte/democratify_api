@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Container from 'react-bootstrap/Container'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import withStyles from 'react-jss'
 
 import { FullHeightSkeleton, LoadingSpinner, Text } from '../../common'
-import client from '../../../requests'
 
 type LogInViewProps = {
   classes: any;
