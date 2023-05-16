@@ -28,17 +28,4 @@ RSpec.describe "accounts/login" do
       )
     end
   end
-
-  # context 'before loggin in' do
-  #   it 'renders the react component' do
-  #     allow(view).to receive(:react_component)
-  #     render
-  #     expect(view).to(
-  #       have_received(:react_component)
-  #       .with('LoginViewHoc',
-  #             props: { failedAuth: nil },
-  #             prerender: false)
-  #     )
-  #   end
-  # end
 end
