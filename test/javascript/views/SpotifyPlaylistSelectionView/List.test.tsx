@@ -3,7 +3,7 @@ import { act, render, fireEvent, getByText } from '@testing-library/react';
 import '@testing-library/jest-dom'
 
 import { List } from "../../../../app/javascript/components/views/spotify_playlists/selection";
-import { serialized_spotify_playlist_fixture } from "../../fixtures/serialized_spotify_playlist_fixture";
+import { serialized_spotify_playlist_fixture } from "../../factories/serialized_spotify_playlist_factory";
 
 const fixture = [serialized_spotify_playlist_fixture(), serialized_spotify_playlist_fixture()]
 fixture[1].id += 1

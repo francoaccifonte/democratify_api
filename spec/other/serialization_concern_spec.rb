@@ -19,6 +19,11 @@ describe SerializationConcern do
         expect(response).not_to include("\"id\":#{Account.first.id}")
         expect(response).to include("\"name\":\"#{Account.first.name}\"")
       end
+
+      it 'returns nil when nothing to serialize' do
+        expect(DummyHelper.new.serialize_one(Account.where(name: 'farafafejajfia').first)).to be_nil
+        expect(DummyHelper.new.serialize_one(nil)).to be_nil
+      end
     end
 
     describe '.serialize_many' do
@@ -34,6 +39,11 @@ describe SerializationConcern do
         expect(response).not_to include("\"id\":#{Account.last.id}")
         expect(response).to include("\"name\":\"#{Account.first.name}\"")
         expect(response).to include("\"name\":\"#{Account.last.name}\"")
+      end
+
+      it 'returns [] when nothing to serialize' do
+        expect(DummyHelper.new.serialize_many(Account.where(name: 'farafafejajfia'))).to eq([])
+        expect(DummyHelper.new.serialize_many([])).to eq([])
       end
     end
   end

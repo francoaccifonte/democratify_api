@@ -40,12 +40,4 @@ RSpec.describe SpotifyUser do
       expect(PlaylistImportWorker.jobs.size).to eq(1)
     end
   end
-
-  context 'when token is expired' do
-    subject { create(:spotify_user, access_token_expires_at: 1.day.ago) }
-
-    before { mock_user }
-
-    xit 'refreshes the token'
-  end
 end

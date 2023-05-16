@@ -14,19 +14,16 @@ module Spotify
 
     SPOTIFY_URL = 'https://api.spotify.com/v1'
 
-    attr_accessor :login_token
-
-    def initialize(user: nil, login_token: nil, **_other)
-      @user = user
-      @login_token = login_token
+    def self.from_user(user)
+      new(access_token: user.access_token, refresh_token: user.refresh_token)
     end
 
-    def access_token
-      @user&.access_token
-    end
+    attr_accessor :login_token, :access_token, :refresh_token
 
-    def refresh_token
-      @user&.refresh_token
+    def initialize(access_token: nil, login_token: nil, refresh_token: nil)
+      @access_token = access_token # the one you use to access the api
+      @refresh_token = refresh_token # the one you use to get a new access token
+      @login_token = login_token # the one you use for the first time. See webhook controller
     end
 
     def handle_error(response)

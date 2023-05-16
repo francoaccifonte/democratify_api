@@ -35,31 +35,9 @@ class SpotifyUser < ApplicationRecord
 
   after_create :import_playlists
 
-  def self.authorize_and_create(account_id:, code:) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-    new_user = new(account_id:)
-    new_user.spotify_client.login_token = code
-    auth_response = new_user.spotify_client.authorize
-    new_user.access_token = auth_response[:access_token]
-
-    user_data = new_user.spotify_client.user
-
-    new_user.assign_attributes(
-      spotify_id: user_data[:id],
-      name: user_data[:display_name],
-      email: user_data[:email],
-      uri: user_data[:uri],
-      scope: auth_response[:scope],
-      access_token: auth_response[:access_token],
-      access_token_expires_at: Time.zone.now + auth_response[:expires_in].seconds,
-      refresh_token: auth_response[:refresh_token],
-      href: user_data[:href]
-    )
-    new_user.save!
-  end
-
   # TODO: remove this method and keep spotify_client
   def client
-    @client ||= Spotify::Client.new(user: self)
+    @client ||= Spotify::Client.from_user(self)
     refresh_access_token
     @client
   end
@@ -69,9 +47,7 @@ class SpotifyUser < ApplicationRecord
   end
 
   def refresh_access_token
-    return unless access_token_expired?
-
-    refresh_access_token!
+    SpotifyUserTokenRefresher.call(user: self)
   end
 
   def sync_devices(async: false)
@@ -87,14 +63,6 @@ class SpotifyUser < ApplicationRecord
   end
 
   private
-
-  def refresh_access_token!
-    response = @client.refresh_access_token!
-
-    self.access_token = response.fetch(:access_token)
-    self.access_token_expires_at = Time.zone.now + response.fetch(:expires_in).seconds
-    save!
-  end
 
   def import_playlists
     PlaylistImportWorker.perform_async(id)

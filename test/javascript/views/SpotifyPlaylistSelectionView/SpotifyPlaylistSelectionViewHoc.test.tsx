@@ -3,7 +3,7 @@ import { act, render, fireEvent, getByText } from '@testing-library/react';
 import '@testing-library/jest-dom'
 
 import { SpotifyPlaylistSelectionViewHoc } from "../../../../app/javascript/components/views/spotify_playlists/selection";
-import { serialized_account_fixture, serialized_spotify_playlist_fixture } from "../../fixtures/";
+import { serialized_account_fixture, serialized_spotify_playlist_fixture } from "../../factories";
 import { serialized_account, to_json } from '../../../../app/javascript/components/types';
 
 const fixture = [serialized_spotify_playlist_fixture(), serialized_spotify_playlist_fixture()]

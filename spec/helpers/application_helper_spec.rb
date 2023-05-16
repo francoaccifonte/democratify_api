@@ -29,14 +29,4 @@ RSpec.describe ApplicationHelper do
       end
     end
   end
-
-  describe '.serialized_spotify_playlists' do
-    subject { DummyHelper.new.serialized_spotify_playlists(playlists) }
-
-    it 'provides a serialized list of playlists' do
-      playlists.each do |sp|
-        expect(subject).to include("\"id\":#{sp.id}")
-      end
-    end
-  end
 end
