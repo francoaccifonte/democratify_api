@@ -107,6 +107,12 @@ commands:
       - run:
           name: Run rubocop
           command: bundle exec rubocop
+  
+  run_eslint:
+    steps:
+      - run:
+          name: Run eslint
+          command: yarn run eslint app/javascript/components
 
 # -------------------------=== JOBS ===------------------------- #
 jobs:
@@ -134,6 +140,13 @@ jobs:
         - get_code
         - install_ruby
         - run_rubocop
+  eslint:
+    executor:
+      name: just_ruby
+    steps:
+        - get_code
+        - install_node
+        - run_eslint
 
 # -------------------------=== WORKFLOWS ===------------------------- #
 workflows:
