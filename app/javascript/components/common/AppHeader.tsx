@@ -41,7 +41,7 @@ const AppHeader = (props: HeaderProps) => {
 
   return (
     <div className={props.classes.container}>
-      <div className={props.classes.brand}>
+      <div className={props.classes.brand} onClick={() => { window.location.href = '/' }}>
         <AppLogo />
         <Text type="header" color="white">Rockolify</Text>
       </div>
@@ -60,9 +60,13 @@ const styles = (theme: any) => {
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignItems: 'center'
+      alignItems: 'center',
+      '&:hover': {
+        cursor: 'pointer'
+      }
     },
     leftCluster: {
+      textDecoration: 'none',
       display: 'flex',
       alignItems: 'center',
       composes: 'pe-5',
@@ -76,6 +80,7 @@ const styles = (theme: any) => {
       composes: 'pe-4'
     },
     brand: {
+      textDecoration: 'none',
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center',
