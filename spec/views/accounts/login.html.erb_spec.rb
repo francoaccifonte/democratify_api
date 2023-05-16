@@ -29,7 +29,6 @@ RSpec.describe "accounts/login" do
     end
   end
 
-  # # rubocop:disable RSpec/ContextWording
   # context 'before loggin in' do
   #   it 'renders the react component' do
   #     allow(view).to receive(:react_component)
@@ -42,5 +41,4 @@ RSpec.describe "accounts/login" do
   #     )
   #   end
   # end
-  # # rubocop:enable RSpec/ContextWording
 end
