@@ -21,7 +21,7 @@ RSpec.describe Api::WebhookController do
             access_token: 'fake_access_token',
             scope: 'fake_scope',
             expires_in: 3600,
-            refresh_token: 'fake_access_token'
+            refresh_token: 'fake_refresh_token'
           },
           user: {
             id: 'fake_id',
@@ -30,7 +30,9 @@ RSpec.describe Api::WebhookController do
             uri: 'https://fake.user.uri',
             href: 'https://fake.user.href'
           },
-          'login_token=': ''
+          'login_token=': '',
+          'access_token=': '',
+          'refresh_token=': ''
         )
       end
 
