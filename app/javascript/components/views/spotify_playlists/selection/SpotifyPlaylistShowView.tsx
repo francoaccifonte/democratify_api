@@ -5,11 +5,11 @@ import Button from 'react-bootstrap/Button'
 import Image from 'react-bootstrap/Image'
 
 import { FullHeightSkeleton } from '../../../common'
-import { serialized_account, serialized_spotify_playlist } from '../../../types'
+import { serializedAccount, serialized_spotify_playlist } from '../../../types'
 
 type SpotifyPlaylistShowViewProps = {
   playlist: serialized_spotify_playlist,
-  account: serialized_account
+  account: serializedAccount
 }
 
 const SpotifyPlaylistShowView = (props: SpotifyPlaylistShowViewProps) => {

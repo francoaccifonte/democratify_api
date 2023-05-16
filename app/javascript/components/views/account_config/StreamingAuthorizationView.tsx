@@ -3,11 +3,11 @@ import withStyles from 'react-jss'
 
 import { FullHeightSkeleton, Text } from '../../common'
 import StreamingCard from './StreamingCard'
-import { serialized_account } from '../../types/serialized_account'
+import { serializedAccount } from '../../types/serializedAccount'
 
 type StreamingAuthorizationViewProps = {
   classes: any;
-  account: serialized_account;
+  account: serializedAccount;
   spotifyAuthUri: string;
 }
 const StreamingAuthorizationView = (props: StreamingAuthorizationViewProps) => {

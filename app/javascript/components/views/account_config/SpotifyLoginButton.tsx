@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import withStyles from 'react-jss'
 
 import { Text } from '../../common'
-import { serialized_account } from '../../types/serialized_account'
+import { serializedAccount } from '../../types/serializedAccount'
 
 type SpotifyLoginButtonProps = {
   classes?: any;
-  account: serialized_account;
+  account: serializedAccount;
   authUri: string
 }
 

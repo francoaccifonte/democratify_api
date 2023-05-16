@@ -1,4 +1,4 @@
-export interface serialized_spotify_song {
+export interface serializedSpotifySong {
   id: number;
   uri: string;
   album?: string;
