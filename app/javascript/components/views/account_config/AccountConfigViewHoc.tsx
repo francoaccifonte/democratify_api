@@ -11,7 +11,7 @@ type AccountConfigViewHocProps = {
 }
 
 const AccountConfigViewHoc = (props: AccountConfigViewHocProps) => {
-  const account: serializedAccount = jsonTo<serializedAccount>(props.account);
+  const account: serializedAccount = jsonTo<serializedAccount>(props.account)
 
   return (
     <ThemeProvider theme={adminPalette}>

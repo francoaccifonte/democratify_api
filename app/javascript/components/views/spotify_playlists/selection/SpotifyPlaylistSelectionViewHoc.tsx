@@ -3,7 +3,7 @@ import withStyles, { ThemeProvider } from 'react-jss'
 
 import { adminPalette } from '../../../ColorPalette'
 import { SpotifyPlaylistSelectionView } from './'
-import { jsonTo, serializedAccount, serialized_spotify_playlist } from '../../../types'
+import { jsonTo, serializedAccount, serializedSpotifyPlaylist } from '../../../types'
 
 type SpotifyPlaylistSelectionViewHocProps = {
   playlists: string;
@@ -12,7 +12,7 @@ type SpotifyPlaylistSelectionViewHocProps = {
 
 const SpotifyPlaylistSelectionViewHoc = (props: SpotifyPlaylistSelectionViewHocProps) => {
   const account: serializedAccount = jsonTo<serializedAccount>(props.account)
-  const playlists: serialized_spotify_playlist[] = jsonTo<serialized_spotify_playlist[]>(props.playlists)
+  const playlists: serializedSpotifyPlaylist[] = jsonTo<serializedSpotifyPlaylist[]>(props.playlists)
 
   return (
     <ThemeProvider theme={adminPalette}>

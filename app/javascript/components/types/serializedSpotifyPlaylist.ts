@@ -1,6 +1,6 @@
 import { serializedSpotifySong } from '.'
 
-export interface serialized_spotify_playlist {
+export interface serializedSpotifyPlaylist {
   id: number;
   description: string;
   name: string;

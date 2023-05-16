@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card'
 import withStyles from 'react-jss'
 
 import { Text } from '../../common'
-import { SpotifyLoginButton, YoutubeLoginButton  } from './'
+import { SpotifyLoginButton, YoutubeLoginButton } from './'
 import { serializedAccount } from '../../types'
 
 type StreamingCardProps = {

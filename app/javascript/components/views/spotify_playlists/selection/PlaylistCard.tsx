@@ -1,18 +1,18 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card'
-import withStyles, { WithStylesProps } from 'react-jss'
+import withStyles from 'react-jss'
 
 import { Text } from '../../../common'
-import { serialized_spotify_playlist } from '../../../types'
+import { serializedSpotifyPlaylist } from '../../../types'
 import { adminPalette } from '../../../ColorPalette'
 
 type PlaylistCardProps = {
   classes: any;
-  playlist: serialized_spotify_playlist;
+  playlist: serializedSpotifyPlaylist;
 }
 
 const PlaylistCard = (props: PlaylistCardProps) => {
-  const { playlist } = props;
+  const { playlist } = props
   const href = `/spotify_playlists/${playlist.id}`
   return (
     <Card className={`mb-3 mt-3 ${props.classes.card}`}>

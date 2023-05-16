@@ -7,7 +7,7 @@ import withStyles from 'react-jss'
 import { FullHeightSkeleton, LoadingSpinner, Text } from '../../common'
 import client from '../../../requests'
 
-type LogInViewProps = { 
+type LogInViewProps = {
   classes: any;
   failedAuth?: Boolean
 };

@@ -4,11 +4,10 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 import { PlaylistCard } from './'
-import { serialized_spotify_playlist } from '../../../types'
-
+import { serializedSpotifyPlaylist } from '../../../types'
 
 type ListProps = {
-  playlists: serialized_spotify_playlist[],
+  playlists: serializedSpotifyPlaylist[],
 }
 
 const List = (props: ListProps) => {

@@ -4,7 +4,7 @@ import withStyles from 'react-jss'
 if (process.env.NODE_ENV === 'test') {
   var logo = ''
 } else {
-  var logo = require("../../../assets/images/logo.svg") as string;
+  var logo = require('../../../assets/images/logo.svg') as string
 }
 
 type LogoProps = {

@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import Container from 'react-bootstrap/Container'
 
 import { AppHeader, BackgroundContainer, LandingFooter } from '.'
@@ -33,7 +33,7 @@ const FullHeightSkeleton = (props: SkeletonProps) => {
   return (
     <BackgroundContainer backgroundColor={{ palette: props.palette }}>
       <AddHeader header={props.header} palette={props.palette}/>
-      <Container className={classNames} style={{ overflowY: overflowY }}>
+      <Container className={classNames} style={{ overflowY }}>
         {props.children}
       </Container>
       <AddFooter footer={props.footer}/>

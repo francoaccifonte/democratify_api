@@ -2,10 +2,10 @@ import React from 'react'
 
 import { List } from './index'
 import { FullHeightSkeleton } from '../../../common'
-import { serializedAccount, serialized_spotify_playlist } from '../../../types'
+import { serializedAccount, serializedSpotifyPlaylist } from '../../../types'
 
 type SpotifyPlaylistSelectionViewProps = {
-  playlists: serialized_spotify_playlist[],
+  playlists: serializedSpotifyPlaylist[],
   account: serializedAccount
 }
 

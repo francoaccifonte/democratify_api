@@ -54,7 +54,7 @@ const SignupCard = (props: SignupCardProps) => {
     event.preventDefault()
     if (isDataValid()) {
       setRequestState('pending')
-      const {status, body} = await client.account.signUp(emailValue, passwordValue, userValue)
+      const { status, body } = await client.account.signUp(emailValue, passwordValue, userValue)
 
       if (status == 200) {
         setRequestState('fulfilled')
