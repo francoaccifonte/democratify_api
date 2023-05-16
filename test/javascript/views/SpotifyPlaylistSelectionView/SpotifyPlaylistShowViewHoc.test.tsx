@@ -4,14 +4,14 @@ import '@testing-library/jest-dom'
 
 import { SpotifyPlaylistShowViewHoc } from "../../../../app/javascript/components/views/spotify_playlists/selection";
 import { buildList, serialized_account_fixture, serialized_spotify_playlist_fixture, serialized_spotify_song_fixture } from "../../factories";
-import { to_json } from '../../../../app/javascript/components/types';
+import { toJson } from '../../../../app/javascript/components/types';
 
 const fixture = serialized_spotify_playlist_fixture()
 fixture.spotify_songs = buildList(serialized_spotify_song_fixture, 3)
 
 describe("List", () => {
   it("renders a playlist", async () => {
-    const subject = render(<SpotifyPlaylistShowViewHoc playlist={to_json(fixture)} account={to_json(serialized_account_fixture())} />);
+    const subject = render(<SpotifyPlaylistShowViewHoc playlist={toJson(fixture)} account={toJson(serialized_account_fixture())} />);
 
     for (let i = 0; i < fixture.spotify_songs.length; i++) {
       expect(subject.getByText(fixture.spotify_songs[i].title)).toBeInTheDocument
@@ -19,7 +19,7 @@ describe("List", () => {
   })
 
   it("renders the controls", async () => {
-    const subject = render(<SpotifyPlaylistShowViewHoc playlist={to_json(fixture)} account={to_json(serialized_account_fixture())} />);
+    const subject = render(<SpotifyPlaylistShowViewHoc playlist={toJson(fixture)} account={toJson(serialized_account_fixture())} />);
 
     const img = subject.getByRole('img')
     expect(img).toBeInTheDocument();

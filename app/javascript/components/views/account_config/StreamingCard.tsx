@@ -3,13 +3,13 @@ import Card from 'react-bootstrap/Card'
 import withStyles from 'react-jss'
 
 import { Text } from '../../common'
-import { SpotifyLoginButton, YoutubeLoginButton  } from './'
-import { serialized_account } from '../../types'
+import { SpotifyLoginButton, YoutubeLoginButton } from './'
+import { serializedAccount } from '../../types'
 
 type StreamingCardProps = {
   classes: any;
   service: 'Spotify' | 'Youtube';
-  account: serialized_account;
+  account: serializedAccount;
   authUri?: string
 }
 

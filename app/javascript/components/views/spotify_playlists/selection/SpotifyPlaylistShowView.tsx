@@ -5,15 +5,15 @@ import Button from 'react-bootstrap/Button'
 import Image from 'react-bootstrap/Image'
 
 import { FullHeightSkeleton } from '../../../common'
-import { serialized_account, serialized_spotify_playlist } from '../../../types'
+import { serializedAccount, serializedSpotifyPlaylist } from '../../../types'
 
 type SpotifyPlaylistShowViewProps = {
-  playlist: serialized_spotify_playlist,
-  account: serialized_account
+  playlist: serializedSpotifyPlaylist,
+  account: serializedAccount
 }
 
 const SpotifyPlaylistShowView = (props: SpotifyPlaylistShowViewProps) => {
-  const { playlist, account } = props
+  const { playlist } = props
   return (
     <FullHeightSkeleton header footer palette='admin'>
       <Container className="d-flex flex-row justify-content-between">

@@ -1,4 +1,4 @@
-export interface serialized_spotify_user {
+export interface serializedSpotifyUser {
   id: number;
   email?: String;
   created_at: Date;

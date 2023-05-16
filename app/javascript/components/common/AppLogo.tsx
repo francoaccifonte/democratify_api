@@ -1,10 +1,13 @@
 import React from 'react'
 import withStyles from 'react-jss'
 
+// TODO: why is the lint complaining about redeclare?
 if (process.env.NODE_ENV === 'test') {
+  // eslint-disable-next-line no-var
   var logo = ''
 } else {
-  var logo = require("../../../assets/images/logo.svg") as string;
+  // eslint-disable-next-line no-var, no-redeclare
+  var logo = require('../../../assets/images/logo.svg') as string
 }
 
 type LogoProps = {

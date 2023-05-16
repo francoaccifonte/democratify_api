@@ -1,9 +1,9 @@
 import React from 'react'
-import withStyles, { ThemeProvider } from 'react-jss'
+import { ThemeProvider } from 'react-jss'
 
 import { StreamingAuthorizationView } from '.'
 import { adminPalette } from '../../ColorPalette'
-import { serialized_account, json_to } from '../../types'
+import { serializedAccount, jsonTo } from '../../types'
 
 type AccountConfigViewHocProps = {
   account: string,
@@ -11,7 +11,7 @@ type AccountConfigViewHocProps = {
 }
 
 const AccountConfigViewHoc = (props: AccountConfigViewHocProps) => {
-  const account: serialized_account = json_to<serialized_account>(props.account);
+  const account: serializedAccount = jsonTo<serializedAccount>(props.account)
 
   return (
     <ThemeProvider theme={adminPalette}>

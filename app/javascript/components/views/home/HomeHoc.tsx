@@ -1,7 +1,7 @@
 import React from 'react'
-import withStyles, { ThemeProvider } from 'react-jss'
+import { ThemeProvider } from 'react-jss'
 
-import { Home, VotingBox } from '.'
+import { Home } from '.'
 import { adminPalette } from '../../ColorPalette'
 
 const HomeHoc = () => {

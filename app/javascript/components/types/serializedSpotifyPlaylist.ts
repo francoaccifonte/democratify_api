@@ -1,6 +1,6 @@
-import { serialized_spotify_song } from "./";
+import { serializedSpotifySong } from '.'
 
-export interface serialized_spotify_playlist {
+export interface serializedSpotifyPlaylist {
   id: number;
   description: string;
   name: string;
@@ -8,5 +8,5 @@ export interface serialized_spotify_playlist {
   cover_art_url: string;
   created_at: Date;
   updated_at: Date;
-  spotify_songs: serialized_spotify_song[];
+  spotify_songs: serializedSpotifySong[];
 }
