@@ -7,7 +7,7 @@ import { FullHeightSkeleton } from '../../../common'
 
 type OngoingPlaylistViewProps = {
   account: serializedAccount;
-  playlist: serializedSpotifyPlaylist;
+  // playlist: serializedSpotifyPlaylist;
   votation: serializedVotation;
   ongoingPlaylist: serializedOngoingPlaylist;
 }
@@ -15,8 +15,8 @@ type OngoingPlaylistViewProps = {
 const OngoingPlaylistView: React.FC<OngoingPlaylistViewProps> = (props) => {
   const [poolSize, setPoolSize] = useState<number>(props.ongoingPlaylist.pool_size)
   const poolControls = {
-    incrementPoolSize: () => { setPoolSize(poolSize + 1) },
-    decrementPoolSize: () => { setPoolSize(Math.max(poolSize - 1, 0)) },
+    incrementPoolSize: () => { console.log(poolSize); setPoolSize(poolSize + 1) },
+    decrementPoolSize: () => { setPoolSize(Math.max(poolSize - 1, 2)) },
     poolSize
   }
 

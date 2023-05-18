@@ -11,7 +11,7 @@ type SongListProps = {
   poolControls: any;
 }
 
-const SongList: React.FC<SongListProps> = ({ ongoingPlaylist }) => {
+const SongList: React.FC<SongListProps> = ({ ongoingPlaylist, poolControls }): JSX.Element => {
   const songListStyle: CSS.Properties = {
     overflowX: 'hidden',
     overflowY: 'scroll',
@@ -57,7 +57,7 @@ const SongList: React.FC<SongListProps> = ({ ongoingPlaylist }) => {
                 {
                   remainingSongs.map((data, id) => {
                     return (
-                      <SongListElementDraggable rowNumber={id} data={data} index={id} key={id} poolSize={ongoingPlaylist.pool_size}/>
+                      <SongListElementDraggable rowNumber={id} data={data} index={id} key={id} poolSize={poolControls.poolSize}/>
                     )
                   })
                 }

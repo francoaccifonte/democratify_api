@@ -13,7 +13,7 @@ type PlayerProps = {
 
 const Player:React.FC<PlayerProps> = (props) => {
   const { ongoingPlaylist, poolControls } = props
-  const candidatePoolSize = ongoingPlaylist.pool_size
+  const candidatePoolSize = poolControls.poolSize
 
   return (
     <div className={props.classes.container}>
@@ -26,7 +26,7 @@ const Player:React.FC<PlayerProps> = (props) => {
         <div className={props.classes.poolSizeLabel}>
           <Text type='bodyRegular' color='Black'>{candidatePoolSize}</Text>
         </div>
-        <div className={props.classes.poolSizeRight} onClick={poolControls.decrementPoolSize}>+</div>
+        <div className={props.classes.poolSizeRight} onClick={poolControls.incrementPoolSize}>+</div>
       </div>
     </div>
   )

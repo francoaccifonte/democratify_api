@@ -6,7 +6,7 @@ import { jsonTo, serializedAccount, serializedSpotifyPlaylist, serializedOngoing
 import { OngoingPlaylistView } from './'
 
 type OngoingPlaylistViewHocProps = {
-  playlist: string;
+  // playlist: string;
   account: string;
   ongoingPlaylist: string;
   votation: string;
@@ -14,13 +14,13 @@ type OngoingPlaylistViewHocProps = {
 
 const OngoingPlaylistViewHoc: React.FC<OngoingPlaylistViewHocProps> = (props) => {
   const account: serializedAccount = jsonTo<serializedAccount>(props.account)
-  const playlist: serializedSpotifyPlaylist = jsonTo<serializedSpotifyPlaylist>(props.playlist)
+  // const playlist: serializedSpotifyPlaylist = jsonTo<serializedSpotifyPlaylist>(props.playlist)
   const ongoingPlaylist: serializedOngoingPlaylist = jsonTo<serializedOngoingPlaylist>(props.ongoingPlaylist)
   const votation: serializedVotation = jsonTo<serializedVotation>(props.votation)
 
   return (
     <ThemeProvider theme={adminPalette}>
-      <OngoingPlaylistView account={account} playlist={playlist} ongoingPlaylist={ongoingPlaylist} votation={votation}/>
+      <OngoingPlaylistView account={account} ongoingPlaylist={ongoingPlaylist} votation={votation}/>
     </ThemeProvider>
   )
 }
