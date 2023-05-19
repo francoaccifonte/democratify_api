@@ -35,6 +35,9 @@ Style/Documentation:
 RSpec/NamedSubject:
   Enabled: false
 
+Rails/I18nLocaleTexts:
+  Enabled: false
+
 RSpec/LetSetup:
   Enabled: false
 

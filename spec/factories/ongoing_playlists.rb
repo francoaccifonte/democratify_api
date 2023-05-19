@@ -29,5 +29,11 @@ FactoryBot.define do
 
     association :account, factory: :account
     association :spotify_playlist, factory: :spotify_playlist
+
+    trait :with_votation do
+      after(:create) do |op, _caller|
+        create(:votation, account_id:, ongoing_playlist_id: op)
+      end
+    end
   end
 end
