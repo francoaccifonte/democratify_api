@@ -18,5 +18,5 @@
 class AccountSerializer < Panko::Serializer
   attributes :id, :email, :name, :created_at, :updated_at, :token, :spotify_user
 
-  has_many :spotify_user, serializer: SpotifyUserSerializer
+  has_one :spotify_user, serializer: SpotifyUserSerializer
 end

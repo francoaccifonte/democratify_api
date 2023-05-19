@@ -33,7 +33,7 @@ describe SpotifyPlaylistSerializer do
   let(:options) { {} }
 
   it 'contains the correct attributes' do
-    [:id, :cover_art_url, :description, :name, :created_at, :updated_at, :account_id, :external_id, :spotify_user_id].each do |attribute|
+    %i[id cover_art_url description name created_at updated_at account_id external_id spotify_user_id].each do |attribute|
       expect(subject).to include("\"#{attribute}\":")
       expect(subject).to include(spotify_playlist.attributes[attribute].to_s) if spotify_playlist.attributes[attribute]
     end
