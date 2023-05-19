@@ -7,5 +7,5 @@ export interface serializedAccount {
   token?: String;
   created_at: Date;
   updated_at: Date;
-  spotify_users?: serializedSpotifyUser[]
+  spotify_user?: serializedSpotifyUser
 }

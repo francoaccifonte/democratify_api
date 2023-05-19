@@ -26,7 +26,7 @@
 class OngoingPlaylist < ApplicationRecord
   attr_accessor :previous_playlist
 
-  delegate :spotify_users, to: :account
+  delegate :spotify_user, to: :account
 
   DEFAULT_POOL_SIZE = 3
 
@@ -57,7 +57,7 @@ class OngoingPlaylist < ApplicationRecord
   end
 
   def user
-    account.spotify_users.first
+    account.spotify_user
   end
 
   def voting_songs
