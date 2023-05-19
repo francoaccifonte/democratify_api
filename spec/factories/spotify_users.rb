@@ -19,7 +19,7 @@
 #
 # Indexes
 #
-#  index_spotify_users_on_account_id  (account_id)
+#  index_spotify_users_on_account_id  (account_id) UNIQUE
 #
 # Foreign Keys
 #

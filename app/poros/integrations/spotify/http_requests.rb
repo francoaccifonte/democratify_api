@@ -62,8 +62,9 @@ module Spotify
     end
 
     def load_bredcrumb(request_or_response)
+      url = request_or_response.is_a?(Typhoeus::Request) ? request_or_response.url : request_or_response.effective_url
       crumb = Sentry::Breadcrumb.new(
-        data: request_or_response.options,
+        data: request_or_response.options.merge(url:),
         category: "Typhoeus",
         message: "#{request_or_response.class} Object"
       )

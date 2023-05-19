@@ -10,10 +10,9 @@ module Api
     end
 
     def create
-      @ongoing_playlist&.destroy!
-      ongoing_playlist = OngoingPlaylist.create!(creation_params)
+      @ongoing_playlist = ShowStarter.call(account: @current_account, spotify_playlist:)
 
-      render_one ongoing_playlist
+      render_one @ongoing_playlist
     end
 
     def update

@@ -7,7 +7,7 @@ import { serializedAccount, serializedSpotifyUser, toJson } from '../../../../ap
 
 describe("AccountConfigViewHoc", () => {
   it("renders correctly", async () => {
-    const account: serializedAccount = { id: 1, created_at: new Date(), updated_at: new Date(), spotify_users: [] }
+    const account: serializedAccount = { id: 1, created_at: new Date(), updated_at: new Date() }
     const subject = render(<AccountConfigViewHoc account={toJson(account)} spotifyAuthUri='http://link.to.somewhere' />);
 
     expect(subject.getByText('Spotify')).toBeInTheDocument();

@@ -16,9 +16,8 @@
 #  index_accounts_on_name   (name) UNIQUE
 #
 class Account < ApplicationRecord
-  # has_many :users, dependent: :destroy
   has_many :spotify_playlists, dependent: :destroy
-  has_many :spotify_users, dependent: :destroy
+  has_one :spotify_user, dependent: :destroy
   has_one :ongoing_playlist, dependent: :destroy
   has_many :votations, dependent: :destroy
   has_many :votation_candidates, dependent: :destroy

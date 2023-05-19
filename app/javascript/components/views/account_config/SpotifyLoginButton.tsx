@@ -13,7 +13,7 @@ type SpotifyLoginButtonProps = {
 }
 
 const SpotifyLoginButton = (props: SpotifyLoginButtonProps) => {
-  const alreadyLinked = (props.account.spotify_users?.length !== 0)
+  const alreadyLinked = (!!props.account.spotify_user)
 
   const DisabledMessage = () => {
     if (alreadyLinked) {

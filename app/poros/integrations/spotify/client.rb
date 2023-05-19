@@ -15,7 +15,9 @@ module Spotify
     SPOTIFY_URL = 'https://api.spotify.com/v1'
 
     def self.from_user(user)
-      new(access_token: user.access_token, refresh_token: user.refresh_token)
+      client = new(access_token: user.access_token, refresh_token: user.refresh_token)
+      SpotifyUserTokenRefresher.call(user:)
+      client
     end
 
     attr_accessor :login_token, :access_token, :refresh_token

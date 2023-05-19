@@ -29,6 +29,16 @@
 #
 FactoryBot.define do
   factory :votation do
-    pending
+    in_progress { true }
+    queued { false }
+    scheduled_close_for { Time.current }
+    scheduled_end_at { Time.current }
+    scheduled_end_for { Time.current }
+    scheduled_start_at { Time.current }
+    scheduled_start_for { Time.current }
+    started_at { Time.current }
+
+    association :account, factory: :account
+    association :ongoing_playlist, factory: :ongoing_playlist
   end
 end
