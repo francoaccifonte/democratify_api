@@ -34,5 +34,15 @@ FactoryBot.define do
 
     association :account, factory: :account
     association :spotify_user, factory: :spotify_user
+
+    trait :with_songs do
+      transient do
+        song_count { 10 }
+      end
+
+      after(:create) do |spotify_playlist, evaluator|
+        create_list(:spotify_playlist_song, evaluator.song_count, spotify_playlist:)
+      end
+    end
   end
 end

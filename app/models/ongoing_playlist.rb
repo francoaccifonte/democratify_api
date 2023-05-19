@@ -42,19 +42,7 @@ class OngoingPlaylist < ApplicationRecord
 
   validate :playing_song_is_in_playlist
 
-  after_create :start_initial_votation
-
   delegate :spotify_playlist_songs, to: :spotify_playlist
-
-  def start_initial_votation(async: false)
-    return InitialVotationStartWorker.perform_async(id) if async
-
-    InitialVotationStartWorker.new.perform(id)
-  end
-
-  def playing_song_remaining_time
-    user.client.playing_song_remaining_time
-  end
 
   def user
     account.spotify_user

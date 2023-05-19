@@ -1,6 +1,8 @@
+import Cookies from 'js-cookie'
+
 export default abstract class BaseModel {
-  baseUrl: string;
-  token: string | undefined;
+  baseUrl: string
+  token: string | undefined
 
   constructor (token?: string) {
     this.baseUrl = 'http://localhost:3001'
@@ -20,8 +22,9 @@ export default abstract class BaseModel {
       'Content-Type': 'application/json',
       Accept: 'application/json'
     }
-    if (this.token) {
-      headers = { ...headers, Authorization: `Bearer ${this.token}` }
+    const token = this.token || Cookies.get('token')
+    if (token) {
+      headers = { ...headers, Authorization: `Bearer ${token}` }
     }
     return headers
   }
