@@ -16,7 +16,7 @@
 #  index_accounts_on_name   (name) UNIQUE
 #
 class AccountSerializer < Panko::Serializer
-  attributes :id, :email, :name, :created_at, :updated_at, :token, :spotify_users
+  attributes :id, :email, :name, :created_at, :updated_at, :token, :spotify_user
 
-  has_many :spotify_users, serializer: SpotifyUserSerializer
+  has_many :spotify_user, serializer: SpotifyUserSerializer
 end

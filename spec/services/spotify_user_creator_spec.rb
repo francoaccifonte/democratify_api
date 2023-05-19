@@ -38,7 +38,7 @@ describe SpotifyUserCreator do
   context 'when all goes well' do
     it 'creates the user' do
       expect { subject }.to change(SpotifyUser, :count).by(1)
-      user = account.spotify_users.reload.last
+      user = account.spotify_user.reload
       expect(user.scope).to eq('some_scope')
       expect(user.access_token).to eq('some_access_token')
       expect(user.refresh_token).to eq('some_refresh_token')

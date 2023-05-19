@@ -21,7 +21,7 @@ describe('SpotifyLoginButton', () => {
       id: 1,
       created_at: new Date(),
       updated_at: new Date(),
-      spotify_users: [spotify_user] }
+      spotify_user: spotify_user }
     const subject = render(<SpotifyLoginButton account={account} authUri='http://link.to.somewhere' />);
 
     expect(subject.getByRole('button')).toBeInTheDocument();
