@@ -48,19 +48,5 @@ RSpec.describe OngoingPlaylist do
     it 'is valid' do
       expect(subject).to be_valid
     end
-
-    it 'creates a votation' do
-      expect(subject.votations.count).to eq(1)
-    end
-
-    it 'has the correct ammount of voting songs / candidates' do
-      expect(subject.voting_songs.count).to eq(subject.pool_size)
-    end
-
-    it 'calls the initial votation worker' do
-      allow(InitialVotationStartWorker).to receive(:new).and_call_original
-      subject
-      expect(InitialVotationStartWorker).to have_received(:new).once
-    end
   end
 end

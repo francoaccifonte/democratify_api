@@ -44,11 +44,6 @@ class OngoingPlaylist < ApplicationRecord
 
   delegate :spotify_playlist_songs, to: :spotify_playlist
 
-  def playing_song_remaining_time
-    # TODO: Remove this. I don't want to have instances of the spotify client being called from models. It should only happen from services
-    user.client.playing_song_remaining_time
-  end
-
   def user
     account.spotify_user
   end
