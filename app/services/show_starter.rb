@@ -18,13 +18,13 @@ class ShowStarter
     create_votation(ongoing_playlist)
   end
 
-  private
-
-  attr_reader :account, :playlist
-
   def client
     @client ||= Spotify::Client.from_user(@account.spotify_user)
   end
+
+  private
+
+  attr_reader :account, :playlist
 
   def send_to_active_remote(ongoing_playlist)
     client.add_to_active_playback_queue!(ongoing_playlist.playing_song.uri)
@@ -34,7 +34,7 @@ class ShowStarter
   def create_votation(ongoing_playlist)
     ongoing_playlist.votations.create!(
       in_progress: true,
-      scheduled_start_for: Time.zone.now + playlist.playing_song_remaining_time.seconds
+      scheduled_start_for: Time.zone.now + client.playing_song_remaining_time.seconds
     )
   end
 end
