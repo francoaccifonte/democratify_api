@@ -32,8 +32,11 @@ module Spotify
     end
 
     def add_to_active_playback_queue!(uri)
-      device_id = list_devices.detect { |device| device.fetch(:is_active) }.fetch(:id)
-      add_to_playback_queue(uri, device_id) if device_id
+      response = list_devices
+      device = response.detect { |dev| dev.fetch(:is_active) }
+      raise Errors::DeviceNotFoundError.new('there is no active spotify device', response) unless device
+
+      add_to_playback_queue(uri, device.fetch(:id))
     end
   end
 end
