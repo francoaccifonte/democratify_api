@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Image from 'react-bootstrap/Image'
 
 import client from '../../../../requests/'
-import { FullHeightSkeleton } from '../../../common'
+import { FullHeightSkeleton, Text } from '../../../common'
 import { serializedAccount, serializedSpotifyPlaylist } from '../../../types'
 
 type SpotifyPlaylistShowViewProps = {
@@ -15,9 +15,14 @@ type SpotifyPlaylistShowViewProps = {
 
 const SpotifyPlaylistShowView = (props: SpotifyPlaylistShowViewProps) => {
   const { playlist } = props
+  const [showErrorMessage, setShowErrorMessage] = useState<Boolean>(false)
   const startPlaylist = async () => {
-    await client.ongoingPlaylist.start(playlist.id)
-    // window.location.href = '/ongoing_playlists'
+    const response = await client.ongoingPlaylist.start(playlist.id)
+    if (response.status === 200) {
+      window.location.href = '/ongoing_playlists'
+    } else if (response.status === 400) {
+      setShowErrorMessage(true)
+    }
   }
 
   return (
@@ -29,6 +34,8 @@ const SpotifyPlaylistShowView = (props: SpotifyPlaylistShowViewProps) => {
             <Button variant='primary' className="mt-5" size="lg" onClick={startPlaylist}>
               Reproducir
             </Button>
+            { showErrorMessage && <Text color='red' type='bodyRegular'>No encontramos ningun dispositivo en spotify</Text>}
+            { showErrorMessage && <Text color='white' type='bodyCaption'>Dirigete a nuestros FAQs para entender como arreglarlo</Text>}
           </div>
         </Col>
         <Col md={6} className="text-white">

@@ -43,6 +43,20 @@ describe ShowStarter do
   end
 
   context 'when user is not using spotify on any device' do
-    pending 'handle this case, it will probably happen often'
+    let(:device_response) { { devices: [] } }
+
+    it 'does not create a new ongoing playlist' do
+      prev_count = OngoingPlaylist.count
+      expect { subject }.to raise_error(Spotify::Errors::DeviceNotFoundError)
+      expect(OngoingPlaylist.count).to eq(prev_count)
+    end
+
+    it 'does not destroy existing ongoing playlist' do
+      create(:ongoing_playlist, account:, spotify_playlist:)
+
+      prev_ongoing_playlist_id = OngoingPlaylist.last.id
+      expect { subject }.to raise_error(Spotify::Errors::DeviceNotFoundError)
+      expect(OngoingPlaylist.last.id).to eq(prev_ongoing_playlist_id)
+    end
   end
 end

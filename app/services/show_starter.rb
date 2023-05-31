@@ -11,11 +11,13 @@ class ShowStarter
   def call
     raise 'Account does not have a spotify_user' if account.spotify_user.blank?
 
-    account.ongoing_playlist&.destroy!
-    ongoing_playlist = OngoingPlaylist.create!(account:, spotify_playlist: playlist)
+    ActiveRecord::Base.transaction do
+      account.ongoing_playlist&.destroy!
+      ongoing_playlist = OngoingPlaylist.create!(account:, spotify_playlist: playlist)
 
-    send_to_active_remote(ongoing_playlist)
-    create_votation(ongoing_playlist)
+      send_to_active_remote(ongoing_playlist)
+      create_votation(ongoing_playlist)
+    end
   end
 
   def client
