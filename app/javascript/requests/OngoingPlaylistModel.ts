@@ -13,7 +13,6 @@ class OngoingPlaylistModel extends BaseModel {
       spotify_playlist_id: playlistId,
       playling_song_id: songId
     })
-    console.log(response)
     return response
   }
 
