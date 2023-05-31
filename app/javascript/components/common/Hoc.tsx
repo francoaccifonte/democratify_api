@@ -6,8 +6,8 @@ import { FooterContext } from '../views/contexts/FooterContext'
 import { serializedVotation, serializedOngoingPlaylist, jsonTo } from '../types'
 
 type HocPropsType = {
-  ongoingPlaylist: string;
-  votation: string;
+  ongoingPlaylist?: string;
+  votation?: string;
 }
 
 type HocType = HocPropsType & {
@@ -15,8 +15,8 @@ type HocType = HocPropsType & {
 }
 
 const Hoc = (props: HocType): JSX.Element => {
-  const ongoingPlaylist: serializedOngoingPlaylist = jsonTo<serializedOngoingPlaylist>(props.ongoingPlaylist)
-  const votation: serializedVotation = jsonTo<serializedVotation>(props.votation)
+  const ongoingPlaylist = props.ongoingPlaylist ? jsonTo<serializedOngoingPlaylist>(props.ongoingPlaylist) : null
+  const votation = props.votation ? jsonTo<serializedVotation>(props.votation) : null
   return (
     <ThemeProvider theme={adminPalette}>
       <FooterContext.Provider value={{ ongoingPlaylist, votation }}>
