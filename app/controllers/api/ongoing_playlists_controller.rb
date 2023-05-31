@@ -4,6 +4,7 @@ module Api
   class OngoingPlaylistsController < Api::ApiController
     before_action :authenticate!
     before_action :set_ongoing_playlist, only: %i[index update destroy create]
+    rescue_from Spotify::Errors::DeviceNotFoundError, with: :handle_device_error
 
     def index
       render_one @ongoing_playlist
@@ -55,6 +56,10 @@ module Api
 
     def song_order
       @song_order ||= params.permit(spotify_playlist_songs: %i[id index]).to_h[:spotify_playlist_songs]
+    end
+
+    def handle_device_error
+      render json: { error: 'there is no active spotify device' }, status: :bad_request
     end
   end
 end
