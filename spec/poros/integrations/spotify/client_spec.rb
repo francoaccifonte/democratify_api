@@ -38,7 +38,7 @@ describe Spotify::Client do
     context 'when token is not expired' do
       let!(:user) { create(:spotify_user, access_token: 'initial_token', access_token_expires_at: 3.days.from_now) }
 
-      it 'refreshes the token' do
+      it 'leaves the token as is' do
         expect { subject }.not_to change { user.reload.access_token }.from('initial_token')
       end
     end
