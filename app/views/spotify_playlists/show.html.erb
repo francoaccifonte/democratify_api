@@ -3,6 +3,6 @@
   props: {
     account: serialized_account(@account),
     playlist: serialize_one(@spotify_playlist)
-  },
+  }.merge(hoc_params),
   prerender: false
   ) %>

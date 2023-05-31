@@ -15,10 +15,12 @@ RSpec.describe "spotify_playlists/show" do
     expect(view).to(
       have_received(:react_component)
       .with('SpotifyPlaylistShowViewHoc',
-            props: {
-              account: AccountSerializer.new({ except: [:token] }).serialize_to_json(account),
-              playlist: SpotifyPlaylistSerializer.new.serialize_to_json(playlist)
-            },
+            props: hash_including(
+              {
+                account: AccountSerializer.new({ except: [:token] }).serialize_to_json(account),
+                playlist: SpotifyPlaylistSerializer.new.serialize_to_json(playlist)
+              }
+            ),
             prerender: false)
     )
   end

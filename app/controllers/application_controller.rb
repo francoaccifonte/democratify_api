@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   attr_reader :account
 
   before_action :proces_cookies
+  before_action :set_player_params
 
   rescue_from InvalidAccountCookiesError, with: :handle_invalid_cookies
 
@@ -34,4 +35,11 @@ class ApplicationController < ActionController::Base
     Rails.logger.debug { 'Invalid cookies' }
     redirect_to root_path
   end
+
+  # rubocop:disable Naming/MemoizedInstanceVariableName
+  def set_player_params
+    @ongoing_playlist ||= @account&.ongoing_playlist
+    @votation ||= @ongoing_playlist&.votations&.in_progress&.first
+  end
+  # rubocop:enable Naming/MemoizedInstanceVariableName
 end
