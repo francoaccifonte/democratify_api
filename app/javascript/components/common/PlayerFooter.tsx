@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import withStyles from 'react-jss'
 
 import { Text } from './'
 import { serializedOngoingPlaylist, serializedVotation } from '../types'
+import { FooterContext } from '../views/contexts/FooterContext'
 
 type PlayerFooterProps = {
   className?: string,
@@ -15,7 +16,9 @@ type PlayerFooterProps = {
 }
 
 const PlayerFooter: React.FC<PlayerFooterProps> = (props): JSX.Element => {
-  const { ongoingPlaylist, votation } = props
+  const { ongoingPlaylist, votation } = useContext(FooterContext)
+  if (!ongoingPlaylist) { return <></> }
+
   const redirect = () => { window.location.href = '/ongoing_playlists' }
   const currentWinner = votation.votation_candidates.reduce((max: any, song: any) => max?.votes > song?.votes ? max : song)
 

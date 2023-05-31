@@ -6,4 +6,11 @@ module ApplicationHelper
 
     AccountSerializer.new(**options).serialize_to_json(account)
   end
+
+  def hoc_params
+    {
+      ongoingPlaylist: serialize_one(@ongoing_playlist),
+      votation: serialize_one(@votation)
+    }
+  end
 end

@@ -1,7 +1,7 @@
 import React from 'react'
 import Container from 'react-bootstrap/Container'
 
-import { AppHeader, BackgroundContainer, LandingFooter } from '.'
+import { AppHeader, BackgroundContainer, LandingFooter, PlayerFooter } from '.'
 import { ColorProps } from '../ColorPalette'
 
 type SkeletonProps = {
@@ -20,7 +20,7 @@ const AddHeader = (props: { header?: SkeletonProps['header'], palette: ColorProp
 
 const AddFooter = (props: { footer?: SkeletonProps['footer'] }) => {
   if (props.footer === true || props.footer === 'default') {
-    return <></>
+    return <PlayerFooter/>
   } else {
     return <LandingFooter className="mt-auto" style={{ alignSelf: 'flex-end' }} />
   }
