@@ -1,5 +1,5 @@
-import { faker } from '@faker-js/faker';
-import { serializedSpotifyPlaylist } from "../../../app/javascript/components/types";
+import { faker } from '@faker-js/faker'
+import { serializedSpotifyPlaylist } from '../../../app/javascript/components/types'
 
 export const serialized_spotify_playlist_fixture = (): serializedSpotifyPlaylist => {
   return {

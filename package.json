@@ -71,5 +71,8 @@
     "react-test-renderer": "^18.2.0",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1"
+  },
+  "scripts": {
+    "eslint": "./node_modules/eslint/bin/eslint.js app/javascript/components app/javascript/requests test/"
   }
 }

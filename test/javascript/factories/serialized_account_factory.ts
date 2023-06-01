@@ -1,5 +1,5 @@
-import { faker } from '@faker-js/faker';
-import { serializedAccount } from "../../../app/javascript/components/types";
+import { faker } from '@faker-js/faker'
+import { serializedAccount } from '../../../app/javascript/components/types'
 
 export const serialized_account_fixture = (): serializedAccount => {
   return {

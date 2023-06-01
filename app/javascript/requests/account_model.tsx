@@ -22,8 +22,8 @@ class AccountModel extends BaseModel {
 
   async authenticate (email: string, password: string): Promise<RequestResponse> {
     const body = {
-      email: email,
-      password: password
+      email,
+      password
     }
     const account: any = await this.post(body, '/login')
     if (account.status === 200) {
@@ -38,9 +38,9 @@ class AccountModel extends BaseModel {
 
   async signUp (email: string, password: string, name: string): Promise<RequestResponse> {
     const body = {
-      email: email,
-      password: password,
-      name: name
+      email,
+      password,
+      name
     }
     const account = await this.post(body, '/signup')
 
