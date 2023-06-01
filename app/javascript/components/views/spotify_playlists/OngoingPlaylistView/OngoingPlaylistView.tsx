@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import Container from 'react-bootstrap/Container'
 
-import { serializedAccount, serializedOngoingPlaylist, serializedSpotifyPlaylist, serializedVotation } from '../../../types'
+import { serializedAccount, serializedOngoingPlaylist, serializedVotation } from '../../../types'
 import { Player, SongList } from './'
 import { FullHeightSkeleton } from '../../../common'
 
 type OngoingPlaylistViewProps = {
   account: serializedAccount;
-  // playlist: serializedSpotifyPlaylist;
   votation: serializedVotation;
   ongoingPlaylist: serializedOngoingPlaylist;
 }
@@ -15,7 +14,7 @@ type OngoingPlaylistViewProps = {
 const OngoingPlaylistView: React.FC<OngoingPlaylistViewProps> = (props) => {
   const [poolSize, setPoolSize] = useState<number>(props.ongoingPlaylist.pool_size)
   const poolControls = {
-    incrementPoolSize: () => { console.log(poolSize); setPoolSize(poolSize + 1) },
+    incrementPoolSize: () => { setPoolSize(poolSize + 1) },
     decrementPoolSize: () => { setPoolSize(Math.max(poolSize - 1, 2)) },
     poolSize
   }

@@ -1,27 +1,24 @@
 import React from 'react'
-import { ThemeProvider } from 'react-jss'
-import { adminPalette } from '../../../ColorPalette'
 
-import { jsonTo, serializedAccount, serializedSpotifyPlaylist, serializedOngoingPlaylist, serializedVotation } from '../../../types'
+import Hoc, { HocPropsType } from '../../../common/Hoc'
+import { jsonTo, serializedAccount, serializedOngoingPlaylist, serializedVotation } from '../../../types'
 import { OngoingPlaylistView } from './'
 
 type OngoingPlaylistViewHocProps = {
-  // playlist: string;
   account: string;
   ongoingPlaylist: string;
   votation: string;
-}
+} & HocPropsType
 
 const OngoingPlaylistViewHoc: React.FC<OngoingPlaylistViewHocProps> = (props) => {
   const account: serializedAccount = jsonTo<serializedAccount>(props.account)
-  // const playlist: serializedSpotifyPlaylist = jsonTo<serializedSpotifyPlaylist>(props.playlist)
   const ongoingPlaylist: serializedOngoingPlaylist = jsonTo<serializedOngoingPlaylist>(props.ongoingPlaylist)
   const votation: serializedVotation = jsonTo<serializedVotation>(props.votation)
 
   return (
-    <ThemeProvider theme={adminPalette}>
+    <Hoc {...props}>
       <OngoingPlaylistView account={account} ongoingPlaylist={ongoingPlaylist} votation={votation}/>
-    </ThemeProvider>
+    </Hoc>
   )
 }
 

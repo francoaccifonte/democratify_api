@@ -1,27 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Container from 'react-bootstrap/Container'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
-import CSS from 'csstype'
+import withStyles from 'react-jss'
 
 import { SongListElementDraggable, PlayingSong, VotingSongs } from './'
-import { serializedOngoingPlaylist } from '../../../types'
+import { serializedOngoingPlaylist, serializedSpotifySong } from '../../../types'
+import { adminPalette } from '../../../ColorPalette'
+import client from '../../../../requests/index'
 
 type SongListProps = {
   ongoingPlaylist: serializedOngoingPlaylist;
-  poolControls: any;
+  poolControls: {
+    incrementPoolSize: Function;
+    decrementPoolSize: Function;
+    poolSize: number
+  };
+  classes: any;
 }
 
-const SongList: React.FC<SongListProps> = ({ ongoingPlaylist, poolControls }): JSX.Element => {
-  const songListStyle: CSS.Properties = {
-    overflowX: 'hidden',
-    overflowY: 'scroll',
-    height: '100%'
-  }
+const SongList: React.FC<SongListProps> = ({ ongoingPlaylist, poolControls, classes }): JSX.Element => {
+  let timerId: any
+  const [playingSong, votingSongs] = [ongoingPlaylist.playing_song, ongoingPlaylist.voting_songs]
+  const [remainingSongs, setRemainingSongs] = useState<serializedSpotifySong[]>(ongoingPlaylist.remaining_songs)
 
-  // let timerId: any
-  const [playingSong, votingSongs, remainingSongs] = [ongoingPlaylist.playing_song, ongoingPlaylist.voting_songs, ongoingPlaylist.remaining_songs]
-
-  const handleDragEnd = (result: any) => {
+  const handleDragEnd = (result) => {
     if (!(result && result.source && result.destination)) { return }
 
     const items = Array.from(remainingSongs)
@@ -30,11 +32,15 @@ const SongList: React.FC<SongListProps> = ({ ongoingPlaylist, poolControls }): J
     const [reorderedItem] = items.splice(from, 1)
     items.splice(to, 0, reorderedItem)
 
-    // dispatch(parseFromPlaylistReorderer(items))
-    // if (timerId) { clearTimeout(timerId) }
-    // timerId = setTimeout(() => {
-    //   dispatch(updateInBackend({ songs: items }))
-    // }, 3000)
+    setRemainingSongs(items)
+    if (timerId) { clearTimeout(timerId) }
+    timerId = setTimeout(async () => {
+      const { id } = ongoingPlaylist
+      const candidatePoolSize = poolControls.poolSize
+      const response = await client.ongoingPlaylist.reorder(id, remainingSongs, candidatePoolSize)
+      console.log(response)
+      // return response.json()
+    }, 3000)
   }
 
   if (!ongoingPlaylist.id) {
@@ -46,7 +52,7 @@ const SongList: React.FC<SongListProps> = ({ ongoingPlaylist, poolControls }): J
   }
 
   return (
-    <Container style={songListStyle}>
+    <Container className={classes.container}>
       <PlayingSong song={playingSong} />
       <VotingSongs songs={votingSongs} />
       <DragDropContext onDragEnd={handleDragEnd}>
@@ -71,4 +77,14 @@ const SongList: React.FC<SongListProps> = ({ ongoingPlaylist, poolControls }): J
   )
 }
 
-export default SongList
+const style = (theme: typeof adminPalette) => {
+  return {
+    container: {
+      overflowX: 'hidden',
+      overflowY: 'scroll',
+      height: '100%'
+    }
+  }
+}
+
+export default withStyles(style)(SongList)
