@@ -20,7 +20,7 @@ const PlayerFooter: React.FC<PlayerFooterProps> = (props): JSX.Element => {
   if (!ongoingPlaylist) { return <></> }
 
   const redirect = () => { window.location.href = '/ongoing_playlists' }
-  const currentWinner = votation.votation_candidates.reduce((max: any, song: any) => max?.votes > song?.votes ? max : song)
+  // const currentWinner = votation.votation_candidates.reduce((max: any, song: any) => max?.votes > song?.votes ? max : song)
 
   if (!ongoingPlaylist) {
     return (null)

@@ -37,7 +37,7 @@ describe('SignupViewHoc', () => {
     await act(async () => fireEvent.click(subject.getByText('Enviar')))
 
     expect(mockedInstance.signUp).toHaveBeenCalledWith('test@example.com', 'testPassword', 'testUser')
-    expect(subject.getByText('¡Listo! Ya podes loguearte con tu cuenta.')).toBeInTheDocument
+    expect(subject.getByText('¡Listo! Ya podes loguearte con tu cuenta.')).toBeInTheDocument()
   })
 
   it('shows an error message when request fails', async () => {
@@ -59,6 +59,6 @@ describe('SignupViewHoc', () => {
 
     await act(async () => fireEvent.click(subject.getByText('Enviar')))
 
-    expect(subject.getByText('Ups, algo salio mal')).toBeInTheDocument
+    expect(subject.getByText('Ups, algo salio mal')).toBeInTheDocument()
   })
 })

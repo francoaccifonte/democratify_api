@@ -4,10 +4,11 @@ import '@testing-library/jest-dom'
 
 import { SpotifyLoginButton } from '../../../../app/javascript/components/views/account_config'
 import { serializedAccount, serializedSpotifyUser } from '../../../../app/javascript/components/types'
+import { SerializedAccountFactory } from '../../factories'
 
 describe('SpotifyLoginButton', () => {
   it('has an available link to the correct place', async () => {
-    const account: serializedAccount = { id: 1, created_at: new Date(), updated_at: new Date(), spotify_users: [] }
+    const account = SerializedAccountFactory()
     const subject = render(<SpotifyLoginButton account={account} authUri='http://link.to.somewhere' />)
 
     expect(subject.getByRole('button')).toBeInTheDocument()
@@ -16,12 +17,12 @@ describe('SpotifyLoginButton', () => {
   })
 
   it('is disabled if already linked', async () => {
-    const spotify_user: serializedSpotifyUser = { id: 1, created_at: new Date(), updated_at: new Date() }
+    const spotifyUser: serializedSpotifyUser = { id: 1, created_at: new Date(), updated_at: new Date() }
     const account: serializedAccount = {
       id: 1,
       created_at: new Date(),
       updated_at: new Date(),
-      spotify_user
+      spotify_user: spotifyUser
     }
     const subject = render(<SpotifyLoginButton account={account} authUri='http://link.to.somewhere' />)
 

@@ -6,15 +6,15 @@ import { act, render, fireEvent, getByText } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 import { SpotifyPlaylistShowViewHoc } from '../../../../app/javascript/components/views/spotify_playlists/selection'
-import { serialized_account_fixture, serialized_spotify_playlist_fixture } from '../../factories'
+import { SerializedAccountFactory, SerializedSpotifyPlaylistFactory } from '../../factories'
 import { toJson } from '../../../../app/javascript/components/types'
 import client, { OngoingPlaylistModel } from '../../../../app/javascript/requests/'
 
-const fixture = serialized_spotify_playlist_fixture()
+const fixture = SerializedSpotifyPlaylistFactory()
 
 describe('List', () => {
   it('renders a list of playlists', async () => {
-    const subject = render(<SpotifyPlaylistShowViewHoc playlist={toJson(fixture)} account={toJson(serialized_account_fixture())} />)
+    const subject = render(<SpotifyPlaylistShowViewHoc playlist={toJson(fixture)} account={toJson(SerializedAccountFactory())} />)
 
     fixture.spotify_songs.forEach((song) => {
       expect(subject.getByText(song.title)).toBeInTheDocument
@@ -31,7 +31,7 @@ describe('List', () => {
         json: new Promise((resolve, reject) => resolve({ id: 1 }))
       })
       client.ongoingPlaylist = mockedInstance as unknown as OngoingPlaylistModel
-      const subject = render(<SpotifyPlaylistShowViewHoc playlist={toJson(fixture)} account={toJson(serialized_account_fixture())} />)
+      const subject = render(<SpotifyPlaylistShowViewHoc playlist={toJson(fixture)} account={toJson(SerializedAccountFactory())} />)
 
       await act(async () => fireEvent.click(subject.getByText('Reproducir')))
 
@@ -48,7 +48,7 @@ describe('List', () => {
         json: new Promise((resolve, reject) => resolve({ id: 1 }))
       })
       client.ongoingPlaylist = mockedInstance as unknown as OngoingPlaylistModel
-      const subject = render(<SpotifyPlaylistShowViewHoc playlist={toJson(fixture)} account={toJson(serialized_account_fixture())} />)
+      const subject = render(<SpotifyPlaylistShowViewHoc playlist={toJson(fixture)} account={toJson(SerializedAccountFactory())} />)
 
       await act(async () => fireEvent.click(subject.getByText('Reproducir')))
 

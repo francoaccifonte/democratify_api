@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
-import { serialized_spotify_song } from '../../../app/javascript/components/types'
+import { serializedSpotifySong } from '../../../app/javascript/components/types'
 
-export const serialized_spotify_song_fixture = (): serialized_spotify_song => {
+export const SerializedSpotifySongFactory = (): serializedSpotifySong => {
   return {
     id: faker.number.int({ min: 10000000 }),
     title: faker.music.songName(),

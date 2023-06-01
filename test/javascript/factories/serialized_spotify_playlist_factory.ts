@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { serializedSpotifyPlaylist } from '../../../app/javascript/components/types'
 
-export const serialized_spotify_playlist_fixture = (): serializedSpotifyPlaylist => {
+export const SerializedSpotifyPlaylistFactory = (): serializedSpotifyPlaylist => {
   return {
     id: faker.number.int({ min: 10000000 }),
     name: faker.company.name(),
