@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import withStyles from 'react-jss'
@@ -23,6 +23,17 @@ const SongList: React.FC<SongListProps> = ({ ongoingPlaylist, poolControls, clas
   const [playingSong, votingSongs] = [ongoingPlaylist.playing_song, ongoingPlaylist.voting_songs]
   const [remainingSongs, setRemainingSongs] = useState<serializedSpotifySong[]>(ongoingPlaylist.remaining_songs)
 
+  useEffect(() => {
+    if (timerId) { clearTimeout(timerId) }
+    timerId = setTimeout(async () => {
+      const { id } = ongoingPlaylist
+      const candidatePoolSize = poolControls.poolSize
+      const response = await client.ongoingPlaylist.reorder(id, remainingSongs, candidatePoolSize)
+      console.log(response)
+      // return response.json()
+    }, 3000)
+  }, [remainingSongs, poolControls.poolSize])
+
   const handleDragEnd = (result) => {
     if (!(result && result.source && result.destination)) { return }
 
@@ -33,14 +44,6 @@ const SongList: React.FC<SongListProps> = ({ ongoingPlaylist, poolControls, clas
     items.splice(to, 0, reorderedItem)
 
     setRemainingSongs(items)
-    if (timerId) { clearTimeout(timerId) }
-    timerId = setTimeout(async () => {
-      const { id } = ongoingPlaylist
-      const candidatePoolSize = poolControls.poolSize
-      const response = await client.ongoingPlaylist.reorder(id, remainingSongs, candidatePoolSize)
-      console.log(response)
-      // return response.json()
-    }, 3000)
   }
 
   if (!ongoingPlaylist.id) {
