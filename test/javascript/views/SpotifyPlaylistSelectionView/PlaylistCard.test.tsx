@@ -1,9 +1,9 @@
 import React from 'react'
-import { act, render, fireEvent, getByText } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 import { PlaylistCard } from '../../../../app/javascript/components/views/spotify_playlists/selection'
-import { SerializedSpotifyPlaylistFactory } from '../../factories/serialized_spotify_playlist_factory'
+import { SerializedSpotifyPlaylistFactory } from '../../factories/SerializedSpotifyPlaylistFactory'
 
 describe('PlaylistCard', () => {
   it('when failedAuth is undefined shows the login form and sends the request', async () => {

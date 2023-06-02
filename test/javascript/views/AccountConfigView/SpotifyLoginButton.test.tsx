@@ -1,5 +1,5 @@
 import React from 'react'
-import { act, render, fireEvent, getByText } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 import { SpotifyLoginButton } from '../../../../app/javascript/components/views/account_config'

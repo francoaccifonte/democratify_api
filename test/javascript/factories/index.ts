@@ -1,4 +1,4 @@
-export * from './serialized_account_factory'
-export * from './serialized_spotify_playlist_factory'
-export * from './serialized_spotify_song_factory'
-export * from './helpers'
+export { SerializedAccountFactory } from './SerializedAccountFactory'
+export { SerializedSpotifyPlaylistFactory } from './SerializedSpotifyPlaylistFactory'
+export { SerializedSpotifySongFactory } from './SerializedSpotifySongFactory'
+export { buildList } from './helpers'

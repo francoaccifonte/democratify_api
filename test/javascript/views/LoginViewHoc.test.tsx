@@ -1,5 +1,5 @@
 import React from 'react'
-import { act, render, fireEvent, getByText } from '@testing-library/react'
+import { act, render, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 import { LoginViewHoc } from '../../../app/javascript/components/views'
@@ -37,7 +37,7 @@ describe('SignupViewHoc', () => {
   })
 
   it('when failedAuth is false shows a success message', async () => {
-    const subject = render(<LoginViewHoc failedAuth={false}/>)
+    // const subject = render(<LoginViewHoc failedAuth={false}/>)
 
     // Don't know, this case should not happen actually because it gets redirected to the main view
   })

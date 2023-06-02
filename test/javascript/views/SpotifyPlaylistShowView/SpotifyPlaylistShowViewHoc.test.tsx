@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-expressions */
 /* eslint-disable camelcase */
-// TODO: this test is repeated, unify it: test/javascript/views/SpotifyPlaylistSelectionView/SpotifyPlaylistShowViewHoc.test.tsx
 import React from 'react'
-import { act, render, fireEvent, getByText } from '@testing-library/react'
+import { act, render, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 import { SpotifyPlaylistShowViewHoc } from '../../../../app/javascript/components/views/spotify_playlists/selection'
@@ -10,15 +8,24 @@ import { SerializedAccountFactory, SerializedSpotifyPlaylistFactory } from '../.
 import { toJson } from '../../../../app/javascript/components/types'
 import client, { OngoingPlaylistModel } from '../../../../app/javascript/requests/'
 
-const fixture = SerializedSpotifyPlaylistFactory()
+const spotifyPlaylist = SerializedSpotifyPlaylistFactory({})
+const account = SerializedAccountFactory({})
 
-describe('List', () => {
-  it('renders a list of playlists', async () => {
-    const subject = render(<SpotifyPlaylistShowViewHoc playlist={toJson(fixture)} account={toJson(SerializedAccountFactory())} />)
+describe('Show', () => {
+  it('renders a single playlist', async () => {
+    const subject = render(<SpotifyPlaylistShowViewHoc playlist={toJson(spotifyPlaylist)} account={toJson(account)} />)
 
-    fixture.spotify_songs.forEach((song) => {
-      expect(subject.getByText(song.title)).toBeInTheDocument
+    spotifyPlaylist.spotify_songs.forEach((song) => {
+      expect(subject.getByText(song.title)).toBeInTheDocument()
     })
+  })
+
+  it('renders the controls', async () => {
+    const subject = render(<SpotifyPlaylistShowViewHoc playlist={toJson(spotifyPlaylist)} account={toJson(account)} />)
+
+    const img = subject.getByRole('img')
+    expect(img).toBeInTheDocument()
+    expect(img).toHaveAttribute('src', spotifyPlaylist.cover_art_url)
   })
 
   describe('When starting a playlist', () => {
@@ -31,11 +38,11 @@ describe('List', () => {
         json: new Promise((resolve, reject) => resolve({ id: 1 }))
       })
       client.ongoingPlaylist = mockedInstance as unknown as OngoingPlaylistModel
-      const subject = render(<SpotifyPlaylistShowViewHoc playlist={toJson(fixture)} account={toJson(SerializedAccountFactory())} />)
+      const subject = render(<SpotifyPlaylistShowViewHoc playlist={toJson(spotifyPlaylist)} account={toJson(account)} />)
 
       await act(async () => fireEvent.click(subject.getByText('Reproducir')))
 
-      expect(mockedInstance.start).toHaveBeenCalledWith(fixture.id)
+      expect(mockedInstance.start).toHaveBeenCalledWith(spotifyPlaylist.id)
       expect(subject.queryByText('No encontramos ningun dispositivo en spotify')).not.toBeInTheDocument()
     })
 
@@ -48,11 +55,11 @@ describe('List', () => {
         json: new Promise((resolve, reject) => resolve({ id: 1 }))
       })
       client.ongoingPlaylist = mockedInstance as unknown as OngoingPlaylistModel
-      const subject = render(<SpotifyPlaylistShowViewHoc playlist={toJson(fixture)} account={toJson(SerializedAccountFactory())} />)
+      const subject = render(<SpotifyPlaylistShowViewHoc playlist={toJson(spotifyPlaylist)} account={toJson(account)} />)
 
       await act(async () => fireEvent.click(subject.getByText('Reproducir')))
 
-      expect(subject.getByText('No encontramos ningun dispositivo en spotify')).toBeInTheDocument
+      expect(subject.getByText('No encontramos ningun dispositivo en spotify')).toBeInTheDocument()
     })
   })
 })

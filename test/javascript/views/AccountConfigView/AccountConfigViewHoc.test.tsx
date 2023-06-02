@@ -1,13 +1,14 @@
 import React from 'react'
-import { act, render, fireEvent, getByText } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 import { AccountConfigViewHoc } from '../../../../app/javascript/components/views'
-import { serializedAccount, serializedSpotifyUser, toJson } from '../../../../app/javascript/components/types'
+import { serializedAccount, toJson } from '../../../../app/javascript/components/types'
+import { SerializedAccountFactory } from '../../factories'
 
 describe('AccountConfigViewHoc', () => {
   it('renders correctly', async () => {
-    const account: serializedAccount = { id: 1, created_at: new Date(), updated_at: new Date() }
+    const account: serializedAccount = SerializedAccountFactory()
     const subject = render(<AccountConfigViewHoc account={toJson(account)} spotifyAuthUri='http://link.to.somewhere' />)
 
     expect(subject.getByText('Spotify')).toBeInTheDocument()
