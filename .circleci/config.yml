@@ -112,7 +112,7 @@ commands:
     steps:
       - run:
           name: Run eslint
-          command: yarn run eslint app/javascript/components
+          command: yarn eslint
 
 # -------------------------=== JOBS ===------------------------- #
 jobs:
