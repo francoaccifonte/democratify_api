@@ -1,19 +1,18 @@
-import React from 'react';
-import { act, render, fireEvent, getByText } from '@testing-library/react';
+import React from 'react'
+import { render } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
-import { List } from "../../../../app/javascript/components/views/spotify_playlists/selection";
-import { serialized_spotify_playlist_fixture } from "../../factories/serialized_spotify_playlist_factory";
+import { List } from '../../../../app/javascript/components/views/spotify_playlists/selection'
+import { SerializedSpotifyPlaylistFactory } from '../../factories/SerializedSpotifyPlaylistFactory'
+import { buildList } from '../../factories'
 
-const fixture = [serialized_spotify_playlist_fixture(), serialized_spotify_playlist_fixture()]
-fixture[1].id += 1
-fixture[1].name = `${fixture[1].name}_dos`
+const playlist = buildList(SerializedSpotifyPlaylistFactory, 2)
 
-describe("List", () => {
-  it("renders a list of playlists", async () => {
-    const subject = render(<List playlists={fixture}/>);
+describe('List', () => {
+  it('renders a list of playlists', async () => {
+    const subject = render(<List playlists={playlist}/>)
 
-    expect(subject.getByText(fixture[0].name)).toBeInTheDocument
-    expect(subject.getByText(fixture[1].name)).toBeInTheDocument
+    expect(subject.getByText(playlist[0].name)).toBeInTheDocument()
+    expect(subject.getByText(playlist[1].name)).toBeInTheDocument()
   })
 })
