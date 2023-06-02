@@ -1,3 +1,5 @@
+import { serializedSpotifySong } from './serializedSpotifySong'
+
 export interface serializedVotationCandidate {
   id: number;
   votes: number;
@@ -8,5 +10,5 @@ export interface serializedVotationCandidate {
   spotify_playlist_song_id: number;
   votation_id: number;
 
-  spotify_song: serializedVotationCandidate;
+  spotify_song: serializedSpotifySong;
 }

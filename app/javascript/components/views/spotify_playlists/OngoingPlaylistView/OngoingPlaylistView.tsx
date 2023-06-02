@@ -14,7 +14,7 @@ type OngoingPlaylistViewProps = {
 const OngoingPlaylistView: React.FC<OngoingPlaylistViewProps> = (props) => {
   const [poolSize, setPoolSize] = useState<number>(props.ongoingPlaylist.pool_size)
   const poolControls = {
-    incrementPoolSize: () => { setPoolSize(poolSize + 1) },
+    incrementPoolSize: () => { setPoolSize(Math.min(poolSize + 1, props.ongoingPlaylist.remaining_songs.length)) },
     decrementPoolSize: () => { setPoolSize(Math.max(poolSize - 1, 2)) },
     poolSize
   }
