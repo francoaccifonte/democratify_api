@@ -8,8 +8,8 @@ import { SerializedAccountFactory, SerializedSpotifyPlaylistFactory } from '../.
 import { toJson } from '../../../../app/javascript/components/types'
 import client, { OngoingPlaylistModel } from '../../../../app/javascript/requests/'
 
-const spotifyPlaylist = SerializedSpotifyPlaylistFactory({})
-const account = SerializedAccountFactory({})
+const spotifyPlaylist = SerializedSpotifyPlaylistFactory()
+const account = SerializedAccountFactory()
 
 describe('Show', () => {
   it('renders a single playlist', async () => {
