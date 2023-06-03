@@ -15,6 +15,7 @@ class SpotifyUserCreator
     user_data(new_user)
 
     new_user.save!
+    PlaylistImportWorker.perform_async(new_user.id)
   end
 
   private

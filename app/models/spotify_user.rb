@@ -32,8 +32,6 @@ class SpotifyUser < ApplicationRecord
 
   delegate :playlists, to: :client
 
-  after_create :import_playlists
-
   # TODO: remove this method and keep spotify_client
   def client
     @client ||= Spotify::Client.from_user(self)
@@ -49,25 +47,9 @@ class SpotifyUser < ApplicationRecord
     SpotifyUserTokenRefresher.call(user: self)
   end
 
-  def sync_devices(async: false)
-    return ImportSpotifyDevicesWorker.perform_async(id) if async
-
-    ImportSpotifyDevicesWorker.new.perform(id)
-  end
-
   def access_token_expired?
     return false unless access_token_expires_at
 
-    access_token_expires_at < 5.minutes.ago
-  end
-
-  private
-
-  def import_playlists
-    PlaylistImportWorker.perform_async(id)
-  end
-
-  def fetch_client
-    client
+    access_token_expires_at < 5.minutes.from_now
   end
 end

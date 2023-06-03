@@ -28,16 +28,32 @@
 require 'rails_helper'
 
 RSpec.describe SpotifyUser do
-  include_context 'with mocked spotify client'
+  describe '#access_token_expired?' do
+    context 'when token is expired' do
+      it 'returns true' do
+        freeze_time do
+          user = create(:spotify_user, access_token_expires_at: 10.hours.ago)
+          expect(user.access_token_expired?).to be(true)
+        end
+      end
+    end
 
-  context 'when a user is created' do
-    subject { create(:spotify_user) }
+    context 'when token is not expired' do
+      it 'returns false' do
+        freeze_time do
+          user = create(:spotify_user, access_token_expires_at: 10.hours.from_now)
+          expect(user.access_token_expired?).to be(false)
+        end
+      end
+    end
 
-    before { mock_user }
-
-    it 'enqueues an import job' do
-      subject
-      expect(PlaylistImportWorker.jobs.size).to eq(1)
+    context 'when token is about to expire' do
+      it 'returns true' do
+        freeze_time do
+          user = create(:spotify_user, access_token_expires_at: 4.minutes.from_now)
+          expect(user.access_token_expired?).to be(true)
+        end
+      end
     end
   end
 end
