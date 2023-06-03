@@ -27,6 +27,6 @@
 #
 FactoryBot.define do
   factory :votation_candidate do
-    pending
+    votes { 0 }
   end
 end
