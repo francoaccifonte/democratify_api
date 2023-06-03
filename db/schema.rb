@@ -38,20 +38,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_19_011729) do
     t.index ["spotify_playlist_id"], name: "index_ongoing_playlists_on_spotify_playlist_id"
   end
 
-  create_table "spotify_devices", force: :cascade do |t|
-    t.string "external_id", null: false
-    t.string "name", null: false
-    t.string "device_type", null: false
-    t.boolean "is_active", default: false, null: false
-    t.boolean "is_private_session", default: false
-    t.boolean "is_restricted", default: false
-    t.boolean "is_selected", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "spotify_user_id", null: false
-    t.index ["spotify_user_id"], name: "index_spotify_devices_on_spotify_user_id"
-  end
-
   create_table "spotify_playlist_songs", force: :cascade do |t|
     t.datetime "enqueued_at", precision: nil
     t.integer "index"
@@ -150,7 +136,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_19_011729) do
   add_foreign_key "ongoing_playlists", "accounts"
   add_foreign_key "ongoing_playlists", "spotify_playlist_songs", column: "playing_song_id"
   add_foreign_key "ongoing_playlists", "spotify_playlists"
-  add_foreign_key "spotify_devices", "spotify_users"
   add_foreign_key "spotify_playlist_songs", "spotify_playlists"
   add_foreign_key "spotify_playlist_songs", "spotify_songs"
   add_foreign_key "spotify_playlists", "accounts"
