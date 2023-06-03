@@ -27,7 +27,6 @@
 #
 class SpotifyUser < ApplicationRecord
   has_many :spotify_playlists, dependent: :destroy # TODO: playlists are not destroyed when the user is deleted
-  has_many :spotify_devices, dependent: :destroy
 
   belongs_to :account
 
