@@ -32,7 +32,7 @@ FactoryBot.define do
 
     trait :with_votation do
       after(:create) do |op, _caller|
-        create(:votation, account_id:, ongoing_playlist_id: op)
+        create(:votation, account_id: op.account.id, ongoing_playlist: op)
       end
     end
   end

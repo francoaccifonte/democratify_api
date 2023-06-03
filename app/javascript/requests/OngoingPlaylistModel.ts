@@ -1,8 +1,5 @@
-// import { serializedOngoingPlaylist } from '../components/types/'
 import BaseModel from './base_model'
 import { serializedSpotifySong } from '../components/types'
-// import { Song } from '../../types/song'
-// import { serializedSpotifySong } from '../components/types'
 
 class OngoingPlaylistModel extends BaseModel {
   modelName (): string {

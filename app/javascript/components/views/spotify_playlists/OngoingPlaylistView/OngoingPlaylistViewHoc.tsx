@@ -10,7 +10,7 @@ type OngoingPlaylistViewHocProps = {
   votation: string;
 } & HocPropsType
 
-const OngoingPlaylistViewHoc: React.FC<OngoingPlaylistViewHocProps> = (props) => {
+const OngoingPlaylistViewHoc: React.FC<OngoingPlaylistViewHocProps> = (props): JSX.Element => {
   const account: serializedAccount = jsonTo<serializedAccount>(props.account)
   const ongoingPlaylist: serializedOngoingPlaylist = jsonTo<serializedOngoingPlaylist>(props.ongoingPlaylist)
   const votation: serializedVotation = jsonTo<serializedVotation>(props.votation)

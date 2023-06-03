@@ -28,9 +28,7 @@ const SongList: React.FC<SongListProps> = ({ ongoingPlaylist, poolControls, clas
     timerId = setTimeout(async () => {
       const { id } = ongoingPlaylist
       const candidatePoolSize = poolControls.poolSize
-      const response = await client.ongoingPlaylist.reorder(id, remainingSongs, candidatePoolSize)
-      console.log(response)
-      // return response.json()
+      await client.ongoingPlaylist.reorder(id, remainingSongs, candidatePoolSize)
     }, 3000)
   }, [remainingSongs, poolControls.poolSize])
 

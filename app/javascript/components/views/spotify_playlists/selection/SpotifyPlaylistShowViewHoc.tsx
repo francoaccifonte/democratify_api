@@ -9,7 +9,7 @@ type SpotifyPlaylistShowViewHocProps = {
   account: string;
 } & HocPropsType
 
-const SpotifyPlaylistShowViewHoc: React.FC<SpotifyPlaylistShowViewHocProps> = (props) => {
+const SpotifyPlaylistShowViewHoc: React.FC<SpotifyPlaylistShowViewHocProps> = (props): JSX.Element => {
   const account: serializedAccount = jsonTo<serializedAccount>(props.account)
   const playlist: serializedSpotifyPlaylist = jsonTo<serializedSpotifyPlaylist>(props.playlist)
 

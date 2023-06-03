@@ -6,8 +6,4 @@ class OngoingPlaylistsController < ApplicationController
 
     @votation = @ongoing_playlist.votations.where(in_progress: true).first
   end
-
-  # POST /ongoing_playlists
-  # PATCH/PUT /ongoing_playlists/1
-  # DELETE /ongoing_playlists/1
 end
