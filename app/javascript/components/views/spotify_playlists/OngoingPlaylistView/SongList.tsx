@@ -18,6 +18,18 @@ type SongListProps = {
   classes: any;
 }
 
+const handleDragEnd = (result, remainingSongs, setRemainingSongs) => {
+  if (!(result && result.source && result.destination)) { return }
+
+  const items = Array.from(remainingSongs)
+  const from = result.source.index
+  const to = result.destination.index
+  const [reorderedItem] = items.splice(from, 1)
+  items.splice(to, 0, reorderedItem)
+
+  setRemainingSongs(items)
+}
+
 const SongList: React.FC<SongListProps> = ({ ongoingPlaylist, poolControls, classes }): JSX.Element => {
   let timerId: any
   const [playingSong, votingSongs] = [ongoingPlaylist.playing_song, ongoingPlaylist.voting_songs]
@@ -32,18 +44,6 @@ const SongList: React.FC<SongListProps> = ({ ongoingPlaylist, poolControls, clas
     }, 3000)
   }, [remainingSongs, poolControls.poolSize])
 
-  const handleDragEnd = (result) => {
-    if (!(result && result.source && result.destination)) { return }
-
-    const items = Array.from(remainingSongs)
-    const from = result.source.index
-    const to = result.destination.index
-    const [reorderedItem] = items.splice(from, 1)
-    items.splice(to, 0, reorderedItem)
-
-    setRemainingSongs(items)
-  }
-
   if (!ongoingPlaylist.id) {
     return (
       <div>
@@ -56,7 +56,7 @@ const SongList: React.FC<SongListProps> = ({ ongoingPlaylist, poolControls, clas
     <Container className={classes.container}>
       <PlayingSong song={playingSong} />
       <VotingSongs songs={votingSongs} />
-      <DragDropContext onDragEnd={handleDragEnd}>
+      <DragDropContext onDragEnd={(result) => { handleDragEnd(result, remainingSongs, setRemainingSongs) }}>
         <Droppable droppableId="songs">
           {(provided, snapshot) => {
             return (
@@ -89,3 +89,4 @@ const style = (theme: typeof adminPalette) => {
 }
 
 export default withStyles(style)(SongList)
+export { handleDragEnd }
