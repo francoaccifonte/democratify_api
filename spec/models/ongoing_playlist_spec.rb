@@ -26,27 +26,34 @@
 require 'rails_helper'
 
 RSpec.describe OngoingPlaylist do
-  include_context 'with mocked spotify client'
+  let!(:account) { create(:account) }
+  let!(:user) { create(:spotify_user, account:) }
+
+  let!(:songs) { create_list(:spotify_playlist_song, 10, spotify_playlist:) }
+  let!(:spotify_playlist) { create(:spotify_playlist, account:, spotify_user: user) }
 
   context 'when all is correct,' do
-    subject do
-      create(:ongoing_playlist,
-             account:,
-             spotify_playlist: playlist)
-    end
+    subject { create(:ongoing_playlist, account:, spotify_playlist:) }
+
+    include_context 'with mocked spotify client'
 
     before do
       mock_user
     end
 
-    let!(:account) { create(:account) }
-    let!(:user) { create(:spotify_user, account:) }
-
-    let!(:songs) { create_list(:spotify_playlist_song, 10, spotify_playlist: playlist) }
-    let!(:playlist) { create(:spotify_playlist, account:, spotify_user: user) }
-
     it 'is valid' do
       expect(subject).to be_valid
+    end
+  end
+
+  describe '#reorder_songs' do
+    let(:ongoing_playlist) { create(:ongoing_playlist, account:, spotify_playlist:) }
+
+    it 'changes the index of the join table' do
+      initial_order = ongoing_playlist.spotify_playlist_songs.pluck(:id, :index)
+      new_order = (initial_order[1..] + initial_order[0..0]).each_with_index.map { |it, index| { id: it.first, index: } }
+      ongoing_playlist.reorder_songs(new_order)
+      expect(ongoing_playlist.spotify_playlist_songs.reload.map { |it| it.attributes.slice('id', 'index').symbolize_keys }).to eq(new_order)
     end
   end
 end

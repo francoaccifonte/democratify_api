@@ -1,7 +1,5 @@
-// import { serializedOngoingPlaylist } from '../components/types/'
 import BaseModel from './base_model'
-// import { Song } from '../../types/song'
-// import { serializedSpotifySong } from '../components/types'
+import { serializedSpotifySong } from '../components/types'
 
 class OngoingPlaylistModel extends BaseModel {
   modelName (): string {
@@ -16,21 +14,21 @@ class OngoingPlaylistModel extends BaseModel {
     return response
   }
 
-  // reorder (id: number, songs: Song[], poolSize: number) {
-  //   const body = {
-  //     pool_size: poolSize,
-  //     spotify_playlist_songs: songs.map((song, index) => {
-  //       return (
-  //         {
-  //           id: song.id,
-  //           index: index
-  //         }
-  //       )
-  //     })
-  //   }
+  reorder (id: number, songs: serializedSpotifySong[], poolSize: number) {
+    const body = {
+      pool_size: poolSize,
+      spotify_playlist_songs: songs.map((song, index) => {
+        return (
+          {
+            id: song.id,
+            index: index
+          }
+        )
+      })
+    }
 
-  //   return this.put(id, body)
-  // }
+    return this.put(id, body)
+  }
 }
 
 export default OngoingPlaylistModel

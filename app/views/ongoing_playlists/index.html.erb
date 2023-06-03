@@ -1,0 +1,9 @@
+<%= react_component(
+  "OngoingPlaylistViewHoc",
+  props: {
+    account: serialized_account(@account),
+    ongoingPlaylist: serialize_one(@ongoing_playlist),
+    votation: serialize_one(@votation)
+  },
+  prerender: false
+  ) %>
