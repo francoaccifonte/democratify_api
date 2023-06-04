@@ -5,3 +5,4 @@ export { default as AccountConfigViewHoc } from './account_config/AccountConfigV
 export { default as SpotifyPlaylistSelectionViewHoc } from './spotify_playlists/selection/SpotifyPlaylistSelectionViewHoc'
 export { default as SpotifyPlaylistShowViewHoc } from './spotify_playlists/selection/SpotifyPlaylistShowViewHoc'
 export { default as OngoingPlaylistViewHoc } from './spotify_playlists/OngoingPlaylistView/OngoingPlaylistViewHoc'
+export { default as VotationViewHoc } from './votation/VotationViewHoc'
