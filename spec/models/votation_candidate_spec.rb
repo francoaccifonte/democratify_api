@@ -28,5 +28,36 @@
 require 'rails_helper'
 
 RSpec.describe VotationCandidate do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let!(:account) { create(:account) }
+  let!(:spotify_playlist) { create(:spotify_playlist, :with_songs, account:) }
+  let!(:ongoing_playlist) { create(:ongoing_playlist, :with_votation, account:, spotify_playlist:, pool_size: 2) }
+
+  let!(:votation_candidate) do
+    create(
+      :votation_candidate,
+      account:,
+      ongoing_playlist:,
+      spotify_playlist_song: ongoing_playlist.playing_song,
+      votation: ongoing_playlist.votations.in_progress.first
+    )
+  end
+  let!(:other_votation_candidate) do
+    create(
+      :votation_candidate,
+      account:,
+      ongoing_playlist:,
+      spotify_playlist_song: ongoing_playlist.playing_song,
+      votation: ongoing_playlist.votations.in_progress.first
+    )
+  end
+
+  describe '#vote!' do
+    it 'increases votes by one' do
+      expect { votation_candidate.vote! }.to change(votation_candidate, :votes).by(1)
+    end
+
+    it 'does not change votes in other record' do
+      expect { votation_candidate.vote! }.not_to change(other_votation_candidate, :votes)
+    end
+  end
 end

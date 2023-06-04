@@ -18,10 +18,10 @@ describe('OngoingPlaylistViewHoc', () => {
 
       expect(subject.getByText(ongoingPlaylist.playing_song.title)).toBeInTheDocument()
       ongoingPlaylist.voting_songs.forEach((value) => {
-        expect(subject.getByText(value.title)).toBeInTheDocument()
+        expect(subject.getAllByText(value.title)[0]).toBeInTheDocument()
       })
       ongoingPlaylist.remaining_songs.forEach((value) => {
-        expect(subject.getByText(value.title)).toBeInTheDocument()
+        expect(subject.getAllByText(value.title)[0]).toBeInTheDocument()
       })
     })
   })

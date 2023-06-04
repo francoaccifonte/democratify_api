@@ -51,5 +51,9 @@ describe SpotifyUserCreator do
       expect(user.uri).to eq(user_hash[:uri])
       expect(user.href).to eq(user_hash[:href])
     end
+
+    it 'enqueues a PlaylistImportWorker' do
+      expect { subject }.to change(PlaylistImportWorker.jobs, :size).by(1)
+    end
   end
 end

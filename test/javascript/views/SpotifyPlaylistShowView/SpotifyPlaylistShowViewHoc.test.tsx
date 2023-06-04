@@ -16,7 +16,7 @@ describe('Show', () => {
     const subject = render(<SpotifyPlaylistShowViewHoc playlist={toJson(spotifyPlaylist)} account={toJson(account)} />)
 
     spotifyPlaylist.spotify_songs.forEach((song) => {
-      expect(subject.getByText(song.title)).toBeInTheDocument()
+      expect(subject.getAllByText(song.title)[0]).toBeInTheDocument()
     })
   })
 
