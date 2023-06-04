@@ -1,27 +1,19 @@
 class VotationsController < ApplicationController
-  before_action :set_votation, only: %i[show update]
+  before_action :set_votation, only: %i[show vote]
 
   # GET /votations/1
   def show; end
 
-  # PATCH/PUT /votations/1
-  def update
-    if @votation.update(votation_params)
-      redirect_to @votation, notice: "Votation was successfully updated."
-    else
-      render :edit, status: :unprocessable_entity
-    end
+  # PUT /votations/1
+  def vote
+    @votation.votation_candidates.find(params.require(:candidate_id)).vote!
+
+    render :show
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_votation
-    @votation = Votation.find(params[:id])
-  end
-
-  # Only allow a list of trusted parameters through.
-  def votation_params
-    params.fetch(:votation, {})
+    @votation = Account.find(params.require(:account_id)).votations.in_progress.first
   end
 end

@@ -1,10 +1,5 @@
-<p style="color: green"><%= notice %></p>
-
-<%= render @votation %>
-
-<div>
-  <%= link_to "Edit this votation", edit_votation_path(@votation) %> |
-  <%= link_to "Back to votations", votations_path %>
-
-  <%= button_to "Destroy this votation", @votation, method: :delete %>
-</div>
+<%= react_component(
+  'VotationViewHoc',
+  props: hoc_params,
+  prerender: false
+  ) %>

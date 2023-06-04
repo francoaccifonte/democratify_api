@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
@@ -8,15 +8,18 @@ import { ThemeProvider } from 'react-jss'
 import { Text, FullHeightSkeleton } from '../../common'
 import { userPalette } from '../../ColorPalette'
 import { CandidateElement } from '.'
-import { serializedVotation } from '../../types'
+import { FooterContext } from '../contexts/FooterContext'
 
-type VotationViewParams = {
-  votation?: serializedVotation
- };
+type VotationViewParams = {};
 
-const VotationView: React.FC<VotationViewParams> = ({ votation }): JSX.Element => {
+const VotationView: React.FC<VotationViewParams> = (params): JSX.Element => {
   const [selected, setSelected] = useState<number|undefined>(undefined)
+  const { votation } = useContext(FooterContext)
 
+  // https://www.npmjs.com/package/clientjs
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // Implement fingerprinting from that package!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   const voteAlreadyCasted = false // previousVotationIds.includes(String(votationState.votation.id))
 
   const handleVote = async (id: number) => {
