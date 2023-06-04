@@ -100,7 +100,7 @@ commands:
     steps:
       - run:
           name: Run jest
-          command: yarn jest --maxWorkers=8
+          command: yarn jest --maxWorkers=2
 
   run_rubocop:
     steps:
