@@ -6,6 +6,7 @@ Sidekiq::Web.use ActionDispatch::Cookies
 Sidekiq::Web.use ActionDispatch::Session::CookieStore, key: '_interslice_session'
 
 Rails.application.routes.draw do
+  resources :votations, only: %i[show update]
   resources :ongoing_playlists, only: %i[index]
   resources :account_settings, only: %i[index]
   resources :spotify_playlists, only: %i[show index]
