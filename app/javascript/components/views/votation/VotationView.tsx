@@ -1,20 +1,23 @@
-import React, { useContext, useState } from 'react'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
+import React, { useContext, useState, FormEvent, ChangeEvent } from 'react'
 import Button from 'react-bootstrap/Button'
 import moment from 'moment'
-import { ThemeProvider } from 'react-jss'
+import withStyles, { ThemeProvider } from 'react-jss'
 
 import { Text, FullHeightSkeleton } from '../../common'
 import { userPalette } from '../../ColorPalette'
-import { CandidateElement } from '.'
+import { Candidate } from '.'
 import { FooterContext } from '../contexts/FooterContext'
+import { serializedVotationCandidate } from '../../types'
+import { Container } from 'react-bootstrap'
 
-type VotationViewParams = {};
+type VotationViewParams = {
+  classes: any
+};
 
-const VotationView: React.FC<VotationViewParams> = (params): JSX.Element => {
-  const [selected, setSelected] = useState<number|undefined>(undefined)
+const BetterVotationView: React.FC<VotationViewParams> = (props): JSX.Element => {
+  const [selected, setSelected] = useState<serializedVotationCandidate | undefined>(undefined)
   const { votation } = useContext(FooterContext)
+  const accountId = 4
 
   // https://www.npmjs.com/package/clientjs
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -23,45 +26,11 @@ const VotationView: React.FC<VotationViewParams> = (params): JSX.Element => {
   const voteAlreadyCasted = false // previousVotationIds.includes(String(votationState.votation.id))
 
   const handleVote = async (id: number) => {
-    // TODO
-  }
-  const handleSelectCandidate = (id: number) => {
-    // if (!voteAlreadyCasted) { setSelected(id) }
-    setSelected(id)
+    await fetch('http://localhost:3001/accounts/4/votation', { method: 'put', body: JSON.stringify({ candidate_id: selected }) })
   }
 
-  if (!votation) {
-    return <div>No hay una playlist en curso</div>
-  }
-
-  const candidates = votation.votation_candidates
-
-  const Candidates = () => {
-    return (
-      <Container style={{ overflowY: 'auto' }}>
-          {
-            candidates?.map((candidate, index) => {
-              return (
-                <CandidateElement data={candidate} key={index} selected={selected} disabled={voteAlreadyCasted} onSelect={() => handleSelectCandidate(candidate.id)} />
-              )
-            })
-          }
-      </Container>
-    )
-  }
-
-  const VoteButton = () => {
-    if (selected) {
-      return (
-        <Container fluid>
-          <Row>
-            <Button className="mb-3 mt-3" onClick={() => handleVote(selected)} style={{ backgroundColor: userPalette.Info, borderColor: userPalette.Info }}>Votar</Button>
-          </Row>
-        </Container>
-      )
-    } else {
-      return <Button className="mb-3 mt-3" disabled>Votar</Button>
-    }
+  const updateSelectedCandidate = (event: ChangeEvent<HTMLInputElement>, candidate: serializedVotationCandidate) => {
+    setSelected(candidate)
   }
 
   const VotationTimer = () => {
@@ -78,12 +47,71 @@ const VotationView: React.FC<VotationViewParams> = (params): JSX.Element => {
   return (
     <ThemeProvider theme={userPalette}>
       <FullHeightSkeleton header palette='user' flexDirectionColumn overflowY="hidden">
-        <VotationTimer />
-        <Candidates />
-        <VoteButton />
+        <div className={props.classes.mainContainer}>
+            <form className={props.classes.form} id="vote" action='votation' method='post'>
+              {
+                votation.votation_candidates?.map((candidate, index) => {
+                  return (
+                    <label key={`votationRadioFormLabel${index}`}>
+                      <Candidate data={candidate} isSelected={selected?.id === candidate.id}/>
+                      <input
+                        key={`votationRadioFormInput${index}`}
+                        type="radio"
+                        name={`selected_candidate_id:${candidate.id}`}
+                        className={props.classes.formInput}
+                        onChange={(event) => updateSelectedCandidate(event, candidate)} />
+                    </label>
+                  )
+                })
+              }
+              <input type="hidden" name="_method" value="PUT" />
+              <input type="submit" value="Votar" disabled={!selected} className={selected ? props.classes.enabledButton : props.classes.disabledButton}></input>
+            </form>
+        </div>
       </FullHeightSkeleton>
     </ThemeProvider>
   )
 }
 
-export default VotationView
+const styles = (theme: typeof userPalette) => {
+  return {
+    mainContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      width: '100%',
+      overflowY: 'scroll'
+    },
+    form: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '1rem',
+      width: '100%'
+    },
+    formInput: {
+      display: 'none'
+    },
+    button: {
+      fontFamily: 'Poppins',
+      fontStyle: 'normal',
+      fontWeight: 'normal',
+      fontSize: '1.25rem',
+      lineHeight: '1.125rem',
+      border: '0',
+      borderRadius: '0.5rem',
+      height: '60px',
+      position: 'sticky',
+      bottom: 0
+    },
+    disabledButton: {
+      backgroundColor: theme.Muted,
+      composes: '$button'
+    },
+    enabledButton: {
+      backgroundColor: theme.Success,
+      composes: '$button'
+    }
+  }
+}
+
+export default withStyles(styles)(BetterVotationView)
