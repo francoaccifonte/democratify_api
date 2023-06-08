@@ -1,15 +1,8 @@
 class VotationsController < ApplicationController
-  before_action :set_votation, only: %i[show vote]
+  before_action :set_votation, only: %i[show]
 
   # GET /votations/1
   def show; end
-
-  # PUT /votations/1
-  def vote
-    @votation.votation_candidates.find(params.require(:candidate_id)).vote!
-
-    render :show
-  end
 
   private
 

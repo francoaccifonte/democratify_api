@@ -49,7 +49,7 @@ RSpec.describe OngoingPlaylist do
   describe '#reorder_songs' do
     let(:ongoing_playlist) { create(:ongoing_playlist, account:, spotify_playlist:) }
 
-    it 'changes the index of the join table' do
+    it 'changes the index of the join table' do # Flaky
       initial_order = ongoing_playlist.spotify_playlist_songs.pluck(:id, :index)
       new_order = (initial_order[1..] + initial_order[0..0]).each_with_index.map { |it, index| { id: it.first, index: } }
       ongoing_playlist.reorder_songs(new_order)

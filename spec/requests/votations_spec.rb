@@ -17,19 +17,4 @@ RSpec.describe "/votations" do
       expect(response).to have_http_status(:success)
     end
   end
-
-  describe "PUT account/:id/vote" do
-    subject { put account_votation_url(account.id), params: { account_id: account.id, candidate_id: chosen_candidate.id } }
-
-    context "with valid parameters" do
-      it 'casts a vote' do
-        expect { subject }.to change { chosen_candidate.reload.votes }.by(1)
-      end
-
-      it 'is successful' do
-        subject
-        expect(response).to have_http_status(:success)
-      end
-    end
-  end
 end

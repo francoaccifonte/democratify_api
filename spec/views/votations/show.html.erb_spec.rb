@@ -8,6 +8,7 @@ RSpec.describe "votations/show" do
 
   before do
     assign(:votation, votation)
+    assign(:account, account)
   end
 
   it 'renders the react component' do
@@ -18,7 +19,8 @@ RSpec.describe "votations/show" do
       .with('VotationViewHoc',
             props: hash_including(
               {
-                votation: VotationSerializer.new.serialize_to_json(votation)
+                votation: VotationSerializer.new.serialize_to_json(votation),
+                accountId: account.id
               }
             ),
             prerender: false)

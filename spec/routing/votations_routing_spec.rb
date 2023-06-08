@@ -7,7 +7,7 @@ RSpec.describe VotationsController do
     end
 
     it "routes to #update via PUT" do
-      expect(put: "/accounts/1/votation").to route_to("votations#vote", account_id: "1")
+      expect(put: "/api/accounts/1/votation").to route_to("api/votations#vote", account_id: "1")
     end
   end
 end

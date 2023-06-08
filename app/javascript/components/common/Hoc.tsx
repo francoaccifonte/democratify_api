@@ -1,14 +1,14 @@
 import React from 'react'
 
 import { ThemeProvider } from 'react-jss'
-import { adminPalette, userPalette } from '../ColorPalette'
+import { Palette, adminPalette } from '../ColorPalette'
 import { FooterContext } from '../views/contexts/FooterContext'
 import { serializedVotation, serializedOngoingPlaylist, jsonTo } from '../types'
 
 type HocPropsType = {
   ongoingPlaylist?: string;
   votation?: string;
-  palette?: (typeof userPalette) | (typeof adminPalette)
+  palette?: Palette
 }
 
 type HocType = HocPropsType & {

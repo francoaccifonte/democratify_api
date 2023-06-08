@@ -1,7 +1,7 @@
 <%= react_component(
   'VotationViewHoc',
   props: {
-    account: serialize_one(@account)
+    accountId: @account.id
   }.merge(hoc_params),
   prerender: false
   ) %>
