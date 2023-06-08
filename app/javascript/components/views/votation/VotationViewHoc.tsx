@@ -4,12 +4,14 @@ import Hoc, { HocPropsType } from '../../common/Hoc'
 import { VotationView } from './'
 import { userPalette } from '../../ColorPalette'
 
-type VotationViewHocProps = {} & HocPropsType
+type VotationViewHocProps = {
+  accountId: string
+} & HocPropsType
 
 const VotationViewHoc: React.FC<VotationViewHocProps> = (props): JSX.Element => {
   return (
     <Hoc {...{ palette: userPalette, ...props }} >
-      <VotationView/>
+      <VotationView accountId={Number(props.accountId)}/>
     </Hoc>
   )
 }

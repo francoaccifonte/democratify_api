@@ -1,32 +1,35 @@
-import React, { useContext, useState, FormEvent, ChangeEvent } from 'react'
+import React, { useContext, useState, ChangeEvent } from 'react'
 import Button from 'react-bootstrap/Button'
 import moment from 'moment'
 import withStyles, { ThemeProvider } from 'react-jss'
+import { ClientJS } from 'clientjs'
 
+import client from '../../../requests/'
 import { Text, FullHeightSkeleton } from '../../common'
 import { userPalette } from '../../ColorPalette'
 import { Candidate } from '.'
 import { FooterContext } from '../contexts/FooterContext'
 import { serializedVotationCandidate } from '../../types'
-import { Container } from 'react-bootstrap'
 
 type VotationViewParams = {
-  classes: any
+  classes: any;
+  accountId: number;
 };
 
-const BetterVotationView: React.FC<VotationViewParams> = (props): JSX.Element => {
+const VotationView: React.FC<VotationViewParams> = (props): JSX.Element => {
   const [selected, setSelected] = useState<serializedVotationCandidate | undefined>(undefined)
   const { votation } = useContext(FooterContext)
-  const accountId = 4
+  const previousVotationIds = localStorage.getItem('votation_ids')?.split(',') || []
+  const { accountId } = props
 
-  // https://www.npmjs.com/package/clientjs
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // Implement fingerprinting from that package!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  const voteAlreadyCasted = false // previousVotationIds.includes(String(votationState.votation.id))
+  const voteAlreadyCasted = previousVotationIds.includes(String(votation.id))
+  console.log(voteAlreadyCasted)
 
-  const handleVote = async (id: number) => {
-    await fetch('http://localhost:3001/accounts/4/votation', { method: 'put', body: JSON.stringify({ candidate_id: selected }) })
+  const handleVote = async (event: React.MouseEvent<HTMLInputElement>) => {
+    const response = await client.votations.castVote(accountId, selected.id, new ClientJS().getFingerprint())
+    if (response.ok) {
+      localStorage.setItem('votation_ids', [...previousVotationIds, votation.id].join(','))
+    }
   }
 
   const updateSelectedCandidate = (event: ChangeEvent<HTMLInputElement>, candidate: serializedVotationCandidate) => {
@@ -64,8 +67,7 @@ const BetterVotationView: React.FC<VotationViewParams> = (props): JSX.Element =>
                   )
                 })
               }
-              <input type="hidden" name="_method" value="PUT" />
-              <input type="submit" value="Votar" disabled={!selected} className={selected ? props.classes.enabledButton : props.classes.disabledButton}></input>
+              <Button className={selected ? props.classes.enabledButton : props.classes.disabledButton} disabled={voteAlreadyCasted} onClick={handleVote}>Votar</Button>
             </form>
         </div>
       </FullHeightSkeleton>
@@ -80,7 +82,8 @@ const styles = (theme: typeof userPalette) => {
       flexDirection: 'row',
       justifyContent: 'center',
       width: '100%',
-      overflowY: 'scroll'
+      overflowY: 'scroll',
+      paddingTop: '20px'
     },
     form: {
       display: 'flex',
@@ -99,9 +102,9 @@ const styles = (theme: typeof userPalette) => {
       lineHeight: '1.125rem',
       border: '0',
       borderRadius: '0.5rem',
-      height: '60px',
       position: 'sticky',
-      bottom: 0
+      bottom: 0,
+      composes: 'py-4'
     },
     disabledButton: {
       backgroundColor: theme.Muted,
@@ -114,4 +117,4 @@ const styles = (theme: typeof userPalette) => {
   }
 }
 
-export default withStyles(styles)(BetterVotationView)
+export default withStyles(styles)(VotationView)

@@ -30,7 +30,6 @@ const BetterCandidate = (props: CandidateElementProps) => {
 }
 
 const styles = (palette: typeof userPalette) => {
-  console.log(palette)
   return {
     container: {
       display: 'flex',
