@@ -22,7 +22,7 @@ module SerializationConcern
 
     serializer = serializer_class&.new(**options) ||
                  guess_serializer(object.class).new(**options)
-    serializer.serialize_to_json(object)
+    serializer.serialize_to_json(optimized_object(object, serializer))
   end
 
   def serialize_many(resources, options: {}, serializer_class: nil)
@@ -38,5 +38,13 @@ module SerializationConcern
 
   def guess_serializer(klass)
     "#{klass.name}Serializer".constantize
+  end
+
+  def optimized_object(object, serializer)
+    ActiveRecord::Base.logger = Logger.new(STDOUT)
+    return object unless serializer.class.respond_to?(:performant_query)
+
+    byebug
+    serializer.class.performant_query.find(object.id)
   end
 end

@@ -29,7 +29,7 @@ class OngoingPlaylistSerializer < Panko::Serializer
   has_one :account, serializer: AccountSerializer
   has_one :spotify_playlist, serializer: SpotifyPlaylistSerializer, only: %i[id name description cover_art_url]
   has_one :playing_song, serializer: SpotifyPlaylistSongSerializer
-  has_many :voting_songs, serializer: SpotifyPlaylistSongSerializer
+  # has_many :voting_songs, serializer: SpotifyPlaylistSongSerializer
   has_many :remaining_songs, serializer: SpotifyPlaylistSongSerializer
 
   def playing_song
@@ -41,4 +41,16 @@ class OngoingPlaylistSerializer < Panko::Serializer
   end
 
   delegate :remaining_songs, to: :object
+
+  def self.performant_query
+    OngoingPlaylist.includes(
+      {
+        votations: {
+          votation_candidates: {
+            spotify_playlist_song: :spotify_song
+          }
+        }
+      }
+    )
+  end
 end

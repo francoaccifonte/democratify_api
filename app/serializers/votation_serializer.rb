@@ -34,4 +34,14 @@ class VotationSerializer < Panko::Serializer
              :account_id, :ongoing_playlist_id
 
   has_many :votation_candidates, serializer: VotationCandidateSerializer
+
+  def self.performant_query
+    Votation.includes(
+      {
+        votation_candidates: {
+          spotify_playlist_song: :spotify_song
+        }
+      }
+    )
+  end
 end
