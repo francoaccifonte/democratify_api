@@ -83,6 +83,7 @@ export default abstract class BaseModel {
     )
   }
 
+  // The following methods trigger requests against arbitrary urls
   appGet (path?: string, params?: any) {
     const url = new URL(`${this.baseUrl}/${path}`)
     if (params) {

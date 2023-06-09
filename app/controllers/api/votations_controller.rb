@@ -13,6 +13,7 @@ module Api
     end
 
     def vote
+      # TODO: frontend sends a parameter called fingerprint, use it to determine if a user voted twice for the same votation
       @votation.votation_candidates.find(params.require(:candidate_id)).vote!
 
       render_one @votation

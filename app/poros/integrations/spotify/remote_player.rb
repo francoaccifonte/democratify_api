@@ -10,6 +10,7 @@ module Spotify
     end
 
     def playing_song_remaining_time
+      # TODO: rename this to be specific about what it returns (seconds)
       state = playback_state
       return 0.seconds if state == ''
 

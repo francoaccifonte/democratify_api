@@ -1,0 +1,27 @@
+.admin_pallete {
+  background-color: #0B2355; /* Primary: */
+  background-color: #021335; /* Secondary: */
+  background-color: #80C999; /* Success: */
+  background-color: #DABC6F; /* Warning: */
+  background-color: #D02B35; /* Danger: */
+  background-color: #B8C6E0; /* Info: */
+  background-color: #203661; /* Light: */
+  background-color: #000000; /* Dark: */
+  background-color: #5571AA; /* Muted: */
+  background-color: #FFFFFF; /* White: */
+  background-color: #000000; /* Black: */
+}
+
+.userPalette {
+  background-color: #63034E; /* Primary */
+  background-color: #39002D; /* Secondary */
+  background-color: #0B65B8; /* Success */
+  background-color: #F88703; /* Warning */
+  background-color: #8B0A0A; /* Danger */
+  background-color: #DA62C0; /* Info */
+  background-color: #770B5F; /* Light */
+  background-color: #000000; /* Dark */
+  background-color: #AA1E8B; /* Muted */
+  background-color: #FFFFFF; /* White */
+  background-color: #000000; /* Black */
+}

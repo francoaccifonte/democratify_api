@@ -19,10 +19,12 @@ Rails.application.routes.draw do
 
   resources :accounts, only: [] do
     get '/votation', to: 'votations#show'
-    put '/votation', to: 'votations#vote'
   end
   get '/spotify_login', to: 'api/webhook#spotify_login'
   namespace :api do
+    resources :accounts, only: [] do
+      put '/votation', to: 'votations#vote'
+    end
     resources :ongoing_playlists, only: %i[update create destroy index]
     resources :spotify_playlists, only: %i[show index update]
   end

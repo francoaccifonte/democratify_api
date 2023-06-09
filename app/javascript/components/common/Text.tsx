@@ -7,6 +7,7 @@ type TextProps = {
   onClick?: () => void;
   className?: string;
   href?: string;
+  style?: any;
 }
 
 const Text = (props: TextProps) => {
@@ -56,29 +57,30 @@ const Text = (props: TextProps) => {
       cursor: 'pointer'
     }
   }
-  let style: any
+  let normalStyle: any
 
   switch (props.type) {
     case 'header':
-      style = headerStyle
+      normalStyle = headerStyle
       break
     case 'title':
-      style = titleStyle
+      normalStyle = titleStyle
       break
     case 'bodyRegular':
-      style = bodyRegularStyle
+      normalStyle = bodyRegularStyle
       break
     case 'bodyImportant':
-      style = bodyImportantStyle
+      normalStyle = bodyImportantStyle
       break
     case 'bodyCaption':
-      style = bodyCaptionStyle
+      normalStyle = bodyCaptionStyle
       break
     case 'link':
-      style = linkStyle
+      normalStyle = linkStyle
       break
   }
-  style.color = props.color
+  normalStyle.color = props.color
+  const style = { ...normalStyle, ...props.style }
 
   if (props.type === 'link') {
     return <span className ={props.className} style={style} onClick={() => { window.location.href = props.href }} >{props.children}</span>
