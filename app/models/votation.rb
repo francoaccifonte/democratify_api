@@ -59,6 +59,8 @@ class Votation < ApplicationRecord
   private
 
   def set_candidates
+    return if votation_candidates.any?
+
     next_votation_songs.each do |spotify_playlist_song|
       votation_candidates.create!(
         spotify_playlist_song:,
@@ -69,7 +71,7 @@ class Votation < ApplicationRecord
   end
 
   def next_votation_songs
-    ongoing_playlist.spotify_playlist_songs.order(index: :asc).first(pool_size)
+    ongoing_playlist.spotify_playlist_songs.order(index: :asc)[1..pool_size]
   end
 
   def set_queued

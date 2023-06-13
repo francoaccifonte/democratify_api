@@ -19,6 +19,11 @@ describe ShowStarter do
       expect(OngoingPlaylist.last.account_id).to eq(account.id)
     end
 
+    it 'returns an OngoingPlaylist instance' do
+      op = subject
+      expect(op).to be_a(OngoingPlaylist)
+    end
+
     it 'assigns the correct spotify_playlist' do
       subject
       expect(OngoingPlaylist.last.spotify_playlist.id).to eq(spotify_playlist.id)
@@ -31,7 +36,21 @@ describe ShowStarter do
 
     it 'has the correct ammount of voting songs / candidates' do
       subject
-      expect(OngoingPlaylist.last.voting_songs.count).to eq(subject.pool_size)
+      op = OngoingPlaylist.last
+      expect(op.voting_songs.count).to eq(subject.pool_size)
+      expect(op.voting_songs.map(&:spotify_song_id)).not_to include(SpotifyPlaylistSong.find(op.playing_song_id).spotify_song_id)
+    end
+
+    it 'has the correct candidates' do
+      expected_candidates = spotify_playlist.spotify_playlist_songs.order(index: :asc)[1..OngoingPlaylist::DEFAULT_POOL_SIZE].pluck(:id)
+      subject
+      actual_candidates = OngoingPlaylist.last.votations.in_progress.first.votation_candidates.pluck(:spotify_playlist_song_id)
+      expect(actual_candidates).to match_array(expected_candidates)
+    end
+
+    it 'starts playing the correct song' do
+      subject
+      expect(OngoingPlaylist.last.playing_song_id).to eq(spotify_playlist.spotify_playlist_songs.order(index: :asc).first.id)
     end
 
     it 'sends a song to the active remote' do
