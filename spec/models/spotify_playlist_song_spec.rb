@@ -34,7 +34,6 @@ RSpec.describe SpotifyPlaylistSong do
     context 'when no index is specified,' do
       it 'gives the correct index' do
         new_song = described_class.new(spotify_playlist:, spotify_song: new_spotify_song)
-        # byebug
         new_song.save!
         expect(new_song.index).to eq(spotify_playlist.reload.spotify_playlist_songs.count)
       end
@@ -43,9 +42,12 @@ RSpec.describe SpotifyPlaylistSong do
     context 'when the index is specified' do
       it 'throws an error if it is invalid' do
         new_song = described_class.new(spotify_playlist:, spotify_song: new_spotify_song, index: 1)
-        # expect { new_song.save! }.to raise_error
-        byebug
-        new_song.save!
+        expect { new_song.save! }.to raise_error(ActiveRecord::RecordNotUnique)
+      end
+
+      it 'can be valid' do
+        new_song = described_class.new(spotify_playlist:, spotify_song: new_spotify_song, index: ongoing_playlist.spotify_playlist_songs.count + 3)
+        expect(new_song.save!).to be_truthy
       end
     end
   end
