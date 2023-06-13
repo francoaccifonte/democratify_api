@@ -17,14 +17,7 @@ class OngoingPlaylistModel extends BaseModel {
   reorder (id: number, songs: serializedSpotifySong[], poolSize: number) {
     const body = {
       pool_size: poolSize,
-      spotify_playlist_songs: songs.map((song, index) => {
-        return (
-          {
-            id: song.id,
-            index: index
-          }
-        )
-      })
+      spotify_playlist_songs: songs.map((song) => song.id)
     }
 
     return this.put(id, body)

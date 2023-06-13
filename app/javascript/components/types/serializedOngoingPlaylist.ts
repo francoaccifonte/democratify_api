@@ -1,4 +1,4 @@
-import { serializedAccount, serializedSpotifyPlaylist, serializedSpotifySong } from '.'
+import { serializedAccount, serializedSpotifyPlaylist, serializedSpotifyPlaylistSong } from '.'
 
 export interface serializedOngoingPlaylist {
   id: number;
@@ -8,7 +8,7 @@ export interface serializedOngoingPlaylist {
 
   account: serializedAccount;
   spotify_playlist: serializedSpotifyPlaylist;
-  playing_song: serializedSpotifySong
-  voting_songs: serializedSpotifySong[];
-  remaining_songs: serializedSpotifySong[];
+  playing_song: serializedSpotifyPlaylistSong
+  voting_songs: serializedSpotifyPlaylistSong[];
+  remaining_songs: serializedSpotifyPlaylistSong[];
 }
