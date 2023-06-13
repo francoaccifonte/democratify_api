@@ -4,7 +4,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import withStyles from 'react-jss'
 
 import { SongListElementDraggable, PlayingSong, VotingSongs } from './'
-import { serializedOngoingPlaylist, serializedSpotifySong } from '../../../types'
+import { serializedOngoingPlaylist, serializedSpotifyPlaylistSong } from '../../../types'
 import { adminPalette } from '../../../ColorPalette'
 import client from '../../../../requests/index'
 
@@ -32,15 +32,15 @@ const handleDragEnd = (result, remainingSongs, setRemainingSongs) => {
 
 const SongList: React.FC<SongListProps> = ({ ongoingPlaylist, poolControls, classes }): JSX.Element => {
   let timerId: any
-  const [playingSong, votingSongs] = [ongoingPlaylist.playing_song, ongoingPlaylist.voting_songs]
-  const [remainingSongs, setRemainingSongs] = useState<serializedSpotifySong[]>(ongoingPlaylist.remaining_songs)
+  const [playingSong, votingSongs] = [ongoingPlaylist.playing_song, ongoingPlaylist.voting_songs.sort((it) => it.id)]
+  const [remainingSongs, setRemainingSongs] = useState<serializedSpotifyPlaylistSong[]>(ongoingPlaylist.remaining_songs.sort((it) => -it.index))
 
   useEffect(() => {
     if (timerId) { clearTimeout(timerId) }
     timerId = setTimeout(async () => {
       const { id } = ongoingPlaylist
       const candidatePoolSize = poolControls.poolSize
-      await client.ongoingPlaylist.reorder(id, remainingSongs, candidatePoolSize)
+      await client.ongoingPlaylist.reorder(id, [...remainingSongs, playingSong, ...votingSongs], candidatePoolSize)
     }, 3000)
   }, [remainingSongs, poolControls.poolSize])
 

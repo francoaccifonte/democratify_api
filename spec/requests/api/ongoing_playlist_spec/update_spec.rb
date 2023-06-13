@@ -39,14 +39,7 @@ RSpec.describe Api::OngoingPlaylistsController do
     end
 
     context 'when reordering the playlist,' do
-      let(:params) do
-        {
-          spotify_playlist_songs:
-          ongoing_playlist.spotify_playlist_songs.pluck(:id).shuffle.each_with_index.map do |id, index|
-            { id:, index: }
-          end
-        }
-      end
+      let(:params) { { spotify_playlist_songs: ongoing_playlist.spotify_playlist_songs.pluck(:id).shuffle } }
 
       it_behaves_like 'returns no content'
 
@@ -55,6 +48,15 @@ RSpec.describe Api::OngoingPlaylistsController do
         subject
         new_order = ongoing_playlist.reload.spotify_playlist_songs.sort_by(&:id).pluck(:id, :index)
         expect(old_order).not_to eq(new_order)
+      end
+
+      context 'when params are invalid' do
+        let(:params) { { spotify_playlist_songs: [1, 2, 3] } }
+
+        it 'returns an unprocessable entity' do
+          subject
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
       end
     end
   end

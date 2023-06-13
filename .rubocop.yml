@@ -50,6 +50,9 @@ RSpec/ExampleLength:
 RSpec/ContextWording:
   Enabled: false
 
+RSpec/NestedGroups:
+  Enabled: false
+
 # This one makes no sense to me. I want a record save to fail if one of the fields is missing, putting a default is idiotic
 Rails/NotNullColumn:
   Enabled: false
