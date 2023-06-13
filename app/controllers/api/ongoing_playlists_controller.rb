@@ -19,7 +19,7 @@ module Api
     def update
       ActiveRecord::Base.transaction do
         @ongoing_playlist.update!(update_params)
-        @ongoing_playlist.reorder_songs(song_order) if song_order
+        PlaylistReorderer.call(new_order: song_order, spotify_playlist: @ongoing_playlist.spotify_playlist) if song_order
       end
     end
 
@@ -55,7 +55,8 @@ module Api
     end
 
     def song_order
-      @song_order ||= params.permit(spotify_playlist_songs: %i[id index]).to_h[:spotify_playlist_songs]
+      # looks like { spotify_playlist_songs: [3131, 1412, 5154, 343] } all ids from songs already in the palylist
+      @song_order ||= params.permit(spotify_playlist_songs: [])['spotify_playlist_songs']&.map(&:to_i)
     end
 
     def handle_device_error
