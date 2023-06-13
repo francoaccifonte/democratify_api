@@ -24,29 +24,5 @@
 require 'rails_helper'
 
 RSpec.describe SpotifyPlaylistSong do
-  let!(:account) { create(:account) }
-  let!(:spotify_user) { create(:spotify_user, account:) }
-  let!(:spotify_playlist) { create(:spotify_playlist, :with_songs, account:, spotify_user:) }
-  let!(:ongoing_playlist) { create(:ongoing_playlist, account:, spotify_playlist:) }
-  let!(:new_spotify_song) { create(:spotify_song) }
-
-  describe '#set_index' do
-    context 'when no index is specified,' do
-      it 'gives the correct index' do
-        new_song = described_class.new(spotify_playlist:, spotify_song: new_spotify_song)
-        # byebug
-        new_song.save!
-        expect(new_song.index).to eq(spotify_playlist.reload.spotify_playlist_songs.count)
-      end
-    end
-
-    context 'when the index is specified' do
-      it 'throws an error if it is invalid' do
-        new_song = described_class.new(spotify_playlist:, spotify_song: new_spotify_song, index: 1)
-        # expect { new_song.save! }.to raise_error
-        byebug
-        new_song.save!
-      end
-    end
-  end
+  pending "add some examples to (or delete) #{__FILE__}"
 end

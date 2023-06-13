@@ -62,16 +62,6 @@ class OngoingPlaylist < ApplicationRecord
     spotify_playlist_songs.find(playing_song_id)
   end
 
-  def reorder_songs(song_indexes)
-    # song_indexes looks like [{ id: 921, index: 0}, { id: 232, index: 1 }]
-    songs = spotify_playlist_songs
-    transaction do
-      song_indexes.each do |song_index|
-        songs.find(song_index.fetch(:id)).update!(index: song_index.fetch(:index))
-      end
-    end
-  end
-
   private
 
   def playing_song_is_in_playlist
