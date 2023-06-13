@@ -13,7 +13,7 @@
 # Indexes
 #
 #  index_spotify_playlist_songs_on_spotify_playlist_id            (spotify_playlist_id)
-#  index_spotify_playlist_songs_on_spotify_playlist_id_and_index  (spotify_playlist_id,index)
+#  index_spotify_playlist_songs_on_spotify_playlist_id_and_index  (spotify_playlist_id,index) UNIQUE
 #  index_spotify_playlist_songs_on_spotify_song_id                (spotify_song_id)
 #
 # Foreign Keys
@@ -42,7 +42,7 @@ class SpotifyPlaylistSong < ApplicationRecord
   def set_index
     return if index
 
-    self.index = spotify_playlist.spotify_playlist_songs.count
+    self.index = spotify_playlist.spotify_playlist_songs.count + 1
   end
 
   def spotify_client

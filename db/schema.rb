@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_19_011729) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_13_014649) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_19_011729) do
     t.datetime "updated_at", null: false
     t.bigint "spotify_playlist_id", null: false
     t.bigint "spotify_song_id", null: false
-    t.index ["spotify_playlist_id", "index"], name: "index_spotify_playlist_songs_on_spotify_playlist_id_and_index"
+    t.index ["spotify_playlist_id", "index"], name: "index_spotify_playlist_songs_on_spotify_playlist_id_and_index", unique: true
     t.index ["spotify_playlist_id"], name: "index_spotify_playlist_songs_on_spotify_playlist_id"
     t.index ["spotify_song_id"], name: "index_spotify_playlist_songs_on_spotify_song_id"
   end
