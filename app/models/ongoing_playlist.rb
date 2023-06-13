@@ -63,6 +63,7 @@ class OngoingPlaylist < ApplicationRecord
   end
 
   def reorder_songs(song_indexes)
+    # song_indexes looks like [{ id: 921, index: 0}, { id: 232, index: 1 }]
     songs = spotify_playlist_songs
     transaction do
       song_indexes.each do |song_index|
