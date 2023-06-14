@@ -2,21 +2,39 @@ class ShowStarter
   def initialize(account:, spotify_playlist:)
     @account = account
     @playlist = spotify_playlist
+    @spotify_playlist_songs = spotify_playlist.spotify_playlist_songs.order(index: :asc).pluck(:id)
   end
 
   def self.call(*args, **kwargs)
     new(*args, **kwargs).call
   end
 
-  def call
+  def call # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     raise 'Account does not have a spotify_user' if account.spotify_user.blank?
 
     ActiveRecord::Base.transaction do
       account.ongoing_playlist&.destroy!
-      ongoing_playlist = OngoingPlaylist.create!(account:, spotify_playlist: playlist)
+      ongoing_playlist = OngoingPlaylist.create!(
+        account:,
+        spotify_playlist: playlist,
+        playing_song_id: @spotify_playlist_songs.first
+      )
 
       send_to_active_remote(ongoing_playlist)
-      create_votation(ongoing_playlist)
+      votation = ongoing_playlist.votations.new(
+        in_progress: true,
+        scheduled_start_for: Time.zone.now + client.playing_song_remaining_time.seconds
+      )
+      ongoing_playlist.pool_size.times do |i|
+        votation.votation_candidates << VotationCandidate.new(
+          spotify_playlist_song_id: @spotify_playlist_songs[i + 1],
+          account: @account,
+          ongoing_playlist:
+        )
+      end
+
+      votation.save!
+      ongoing_playlist
     end
   end
 

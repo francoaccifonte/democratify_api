@@ -65,7 +65,6 @@ class OngoingPlaylist < ApplicationRecord
   private
 
   def playing_song_is_in_playlist
-    return if playing_song.blank?
     return if spotify_playlist_songs.exists?(playing_song.id)
 
     errors.add(:playing_song, 'is not in the playlist')
@@ -80,6 +79,6 @@ class OngoingPlaylist < ApplicationRecord
   def set_playing_song
     return if playing_song_id
 
-    self.playing_song_id = spotify_playlist_songs.sample.id
+    self.playing_song_id = spotify_playlist_songs.order(index: :asc).first.id
   end
 end

@@ -44,7 +44,6 @@ describe SpotifyUserCreator do
       expect(user.refresh_token).to eq('some_refresh_token')
 
       user_hash = JSON.parse(user_body).symbolize_keys
-      # byebug
       expect(user.spotify_id).to eq(user_hash[:id])
       expect(user.name).to eq(user_hash[:display_name])
       expect(user.email).to eq(user_hash[:email])
