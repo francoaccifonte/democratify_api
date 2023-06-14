@@ -7,38 +7,53 @@ class VotationTransitionWorker
   def perform(ongoing_playlist_id) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     @playlist = OngoingPlaylist.find(ongoing_playlist_id)
     current_votation = @playlist.votations.in_progress.first
-
-    # No idea why, but a spec fails without this line: rspec ./spec/workers/votation_transition_worker_spec.rb:37
-    @playlist.votations.queued.first
-
     winner_candidate = current_votation.winner
+    @initial_song_set_ids = {
+      playing_song: @playlist.playing_song_id,
+      voting_songs: @playlist.voting_songs.pluck(:id),
+      remaining_songs: @playlist.remaining_songs.pluck(:id)
+    }
 
     ActiveRecord::Base.transaction do
-      # TODO: split into two separate workers so the song is enqued in spotify only once.
-      #       there should also be some management to drop the playlist if one of them fails
-      send_to_active_remote(winner_candidate.spotify_playlist_song)
-
-      @playlist.update!(playing_song_id: winner_candidate.spotify_playlist_song.id)
+      send_to_active_remote(winner_candidate.spotify_playlist_song.uri)
 
       send_candidates_to_end_of_queue
-      @playlist.votations.in_progress.first.destroy!
-      # TODO: check if a scheduled votation exists and use that one.
-      @playlist.votations.create!(
+      @playlist.update!(playing_song_id: winner_candidate.spotify_playlist_song.id)
+      winner_candidate.spotify_playlist_song.update!(enqueued_at: Time.zone.now)
+
+      current_votation.destroy!
+      votation = @playlist.votations.new(
         in_progress: true,
-        scheduled_start_for: Time.zone.now + @playlist.playing_song_remaining_time
+        scheduled_start_for: Time.zone.now + client.playing_song_remaining_time
       )
+      @playlist.pool_size.times do |i|
+        votation.votation_candidates << VotationCandidate.new(
+          spotify_playlist_song_id: @initial_song_set_ids.fetch(:remaining_songs)[i],
+          account: @playlist.account,
+          ongoing_playlist: @playlist
+        )
+      end
+
+      votation.save!
     end
   end
 
-  def send_to_active_remote(song)
-    song.send_to_active_remote
-    song.update!(enqueued_at: Time.zone.now)
+  def client
+    @client ||= Spotify::Client.from_user(SpotifyUser.find_by(account_id: @playlist.account_id))
+  end
+
+  def send_to_active_remote(song_uri)
+    client.add_to_active_playback_queue!(song_uri)
   end
 
   def send_candidates_to_end_of_queue
-    index = @playlist.remaining_songs.last.index
-    @playlist.voting_songs.each do |song|
-      song.update!(index: (song.index || 0) + index)
-    end
+    PlaylistReorderer.call(
+      spotify_playlist: @playlist.spotify_playlist,
+      new_order: [
+        *@initial_song_set_ids.fetch(:remaining_songs),
+        *@initial_song_set_ids.fetch(:voting_songs),
+        @initial_song_set_ids.fetch(:playing_song)
+      ]
+    )
   end
 end
