@@ -41,3 +41,8 @@ yarn-debug.log*
 .byebug_history
 .vscode
 .env
+
+.terraform/
+*.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
