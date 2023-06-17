@@ -19,11 +19,11 @@ resource "aws_security_group" "rockolify_private" {
   }
 
   ingress {
-    protocol = "tcp"
+    protocol        = "tcp"
     security_groups = [aws_security_group.rockolify_public.id]
-    cidr_blocks = [var.cidrs.vpc]
+    cidr_blocks     = [var.cidrs.vpc]
     self            = true
-    from_port = 0
-    to_port = 10000
+    from_port       = 0
+    to_port         = 10000
   }
 }
