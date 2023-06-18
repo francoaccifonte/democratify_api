@@ -16,3 +16,9 @@ variable "db_username" {
 variable "db_password" {
   default = "rockolify"
 }
+
+data "aws_caller_identity" "current" {}
+
+locals {
+    account_id = data.aws_caller_identity.current.account_id
+}
