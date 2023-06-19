@@ -112,6 +112,15 @@ resource "aws_codebuild_project" "Rockolify" {
     image_pull_credentials_type = "CODEBUILD"
     privileged_mode             = true
     type                        = "LINUX_CONTAINER"
+
+    environment_variable {
+      name  = "AWS_ACCOUNT"
+      value = local.account_id
+    }
+    environment_variable {
+      name  = "REGION"
+      value = local.region
+    }
   }
 
   logs_config {

@@ -7,7 +7,7 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 480062172841.dkr.ecr.us-east-2.amazonaws.com
+      - aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com
   build:
     commands:
       - echo Building Docker image...
@@ -15,5 +15,5 @@ phases:
   post_build:
     commands:
       - echo Pushing Docker image to Amazon ECR...
-      - docker tag rockolify:latest 480062172841.dkr.ecr.us-east-2.amazonaws.com/rockolify:latest
-      - docker push 480062172841.dkr.ecr.us-east-2.amazonaws.com/rockolify:latest
+      - docker tag rockolify:latest ${AWS_ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/rockolify:latest
+      - docker push ${AWS_ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/rockolify:latest
