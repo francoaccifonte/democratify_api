@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 19
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.<your-region>.amazonaws.com
+  build:
+    commands:
+      - echo Building Docker image...
+      - docker build -t rockolify .
+  post_build:
+    commands:
+      - echo Pushing Docker image to Amazon ECR...
+      - docker tag rockolify:latest 480062172841.dkr.ecr.us-east-2.amazonaws.com/rockolify:latest
+      - docker push 480062172841.dkr.ecr.us-east-2.amazonaws.com/rockolify:latest

@@ -1,7 +1,7 @@
-FROM --platform=linux/amd64 ruby:3.2.1-alpine
+FROM ruby:3.2.1-alpine
 
 # Install dependencies
-RUN apk update && apk add --no-cache \
+RUN apk update && apk add \
   build-base \
   postgresql-dev \
   tzdata \
