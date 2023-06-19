@@ -137,7 +137,6 @@ resource "aws_codebuild_project" "Rockolify" {
   }
 }
 
-
 resource "aws_codebuild_webhook" "on_merge_or_message" {
   project_name = aws_codebuild_project.Rockolify.name
 
@@ -146,9 +145,15 @@ resource "aws_codebuild_webhook" "on_merge_or_message" {
       pattern = "PULL_REQUEST_MERGED"
       type    = "EVENT"
     }
+  }
+  filter_group {
     filter {
       pattern = "[codebuild]"
       type    = "COMMIT_MESSAGE"
+    }
+    filter {
+      pattern = "PUSH"
+      type    = "EVENT"
     }
   }
 }
