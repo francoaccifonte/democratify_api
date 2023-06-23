@@ -13,6 +13,15 @@ resource "aws_security_group" "rockolify_public" {
     to_port     = 22
   }
 
+    ingress {
+    description = "attempt to allow ssh"
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    self        = true
+    from_port   = 3001
+    to_port     = 3001
+  }
+
   egress {
     description = "Allow all outgoing traffic"
     protocol    = "-1"
