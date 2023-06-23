@@ -1,8 +1,8 @@
 FROM --platform=linux/amd64 ruby:3.2.1-alpine
 
-ENV SPOTIFY_CLIENT_ID
-ENV SPOTIFY_SECRET
-ENV SENTRY_DSN
+ENV SPOTIFY_CLIENT_ID=$SPOTIFY_CLIENT_ID
+ENV SPOTIFY_SECRET=$SPOTIFY_SECRET
+ENV SENTRY_DSN=$SENTRY_DSN
 
 # Install dependencies
 RUN apk update && apk add --no-cache \
