@@ -123,15 +123,15 @@ resource "aws_codebuild_project" "Rockolify" {
     }
     environment_variable {
       name  = "SPOTIFY_CLIENT_ID"
-      value = var.spotify_client_id
+      value = var.SPOTIFY_CLIENT_ID
     }
     environment_variable {
       name  = "SPOTIFY_SECRET"
-      value = var.spotify_secret
+      value = var.SPOTIFY_SECRET
     }
     environment_variable {
       name  = "SENTRY_DSN"
-      value = var.sentry_dsn
+      value = var.SENTRY_DSN
     }
     environment_variable {
       name  = "DEMOCRATIFYAPI_DATABASE_DB_NAME"

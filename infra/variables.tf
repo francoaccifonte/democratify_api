@@ -25,6 +25,6 @@ locals {
   region     = data.aws_region.current.name
 }
 
-variable "spotify_client_id" {}
-variable "spotify_secret" {}
-variable "sentry_dsn" {}
+variable "SPOTIFY_CLIENT_ID" {}
+variable "SPOTIFY_SECRET" {}
+variable "SENTRY_DSN" {}
