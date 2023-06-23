@@ -13,7 +13,7 @@ resource "aws_security_group" "rockolify_public" {
     to_port     = 22
   }
 
-    ingress {
+  ingress {
     description = "attempt to allow ssh"
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]

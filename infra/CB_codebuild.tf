@@ -121,6 +121,38 @@ resource "aws_codebuild_project" "Rockolify" {
       name  = "REGION"
       value = local.region
     }
+    environment_variable {
+      name  = "SPOTIFY_CLIENT_ID"
+      value = var.spotify_client_id
+    }
+    environment_variable {
+      name  = "SPOTIFY_SECRET"
+      value = var.spotify_secret
+    }
+    environment_variable {
+      name  = "SENTRY_DSN"
+      value = var.sentry_dsn
+    }
+    environment_variable {
+      name  = "DEMOCRATIFYAPI_DATABASE_DB_NAME"
+      value = aws_db_instance.rockolify_db.db_name
+    }
+    environment_variable {
+      name  = "DEMOCRATIFYAPI_DATABASE_USERNAME"
+      value = aws_db_instance.rockolify_db.username
+    }
+    environment_variable {
+      name  = "DEMOCRATIFYAPI_DATABASE_PASSWORD"
+      value = aws_db_instance.rockolify_db.password
+    }
+    environment_variable {
+      name  = "DEMOCRATIFYAPI_DATABASE_HOSTNAME"
+      value = aws_db_instance.rockolify_db.address
+    }
+    environment_variable {
+      name  = "DEMOCRATIFYAPI_DATABASE_PORT"
+      value = aws_db_instance.rockolify_db.port
+    }
   }
 
   logs_config {

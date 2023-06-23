@@ -28,4 +28,4 @@ COPY . .
 RUN bundle exec rails assets:precompile
 
 # Start the application
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3001"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3001", "-e", "production"]
