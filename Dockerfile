@@ -25,7 +25,7 @@ WORKDIR /home/democratify
 # Install gems
 COPY Gemfile Gemfile.lock ./
 RUN gem install bundler -v $(tail -n1 Gemfile.lock)
-RUN bundle install
+RUN bundle install --local
 
 # Install Node.js packages
 COPY package.json yarn.lock ./
