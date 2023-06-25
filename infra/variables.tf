@@ -28,3 +28,4 @@ locals {
 variable "SPOTIFY_CLIENT_ID" {}
 variable "SPOTIFY_SECRET" {}
 variable "SENTRY_DSN" {}
+variable "MASTER_KEY" {}
