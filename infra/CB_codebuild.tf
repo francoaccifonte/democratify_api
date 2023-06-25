@@ -138,6 +138,10 @@ resource "aws_codebuild_project" "Rockolify" {
       value = var.MASTER_KEY
     }
     environment_variable {
+      name  = "RAILS_SERVE_STATIC_FILES"
+      value = "TRUE"
+    }
+    environment_variable {
       name  = "DEMOCRATIFYAPI_DATABASE_DB_NAME"
       value = aws_db_instance.rockolify_db.db_name
     }

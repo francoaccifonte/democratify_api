@@ -5,7 +5,7 @@ resource "aws_security_group" "rockolify_public" {
   vpc_id      = aws_vpc.rockolify.id
 
   ingress {
-    description = "attempt to allow ssh"
+    description = "attempt to allow ssh" // TODO: redescribe
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     self        = true
@@ -14,7 +14,7 @@ resource "aws_security_group" "rockolify_public" {
   }
 
   ingress {
-    description = "attempt to allow ssh"
+    description = "attempt to allow ssh" // TODO: redescribe
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     self        = true
