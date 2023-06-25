@@ -54,7 +54,9 @@ resource "aws_iam_role_policy" "ec2_ecr_policy" {
       "Statement" : [
         {
           "Action" : [
-            "ecr:*"
+            "ecr:*",
+            "s3:*",
+            "ssm:*"
           ],
           "Effect" : "Allow",
           "Resource" : "*"
