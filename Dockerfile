@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 ruby:3.2.1-alpine
+FROM --platform=linux/amd64 public.ecr.aws/docker/library/ruby:3.2.1-alpine
 
 # Install dependencies
 RUN apk update && apk add --no-cache \
