@@ -5,7 +5,8 @@ export default abstract class BaseModel {
   token: string | undefined
 
   constructor (token?: string) {
-    this.baseUrl = 'http://localhost:3001'
+    // this.baseUrl = 'http://localhost:3001'
+    this.baseUrl = window.location.hostname
     this.token = token
   }
 
