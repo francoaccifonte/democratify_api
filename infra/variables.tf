@@ -17,6 +17,10 @@ variable "db_password" {
   default = "rockolify"
 }
 
+variable "rockolify_port" {
+  default = 443
+}
+
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 

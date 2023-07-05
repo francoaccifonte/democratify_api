@@ -5,7 +5,7 @@ resource "aws_security_group" "rockolify_public" {
   vpc_id      = aws_vpc.rockolify.id
 
   ingress {
-    description = "attempt to allow ssh" // TODO: redescribe
+    description = "allow ssh into ec2 instance"
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     self        = true
@@ -14,12 +14,12 @@ resource "aws_security_group" "rockolify_public" {
   }
 
   ingress {
-    description = "attempt to allow ssh" // TODO: redescribe
+    description = "rails app inbound traffic from https"
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     self        = true
-    from_port   = 3001
-    to_port     = 3001
+    from_port   = var.rockolify_port
+    to_port     = var.rockolify_port
   }
 
   egress {

@@ -27,5 +27,6 @@ COPY . .
 # Precompile assets
 RUN bundle exec rails assets:precompile
 
+EXPOSE 80 443
 # Start the application
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3001", "-e", "production"]
