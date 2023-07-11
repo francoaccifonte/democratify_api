@@ -10,7 +10,7 @@ module Spotify
 
     CLIENT_SECRET = ENV['SPOTIFY_SECRET'].freeze
     CLIENT_ID = ENV['SPOTIFY_CLIENT_ID'].freeze
-    REDIRECT_URI = (Rails.env.production? ? 'http://rockolify.click:3001/spotify_login' : 'http://localhost:3001/spotify_login').freeze
+    REDIRECT_URI = (Rails.env.production? ? 'https://rockolify.holasoyfranco.com/spotify_login' : 'http://localhost:3001/spotify_login').freeze
 
     SPOTIFY_URL = 'https://api.spotify.com/v1'
 
