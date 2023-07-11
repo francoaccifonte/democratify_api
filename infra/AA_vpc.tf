@@ -20,6 +20,17 @@ resource "aws_subnet" "rockolify_public" { // TODO: wrap this in a subnet group?
   }
 }
 
+resource "aws_subnet" "rockolify_public2" { // TODO: wrap this in a subnet group?
+  vpc_id                  = aws_vpc.rockolify.id
+  cidr_block              = var.cidrs.public_subnet2
+  availability_zone       = "us-east-2a"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "rockolify-public2"
+  }
+}
+
 resource "aws_subnet" "rockolify_private" { // TODO: wrap this in a subnet group?
   vpc_id                  = aws_vpc.rockolify.id
   cidr_block              = var.cidrs.private_subnet

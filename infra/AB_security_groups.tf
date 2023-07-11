@@ -18,8 +18,17 @@ resource "aws_security_group" "rockolify_public" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     self        = true
-    from_port   = var.rockolify_port
-    to_port     = var.rockolify_port
+    from_port   = 443
+    to_port     = 443
+  }
+
+  ingress {
+    description = "rails app inbound traffic from http"
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    self        = true
+    from_port   = 80
+    to_port     = 80
   }
 
   egress {

@@ -66,6 +66,70 @@ resource "aws_iam_role_policy" "ec2_ecr_policy" {
   )
 }
 
+## Load balancing
+
+resource "aws_lb_target_group" "rockolify" {
+  name     = "rockolifyGroup"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.rockolify.id
+}
+
+resource "aws_lb" "rockolify_lb" {
+  name               = "rockolifyLoadBalancer"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.rockolify_public.id]
+  subnets            = [aws_subnet.rockolify_public.id, aws_subnet.rockolify_public2.id]
+
+  enable_deletion_protection = true
+}
+
+resource "aws_lb_target_group" "rockolify_app" {
+  name     = "rockolifyAppTg"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.rockolify.id
+
+  // TODO: add a custom health check
+}
+
+resource "aws_lb_target_group_attachment" "rockolify" {
+  target_group_arn = aws_lb_target_group.rockolify_app.arn
+  target_id        = aws_instance.rockolify_app.id
+  port             = 80
+}
+
+
+resource "aws_lb_listener" "rockolify_https" {
+  load_balancer_arn = aws_lb.rockolify_lb.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = aws_acm_certificate.cert.arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.rockolify_app.arn
+  }
+}
+
+resource "aws_lb_listener" "rockolify_http" {
+  load_balancer_arn = aws_lb.rockolify_lb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "redirect"
+  
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
 ################# OUTPUTS #########################################################
 
 output "ec2_elastic_ip" {

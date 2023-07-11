@@ -7,8 +7,12 @@ resource "aws_route53_record" "rockolify" {
   zone_id = data.aws_route53_zone.holasoyfranco.zone_id
   name    = "rockolify.${data.aws_route53_zone.holasoyfranco.name}"
   type    = "A"
-  ttl     = "300"
-  records = [aws_eip.rockolify_ec2_ip.public_ip]
+
+  alias {
+    name = aws_lb.rockolify_lb.dns_name
+    zone_id = aws_lb.rockolify_lb.zone_id
+    evaluate_target_health = true
+  }
 }
 
 
