@@ -15,6 +15,6 @@ module AccountSettingsHelper
 
   def redirect_uri
     # TODO: change this with an env variable
-    Rails.env.production? ? 'http://rockolify.click:3001/spotify_login' : 'http://localhost:3001/spotify_login'
+    Rails.env.production? ? 'https://rockolify.holasoyfranco.com/spotify_login' : 'http://localhost:3001/spotify_login'
   end
 end
