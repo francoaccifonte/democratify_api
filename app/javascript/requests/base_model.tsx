@@ -5,7 +5,7 @@ export default abstract class BaseModel {
   token: string | undefined
 
   constructor (token?: string) {
-    this.baseUrl = 'http://ec2-18-217-116-49.us-east-2.compute.amazonaws.com:3001'
+    this.baseUrl = 'https://rockolify.holasoyfranco.com'
     this.token = token
   }
 

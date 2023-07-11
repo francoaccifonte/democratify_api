@@ -5,7 +5,7 @@ variable "cidrs" {
     "private_subnet"  = "172.31.0.0/28"
     "private_subnet2" = "172.31.0.16/28"
     "public_subnet"   = "172.31.0.128/25"
-    "public_subnet2"   = "172.31.1.0/25"
+    "public_subnet2"  = "172.31.1.0/25"
     "vpc"             = "172.31.0.0/16"
   }
 }

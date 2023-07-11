@@ -1,5 +1,5 @@
 data "aws_route53_zone" "holasoyfranco" {
-  name         = "holasoyfranco.com"
+  name = "holasoyfranco.com"
   # private_zone = true
 }
 
@@ -9,8 +9,8 @@ resource "aws_route53_record" "rockolify" {
   type    = "A"
 
   alias {
-    name = aws_lb.rockolify_lb.dns_name
-    zone_id = aws_lb.rockolify_lb.zone_id
+    name                   = aws_lb.rockolify_lb.dns_name
+    zone_id                = aws_lb.rockolify_lb.zone_id
     evaluate_target_health = true
   }
 }
