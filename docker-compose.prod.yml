@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+    redis:
+        image: redis:4-alpine
+        ports:
+            - 3002:6379
+    app:
+        container_name: backend_server
+        image: 480062172841.dkr.ecr.us-east-2.amazonaws.com/rockolify:latest
+        environment:
+            - CONTAINER=APP
+            - REDIS_HOSTNAME=redis
+            - REDIS_PORT=6379
+        env_file:
+            - .env
+        depends_on:
+            - redis
+        ports:
+            - 3001:3001
+        volumes:
+            - ./log:/home/democratify/app/log
+        tty: true
+        stdin_open: true
+        command: "bundle exec rails s -p 3001 -b 0.0.0.0 -e production"
+    sidekiq:
+        container_name: backend_sidekiq
+        image: 480062172841.dkr.ecr.us-east-2.amazonaws.com/rockolify:latest
+        environment:
+            - CONTAINER=SIDEKIQ
+            - REDIS_HOSTNAME=redis
+            - REDIS_PORT=6379
+        depends_on:
+            - redis
+        volumes:
+            - ./log:/home/democratify/app/log
+        tty: true
+        stdin_open: true
+        command: "bundle exec sidekiq -e production -C config/sidekiq.yml"

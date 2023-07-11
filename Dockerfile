@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 ruby:3.2.1-alpine
+FROM --platform=linux/amd64 public.ecr.aws/docker/library/ruby:3.2.1-alpine
 
 # Install dependencies
 RUN apk update && apk add --no-cache \
@@ -27,5 +27,6 @@ COPY . .
 # Precompile assets
 RUN bundle exec rails assets:precompile
 
+EXPOSE 80 443
 # Start the application
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3001"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3001", "-e", "production"]
