@@ -33,6 +33,8 @@ class ApplicationController < ActionController::Base
 
   def handle_invalid_cookies
     Rails.logger.debug { 'Invalid cookies' }
+    cookies.delete(:account_id)
+    cookies.delete(:token)
     redirect_to root_path
   end
 

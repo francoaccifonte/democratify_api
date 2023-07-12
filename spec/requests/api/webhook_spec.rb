@@ -10,6 +10,8 @@ RSpec.describe Api::WebhookController do
       get(spotify_login_path, params:)
     end
 
+    before { WithAccountCookies.set_account_cookie(cookies, account) }
+
     let(:params) { nil }
     let(:account) { create(:account) }
 
@@ -40,6 +42,11 @@ RSpec.describe Api::WebhookController do
 
       it 'creates the spotify user' do
         expect { subject }.to change(SpotifyUser, :count).by(1)
+      end
+
+      it 'redirects home' do
+        subject
+        expect(response).to redirect_to(spotify_playlists_url)
       end
     end
   end
