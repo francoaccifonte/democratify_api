@@ -45,6 +45,7 @@ resource "aws_cognito_user_pool_client" "userpool_client" {
   allowed_oauth_scopes         = ["email", "openid"]
   allowed_oauth_flows          = ["code", "implicit"]
   allowed_oauth_flows_user_pool_client = true
+  generate_secret = true
 }
 
 resource "aws_cognito_user_pool_domain" "rockolify" {
