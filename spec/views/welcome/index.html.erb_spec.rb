@@ -6,7 +6,18 @@ RSpec.describe "welcome/index" do
     render
     expect(view).to(
       have_received(:react_component)
-      .with('HomeHoc', prerender: false)
+      .with(
+        'HomeHoc',
+        props: hash_including(
+          {
+            ongoingPlaylist: anything,
+            votation: anything,
+            cognitoEndpoint: anything,
+            backendBaseUrl: anything
+          }
+        ),
+        prerender: false
+      )
     )
   end
 end

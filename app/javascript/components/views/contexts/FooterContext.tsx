@@ -3,10 +3,14 @@ import { serializedOngoingPlaylist, serializedVotation } from '../../types'
 
 type FooterContextType = {
   ongoingPlaylist?: serializedOngoingPlaylist;
-  votation?: serializedVotation
+  votation?: serializedVotation;
+  cognitoEndpoint?: string;
+  backendBaseUrl?: string;
 }
 
 export const FooterContext = createContext<FooterContextType>({
   ongoingPlaylist: null,
-  votation: null
+  votation: null,
+  cognitoEndpoint: null,
+  backendBaseUrl: null
 })

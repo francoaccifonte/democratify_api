@@ -11,7 +11,9 @@ module ApplicationHelper
     # rubocop:disable Rails/HelperInstanceVariable
     {
       ongoingPlaylist: serialize_one(@ongoing_playlist),
-      votation: serialize_one(@votation)
+      votation: serialize_one(@votation),
+      cognitoEndpoint: @cognito_endpoint,
+      backendBaseUrl: @backend_base_url
     }
     # rubocop:enable Rails/HelperInstanceVariable
   end

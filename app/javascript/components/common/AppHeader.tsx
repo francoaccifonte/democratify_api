@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import withStyles from 'react-jss'
 
 import { ColorProps } from '../ColorPalette'
 import { AppLogo, Text } from './'
+import { FooterContext } from '../views/contexts/FooterContext'
 
 export const useAppHeaderUtils = () => {
   return {
@@ -21,11 +22,12 @@ type HeaderProps = {
 }
 
 const AppHeader = (props: HeaderProps) => {
+  const { cognitoEndpoint } = useContext(FooterContext)
   const LogInButtons = () => {
     return (
       <>
-        <Text type="link" color="White" className="pe-5" href="/accounts/login">Entrar</Text>
-        <Text type="link" color="White" href="/accounts/signup">Registrarse</Text>
+        <Text type="link" color="White" className="pe-5" href={cognitoEndpoint}>Entrar</Text>
+        <Text type="link" color="White" href={cognitoEndpoint}>Registrarse</Text>
       </>
     )
   }

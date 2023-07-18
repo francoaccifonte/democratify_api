@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_action :proces_cookies
   before_action :set_player_params
+  before_action :set_global_frontend_params
 
   rescue_from InvalidAccountCookiesError, with: :handle_invalid_cookies
   rescue_from MissingRefreshTokenError, with: :handle_invalid_cookies
@@ -46,6 +47,11 @@ class ApplicationController < ActionController::Base
     @votation ||= @ongoing_playlist&.votations&.in_progress&.first
   end
   # rubocop:enable Naming/MemoizedInstanceVariableName
+
+  def set_global_frontend_params
+    @cognito_endpoint = ENV.fetch('COGNITO_ENDPOINT_URI', nil)
+    @backend_base_url = Rails.env.production? ? 'https://rockolify.holasoyfranco.com/spotify_login' : 'http://localhost:3001/spotify_login'
+  end
 
   def update_cognito_cookies
     return if cookies.encrypted[:access_token] && cookies.encrypted[:id_token]
