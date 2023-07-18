@@ -16,8 +16,7 @@ class CodeToAccount
     response(
       Account.create!(
         email: user_info.fetch(:email),
-        name: user_info.fetch(:username, nil),
-        password: '123123123'
+        name: user_info.fetch(:username, nil)
       )
     )
   end

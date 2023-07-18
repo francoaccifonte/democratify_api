@@ -50,16 +50,9 @@ RSpec.describe "Accounts" do
     end
 
     context 'when user is not logged in' do
-      it 'returns http success' do
+      it 'redirects home' do
         post accounts_login_url, params: { email: account.email, password: account.password }
-        expect(response).to redirect_to(spotify_playlists_url)
-      end
-    end
-
-    context 'when provided credentials are invalid' do
-      it 'returns unauthorized' do
-        post accounts_login_url, params: { email: account.email, password: "#{account.password}fakePW" }
-        expect(response).to have_http_status(:unauthorized)
+        expect(response).to redirect_to(root_path)
       end
     end
   end

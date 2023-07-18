@@ -17,7 +17,5 @@ FactoryBot.define do
   factory :account do
     email { Faker::Internet.email }
     name { Faker::Name.name }
-    token { Faker::Lorem.characters(number: 50) }
-    password { Faker::Lorem.characters(number: 15) }
   end
 end
