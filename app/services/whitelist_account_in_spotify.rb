@@ -8,10 +8,10 @@ class WhitelistAccountInSpotify
     new(*args, **kwargs).call
   end
 
-  def call
+  def call # rubocop:disable Metrics/AbcSize
     account = Account.last # Account.find(account_id)
     driver = Selenium::WebDriver.for :chrome
-    wait = Selenium::WebDriver::Wait.new(:timeout => 15)
+    wait = Selenium::WebDriver::Wait.new(timeout: 15)
 
     driver.get('https://developer.spotify.com/')
     driver.find_element(:xpath, '/html/body/div[1]/div/header/div[2]/button').click

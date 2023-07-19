@@ -3,7 +3,7 @@
 module Api
   class WebhookController < Api::ApiController
     def spotify_login
-      SpotifyUserCreator.call(account_id: params.require(:state), code: params.require(:code))
+      SpotifyUserAuthorizer.call(account_id: params.require(:state), code: params.require(:code))
 
       render json: {}, status: :ok
     end
