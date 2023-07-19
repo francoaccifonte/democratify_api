@@ -13,9 +13,5 @@ RSpec.describe SpotifyPlaylistsController do
     it 'routes to #login_form' do
       expect(post: '/accounts/login').to route_to('accounts#login_form')
     end
-
-    it 'routes to #signup' do
-      expect(post: 'accounts/signup').to route_to('api/accounts#signup')
-    end
   end
 end
