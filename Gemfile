@@ -24,6 +24,8 @@ gem 'redis'
 
 gem "sprockets-rails"
 
+gem "selenium-webdriver"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -74,7 +76,6 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
-  gem "selenium-webdriver"
   gem "webdrivers"
 end
 
@@ -83,3 +84,4 @@ gem "shakapacker", "= 6.6"
 gem "react_on_rails", "= 13.3"
 gem "sentry-rails"
 gem "sentry-ruby"
+gem "sentry-sidekiq"
