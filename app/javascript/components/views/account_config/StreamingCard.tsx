@@ -32,7 +32,7 @@ const styles = (theme: any) => {
   return {
     card: {
       backgroundColor: theme.Muted,
-      width: '400px',
+      width: '100%',
       textAlign: 'center',
       alignItems: 'center',
       composes: 'py-4'

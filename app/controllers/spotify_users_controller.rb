@@ -15,6 +15,9 @@ class SpotifyUsersController < ApplicationController
       format.json do
         render json: serialize_one(@spotify_user), status: :ok
       end
+      format.html do
+        redirect_to account_settings_path
+      end
     end
   end
 end
