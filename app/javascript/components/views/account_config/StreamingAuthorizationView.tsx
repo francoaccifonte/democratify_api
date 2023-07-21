@@ -18,7 +18,6 @@ const StreamingAuthorizationView = (props: StreamingAuthorizationViewProps) => {
       <div className={classes.caption}><Text type="bodyRegular" color="White">Enlaza tu cuenta de Streaming</Text></div>
       <div className={classes.container}>
         <SpotifySettings account={props.account} authUri={props.spotifyAuthUri}/>
-        <StreamingCard account={props.account} service="Spotify" authUri={props.spotifyAuthUri}/>
         <StreamingCard account={props.account} service="Youtube"/>
       </div>
     </FullHeightSkeleton>

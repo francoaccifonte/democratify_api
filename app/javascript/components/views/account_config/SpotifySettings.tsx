@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
-import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import withStyles from 'react-jss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import classNames from 'classnames'
 
-import { LoadingSpinner, Text } from '../../common'
-import { SpotifyLoginButton } from './'
+import { Text } from '../../common'
 import { serializedAccount } from '../../types'
+import { SpotifyLoginButton } from './'
 
 type StreamingCardProps = {
   classes: any;
@@ -22,7 +20,7 @@ const EmailForm = (props: { editBox: any, email: any } & StreamingCardProps) => 
   if (props.editBox.showEditBox) {
     return (
       <>
-        <Text type='bodyRegular' color='White'>Email de tu cuenta de Spotifyaaaaa:</Text>
+        <Text type='bodyRegular' color='White'>Email de tu cuenta de Spotify:</Text>
         <br />
         <Text className={props.classes.settingBody} type='bodyRegular' color='White'>{`${props.account.spotify_user?.user_provided_email}`}</Text>
       </>
@@ -45,6 +43,17 @@ const EmailForm = (props: { editBox: any, email: any } & StreamingCardProps) => 
   }
 }
 
+const AuthButton = (props: StreamingCardProps) => {
+  return (
+    <>
+    <Text type="bodyRegular" color="white">Conectar tu cuenta de spotify</Text>
+    <div className={props.classes.settingBody}>
+      <SpotifyLoginButton account={props.account} authUri={props.authUri} />
+    </div>
+    </>
+  )
+}
+
 const SpotifySettings = (props: StreamingCardProps) => {
   const [showEditBox, setShowEditBox] = useState<Boolean>(!!props.account.spotify_user?.user_provided_email)
   const [formEmail, setFormEmail] = useState<String>()
@@ -60,6 +69,7 @@ const SpotifySettings = (props: StreamingCardProps) => {
       </div>
       <div className={classes.body}>
         <EmailForm {...props} editBox={editBox} email={email}/>
+        <AuthButton {...props} />
       </div>
     </div>
   )

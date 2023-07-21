@@ -23,7 +23,6 @@ const VotationView: React.FC<VotationViewParams> = (props): JSX.Element => {
   const { accountId } = props
 
   const voteAlreadyCasted = previousVotationIds.includes(String(votation.id))
-  console.log(voteAlreadyCasted)
 
   const handleVote = async (event: React.MouseEvent<HTMLInputElement>) => {
     const response = await client.votations.castVote(accountId, selected.id, new ClientJS().getFingerprint())
