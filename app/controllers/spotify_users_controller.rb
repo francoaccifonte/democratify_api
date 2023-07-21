@@ -2,7 +2,7 @@ class SpotifyUsersController < ApplicationController
   include SerializationConcern
 
   # POST /spotify_users
-  def create
+  def create # rubocop:disable Metrics/MethodLength
     SpotifyUser.transaction do
       @spotify_user = SpotifyUser.create!(
         account_id: @account.id,
