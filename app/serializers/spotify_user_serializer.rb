@@ -8,16 +8,17 @@
 #  access_token             :string
 #  access_token_expires_at  :datetime
 #  email                    :string
-#  href                     :string           not null
+#  href                     :string
 #  name                     :string
 #  refresh_token            :string
 #  refresh_token_expires_at :datetime
-#  scope                    :string           not null
+#  scope                    :string
 #  uri                      :string
+#  user_provided_email      :string           not null
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  account_id               :bigint
-#  spotify_id               :string           not null
+#  spotify_id               :string
 #
 # Indexes
 #
@@ -28,5 +29,5 @@
 #  fk_rails_...  (account_id => accounts.id)
 #
 class SpotifyUserSerializer < Panko::Serializer
-  attributes :id, :email, :created_at, :updated_at
+  attributes :id, :email, :created_at, :updated_at, :user_provided_email, :account_id
 end

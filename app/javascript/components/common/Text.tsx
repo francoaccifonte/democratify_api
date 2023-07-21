@@ -1,7 +1,7 @@
 import React from 'react'
 
 type TextProps = {
-  type: string;
+  type: 'header' | 'title' | 'bodyRegular' | 'bodyImportant' | 'bodyCaption' | 'link';
   color?: string;
   children: React.ReactNode;
   onClick?: () => void;

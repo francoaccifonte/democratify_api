@@ -270,6 +270,9 @@ GEM
       sentry-ruby (~> 5.9.0)
     sentry-ruby (5.9.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
+    sentry-sidekiq (5.9.0)
+      sentry-ruby (~> 5.9.0)
+      sidekiq (>= 3.0)
     shakapacker (6.6.0)
       activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
@@ -354,6 +357,7 @@ DEPENDENCIES
   selenium-webdriver
   sentry-rails
   sentry-ruby
+  sentry-sidekiq
   shakapacker (= 6.6)
   sidekiq
   simplecov

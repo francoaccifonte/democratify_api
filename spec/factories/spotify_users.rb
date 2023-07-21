@@ -6,16 +6,17 @@
 #  access_token             :string
 #  access_token_expires_at  :datetime
 #  email                    :string
-#  href                     :string           not null
+#  href                     :string
 #  name                     :string
 #  refresh_token            :string
 #  refresh_token_expires_at :datetime
-#  scope                    :string           not null
+#  scope                    :string
 #  uri                      :string
+#  user_provided_email      :string           not null
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  account_id               :bigint
-#  spotify_id               :string           not null
+#  spotify_id               :string
 #
 # Indexes
 #
@@ -30,6 +31,7 @@ FactoryBot.define do
     access_token { Faker::Lorem.characters(number: 50) }
     access_token_expires_at { 30.minutes.from_now }
     email { Faker::Internet.email }
+    user_provided_email { email }
     href { Faker::Internet.url }
     name { Faker::Name.name }
     refresh_token { Faker::Lorem.characters(number: 50) }
