@@ -15,7 +15,7 @@ class WhitelistAccountInSpotify
     wait = Selenium::WebDriver::Wait.new(timeout: 15)
 
     driver.get('https://developer.spotify.com/')
-    driver.find_element(:xpath, '/html/body/div[1]/div/header/div[2]/button').click
+    wait.until { driver.find_element(:xpath, '/html/body/div[1]/div/header/div[2]/button') }.click
     wait.until { driver.find_element(id: 'login-username') }.send_keys ENV.fetch('SPOTIFY_ACCOUNT_EMAIL')
     wait.until { driver.find_element(id: 'login-password') }.send_keys ENV.fetch('SPOTIFY_ACCOUNT_PASSWORD')
     driver.find_element(:xpath, '/html/body/div[1]/div/div[2]/div/div/div[1]/div[4]/button/span[1]').click
@@ -27,6 +27,7 @@ class WhitelistAccountInSpotify
     wait.until { driver.find_element(id: 'email') }.send_keys(email)
     driver.find_element(:xpath, '/html/body/div[1]/div/div/main/div/div/div[4]/div/div/div[2]/form/div/div[3]/button/span[1]').click
     sleep 3
+  ensure
     driver.quit
   end
 
