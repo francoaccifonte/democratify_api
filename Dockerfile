@@ -8,7 +8,9 @@ RUN apk update && apk add --no-cache \
   nodejs \
   yarn \
   libcurl \
-  gcompat
+  gcompat \
+  chromium \
+  chromium-chromedriver
 
 WORKDIR /home/democratify
 

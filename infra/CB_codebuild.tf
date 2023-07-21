@@ -102,8 +102,8 @@ resource "aws_codebuild_project" "Rockolify" {
   }
 
   cache {
-    modes = []
-    type  = "NO_CACHE"
+    type  = "LOCAL"
+    modes = ["LOCAL_DOCKER_LAYER_CACHE", "LOCAL_SOURCE_CACHE"]
   }
 
   environment {
