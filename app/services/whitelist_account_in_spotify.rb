@@ -10,7 +10,7 @@ class WhitelistAccountInSpotify
 
   def call # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     @account = Account.find(account_id)
-    options_driver = Selenium::WebDriver::Options.chrome(args: ['--headless=new', '--no-sandbox'])
+    options_driver = Selenium::WebDriver::Options.chrome(args: ['--headless=new', '--no-sandbox', '--window-size=1920,1080'])
     driver = Selenium::WebDriver.for(:chrome, options: options_driver)
     wait = Selenium::WebDriver::Wait.new(timeout: 15)
 
