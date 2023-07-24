@@ -1,9 +1,10 @@
 from selenium import webdriver
 from tempfile import mkdtemp
 from selenium.webdriver.common.by import By
-
+import os
 
 def handler(event=None, context=None):
+    print(os.environ['SPOTIFY_ACCOUNT_EMAIL'])
     options = webdriver.ChromeOptions()
     options.binary_location = '/opt/chrome/chrome'
     options.add_argument('--headless')
@@ -21,4 +22,7 @@ def handler(event=None, context=None):
     chrome = webdriver.Chrome("/opt/chromedriver",
                               options=options)
     chrome.get("https://example.com/")
+    
     return chrome.find_element(by=By.XPATH, value="//html").text
+
+handler('123', '123')

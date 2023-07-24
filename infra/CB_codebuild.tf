@@ -291,7 +291,7 @@ resource "aws_codebuild_webhook" "on_merge_or_message_lambda" {
   }
   filter_group {
     filter {
-      pattern = "[codebuild]"
+      pattern = "[codebuildLambda]"
       type    = "COMMIT_MESSAGE"
     }
     filter {
