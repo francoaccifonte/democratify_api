@@ -8,6 +8,9 @@ import requests
 
 def handler(event=None, context=None):
     print("STARTING LAMBDA")
+    x = requests.get('https://developer.spotify.com/')
+    print(x.status_code)
+
     options = webdriver.ChromeOptions()
     options.binary_location = '/opt/chrome/chrome'
     options.add_argument('--headless')
@@ -24,9 +27,6 @@ def handler(event=None, context=None):
     options.add_argument("--remote-debugging-port=9222")
     driver = webdriver.Chrome("/opt/chromedriver",
                               options=options)
-
-    x = requests.get('https://developer.spotify.com/')
-    print(x.status_code)
 
     account_id = event["account_id"]
     email = event["email"]
