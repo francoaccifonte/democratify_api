@@ -206,3 +206,95 @@ resource "aws_codebuild_webhook" "on_merge_or_message" {
     }
   }
 }
+
+resource "aws_codebuild_project" "RockolifyLambda" {
+  badge_enabled      = false
+  build_timeout      = 60
+  encryption_key     = "arn:aws:kms:us-east-2:480062172841:alias/aws/s3"
+  name               = "RockolifyLambda"
+  project_visibility = "PRIVATE"
+  queued_timeout     = 480
+  service_role       = aws_iam_role.codebuild.arn
+  tags               = {}
+  tags_all           = {}
+
+  artifacts {
+    encryption_disabled    = false
+    override_artifact_name = false
+    type                   = "NO_ARTIFACTS"
+  }
+
+  cache {
+    type  = "LOCAL"
+    modes = ["LOCAL_DOCKER_LAYER_CACHE", "LOCAL_SOURCE_CACHE"]
+  }
+
+  environment {
+    compute_type                = "BUILD_GENERAL1_SMALL"
+    image                       = "aws/codebuild/amazonlinux2-x86_64-standard:5.0"
+    image_pull_credentials_type = "CODEBUILD"
+    privileged_mode             = true
+    type                        = "LINUX_CONTAINER"
+
+    environment_variable {
+      name  = "SPOTIFY_ACCOUNT_PASSWORD"
+      value = var.SPOTIFY_ACCOUNT_PASSWORD
+    }
+    environment_variable {
+      name  = "SPOTIFY_ACCOUNT_EMAIL"
+      value = var.SPOTIFY_ACCOUNT_EMAIL
+    }
+    environment_variable {
+      name  = "AWS_ACCOUNT"
+      value = local.account_id
+    }
+    environment_variable {
+      name  = "REGION"
+      value = local.region
+    }
+  }
+
+  logs_config {
+    cloudwatch_logs {
+      status = "ENABLED"
+    }
+    s3_logs {
+      encryption_disabled = false
+      status              = "DISABLED"
+    }
+  }
+
+  source {
+    git_clone_depth     = 1
+    insecure_ssl        = false
+    location            = "https://github.com/francoaccifonte/democratify_api.git"
+    report_build_status = false
+    type                = "GITHUB"
+    buildspec = "./lambdas/buildspec.yml"
+
+    git_submodules_config {
+      fetch_submodules = false
+    }
+  }
+}
+
+resource "aws_codebuild_webhook" "on_merge_or_message_lambda" {
+  project_name = aws_codebuild_project.RockolifyLambda.name
+
+  filter_group {
+    filter {
+      pattern = "PULL_REQUEST_MERGED"
+      type    = "EVENT"
+    }
+  }
+  filter_group {
+    filter {
+      pattern = "[codebuild]"
+      type    = "COMMIT_MESSAGE"
+    }
+    filter {
+      pattern = "PUSH"
+      type    = "EVENT"
+    }
+  }
+}
