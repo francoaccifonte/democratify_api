@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import os
 
 def handler(event=None, context=None):
+    print("STARTING LAMBDA")
     options = webdriver.ChromeOptions()
     options.binary_location = '/opt/chrome/chrome'
     options.add_argument('--headless')
@@ -27,16 +28,24 @@ def handler(event=None, context=None):
     email = event["email"]
     account_name = event["account_name"]
 
-    wait = WebDriverWait(driver, 15)
+    print("before first wait")
+    wait = WebDriverWait(driver, 3)
 
+    print("LOC 34")
     driver.get('https://developer.spotify.com/')
+    print("LOC 36")
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/header/div[2]/button'))).click()
+    print("LOC 38")
     wait.until(EC.presence_of_element_located((By.ID, 'login-username'))).send_keys(os.environ['SPOTIFY_ACCOUNT_EMAIL'])
+    print("LOC 39")
     wait.until(EC.presence_of_element_located((By.ID, 'login-password'))).send_keys(os.environ['SPOTIFY_ACCOUNT_PASSWORD'])
+    print("LOC 42")
     driver.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div[1]/div[4]/button/span[1]').click()
 
+    print("LOC 45")
     wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/header/div[2]/div/div/button/span')))
 
+    print("LOC 48")
     driver.get('https://developer.spotify.com/dashboard/9d48abfbbf194adc9051e1b82b0ecdb0/users')
     name_input = wait.until(EC.presence_of_element_located((By.ID, 'name')))
     name_input.send_keys(f"{account_name}{account_id}" if account_name else f"namelessUser{account_id}")
