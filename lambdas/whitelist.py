@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
+import requests
 
 def handler(event=None, context=None):
     print("STARTING LAMBDA")
@@ -23,6 +24,9 @@ def handler(event=None, context=None):
     options.add_argument("--remote-debugging-port=9222")
     driver = webdriver.Chrome("/opt/chromedriver",
                               options=options)
+
+    x = requests.get('https://developer.spotify.com/')
+    print(x.status_code)
 
     account_id = event["account_id"]
     email = event["email"]
