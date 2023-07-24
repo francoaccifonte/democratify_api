@@ -8,6 +8,8 @@ import requests
 
 def handler(event=None, context=None):
     print("STARTING LAMBDA")
+    x = requests.get('http://example.com/')
+    print(x.status_code)
     x = requests.get('https://developer.spotify.com/')
     print(x.status_code)
 
