@@ -14,4 +14,8 @@ RUN pip install selenium==4.9.1
 COPY --from=build /opt/chrome-linux /opt/chrome
 COPY --from=build /opt/chromedriver /opt/
 COPY whitelist.py ./
+
+ENV SPOTIFY_ACCOUNT_EMAIL=${SPOTIFY_ACCOUNT_EMAIL}
+ENV SPOTIFY_ACCOUNT_PASSWORD=${SPOTIFY_ACCOUNT_PASSWORD}
+
 CMD [ "whitelist.handler" ]
