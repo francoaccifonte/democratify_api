@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com
+  build:
+    commands:
+      - cd lambdas
+      - echo Building Docker image...
+      - docker build -t rockolify:lambdas-latest .
+  post_build:
+    commands:
+      - echo Pushing Docker image to Amazon ECR...
+      - docker tag rockolify/lambdas:latest ${AWS_ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/rockolify:lambdas-latest
+      - docker push ${AWS_ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/rockolify/lambdas:latest

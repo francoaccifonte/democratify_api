@@ -1,0 +1,6 @@
+SPOTIFY_CLIENT_ID        = "someClientId"
+SPOTIFY_SECRET           = "SomeSecret"
+SENTRY_DSN               = "SomeDSN"
+MASTER_KEY               = "SomeMasterKey"
+SPOTIFY_ACCOUNT_EMAIL    = "some@email.com"
+SPOTIFY_ACCOUNT_PASSWORD = "somePassword"
