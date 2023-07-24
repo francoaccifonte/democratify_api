@@ -45,7 +45,9 @@ resource "aws_iam_policy" "codebuild" {
           "Effect" : "Allow",
           "Resource" : [
             "arn:aws:logs:us-east-2:480062172841:log-group:/aws/codebuild/Rockolify",
-            "arn:aws:logs:us-east-2:480062172841:log-group:/aws/codebuild/Rockolify:*"
+            "arn:aws:logs:us-east-2:480062172841:log-group:/aws/codebuild/Rockolify:*",
+            "arn:aws:logs:us-east-2:480062172841:log-group:/aws/codebuild/RockolifyLambda",
+            "arn:aws:logs:us-east-2:480062172841:log-group:/aws/codebuild/RockolifyLambda:*"
           ],
           "Action" : [
             "logs:CreateLogGroup",
