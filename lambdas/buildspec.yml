@@ -13,5 +13,5 @@ phases:
   post_build:
     commands:
       - echo Pushing Docker image to Amazon ECR...
-      - docker tag rockolify/lambdas:latest ${AWS_ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/rockolify:lambdas-latest
-      - docker push ${AWS_ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/rockolify/lambdas:latest
+      - docker tag rockolify:lambdas-latest ${AWS_ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/rockolify:lambdas-latest
+      - docker push ${AWS_ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/rockolify:lambdas-latest
