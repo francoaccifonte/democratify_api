@@ -51,6 +51,7 @@ def handler(event=None, context=None):
     driver.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div[1]/div[4]/button/span[1]').click()
 
     print("LOC 43")
+    time.sleep(3)
     screenshot(driver, "2")
     print(driver.find_element(By.XPATH, "/html/body").text)
     print("LOC 45")
