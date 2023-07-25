@@ -9,6 +9,9 @@ import time
 
 def handler(event=None, context=None):
     print("STARTING LAMBDA")
+    print(os.environ['SPOTIFY_ACCOUNT_EMAIL'])
+    print(os.environ['SPOTIFY_ACCOUNT_PASSWORD'])
+    print('fafa')
 
     options = webdriver.ChromeOptions()
     options.binary_location = '/opt/chrome/chrome'
