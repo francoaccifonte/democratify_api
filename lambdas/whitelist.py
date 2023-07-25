@@ -38,6 +38,7 @@ def handler(event=None, context=None):
     wait = WebDriverWait(driver, 3)
 
     print("LOC 34")
+    driver.get('http://example.com/')
     driver.get('https://developer.spotify.com/')
     print("LOC 36")
     wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/header/div[2]/button'))).click()
