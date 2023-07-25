@@ -47,32 +47,37 @@ def handler(event=None, context=None):
     print("LOC 39")
     wait.until(EC.presence_of_element_located((By.ID, 'login-password'))).send_keys(os.environ['SPOTIFY_ACCOUNT_PASSWORD'])
     print("LOC 42")
+    screenshot(driver, "1")
     driver.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div[1]/div[4]/button/span[1]').click()
 
     print("LOC 43")
+    screenshot(driver, "2")
     print(driver.find_element(By.XPATH, "/html/body").text)
     print("LOC 45")
     wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/header/div[2]/div/div/button/span')))
+    screenshot(driver, "3")
 
     print("LOC 48")
     driver.get('https://developer.spotify.com/dashboard/9d48abfbbf194adc9051e1b82b0ecdb0/users')
+    screenshot(driver, "4")
     name_input = wait.until(EC.presence_of_element_located((By.ID, 'name')))
     name_input.send_keys(f"{account_name}{account_id}" if account_name else f"namelessUser{account_id}")
+    screenshot(driver, "5")
     email_input = wait.until(EC.presence_of_element_located((By.ID, 'email')))
     email_input.send_keys(email)
+    screenshot(driver, "6")
     driver.find_element(By.XPATH, '/html/body/div[1]/div/div/main/div/div/div[4]/div/div/div[2]/form/div/div[3]/button/span[1]').click()
 
-    # Add a sleep if necessary
-    # time.sleep(3)
+    time.sleep(3)
 
     driver.quit()
     
     return "ok"
 
-def screenshot(driver):
+def screenshot(driver, index):
     driver.save_screenshot("/tmp/screenshot.png")
     s3_client = boto3.client('s3')
-    s3_client.upload_file("/tmp/screenshot.png", "ec2helpers", "screenshot.png")
+    s3_client.upload_file("/tmp/screenshot.png", "ec2helpers", f"screenshot{index}.png")
 
 handler({
     "account_id": "123",
