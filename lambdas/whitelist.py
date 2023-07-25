@@ -5,13 +5,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
 import requests
+import time
 
 def handler(event=None, context=None):
     print("STARTING LAMBDA")
-    x = requests.get('http://example.com/')
-    print(x.status_code)
-    x = requests.get('https://developer.spotify.com/')
-    print(x.status_code)
 
     options = webdriver.ChromeOptions()
     options.binary_location = '/opt/chrome/chrome'
@@ -37,8 +34,6 @@ def handler(event=None, context=None):
     print("before first wait")
     wait = WebDriverWait(driver, 10)
 
-    print("LOC 34")
-    driver.get('http://example.com/')
     print("LOC 35")
     driver.get('https://developer.spotify.com/')
     print("LOC 36")
@@ -50,6 +45,9 @@ def handler(event=None, context=None):
     print("LOC 42")
     driver.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div[1]/div[4]/button/span[1]').click()
 
+    time.sleep(3)
+    print("LOC 43")
+    print(driver.find_element(By.XPATH, "/html/body").text)
     print("LOC 45")
     wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/header/div[2]/div/div/button/span')))
 
