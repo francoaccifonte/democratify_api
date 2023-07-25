@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import os
 import requests
 import time
+import boto3
 
 def handler(event=None, context=None):
     print("STARTING LAMBDA")
@@ -48,7 +49,6 @@ def handler(event=None, context=None):
     print("LOC 42")
     driver.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div/div/div[1]/div[4]/button/span[1]').click()
 
-    time.sleep(3)
     print("LOC 43")
     print(driver.find_element(By.XPATH, "/html/body").text)
     print("LOC 45")
@@ -68,3 +68,14 @@ def handler(event=None, context=None):
     driver.quit()
     
     return "ok"
+
+def screenshot(driver):
+    driver.save_screenshot("/tmp/screenshot.png")
+    s3_client = boto3.client('s3')
+    s3_client.upload_file("/tmp/screenshot.png", "ec2helpers", "screenshot.png")
+
+handler({
+    "account_id": "123",
+    "email": "qwe@qwe.com",
+    "account_name": "123",
+}, None)
