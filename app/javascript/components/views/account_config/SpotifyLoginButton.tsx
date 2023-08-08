@@ -14,6 +14,8 @@ type SpotifyLoginButtonProps = {
 
 const SpotifyLoginButton = (props: SpotifyLoginButtonProps) => {
   const alreadyLinked = (!!props.account?.spotify_user?.email)
+  const whitelistPending = (!props.account?.spotify_user?.whitelisted)
+  const userPrividedAnEmail = (!!props.account?.spotify_user?.user_provided_email)
 
   const DisabledMessage = () => {
     if (alreadyLinked) {
@@ -32,7 +34,7 @@ const SpotifyLoginButton = (props: SpotifyLoginButtonProps) => {
       <Button
         href={props.authUri}
         target="_blank"
-        disabled={alreadyLinked}
+        disabled={alreadyLinked || !userPrividedAnEmail || whitelistPending}
       >
         <FontAwesomeIcon icon={['fab', 'spotify']} className={props.classes.icon}/>
         <Text type="bodyRegular" className={props.classes.buttonText}>Conectar</Text>
