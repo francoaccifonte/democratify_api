@@ -26,7 +26,6 @@ module Telegram
       {}
     end
 
-    def handle_error(response)
-    end
+    def handle_error(response); end
   end
 end

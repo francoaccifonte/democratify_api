@@ -4,7 +4,7 @@ class TelegramPollingWorker
   include Sidekiq::Worker
   sidekiq_options queue: :default
 
-  def perform
+  def perform # rubocop:disable Metrics/AbcSize
     messages = client.list_updates
     raise unless messages[:ok]
 
