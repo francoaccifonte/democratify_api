@@ -1,6 +1,6 @@
 class WhitelistAccountInSpotify
-  TELEGRAM_TOKEN = ENV.fetch('TELEGRAM_TOKEN')
-  TELEGRAM_CHAT_ID = ENV.fetch('TELEGRAM_CHAT_ID').to_i
+  TELEGRAM_TOKEN = ENV['TELEGRAM_TOKEN'].freeze
+  TELEGRAM_CHAT_ID = ENV['TELEGRAM_CHAT_ID'].to_i
 
   def initialize(account_id:, email:)
     @account_id = account_id

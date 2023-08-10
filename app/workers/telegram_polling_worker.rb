@@ -1,5 +1,5 @@
 class TelegramPollingWorker
-  TELEGRAM_TOKEN = ENV.fetch('TELEGRAM_TOKEN')
+  TELEGRAM_TOKEN = ENV['TELEGRAM_TOKEN'].freeze
 
   include Sidekiq::Worker
   sidekiq_options queue: :default

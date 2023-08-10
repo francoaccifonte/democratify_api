@@ -1,6 +1,6 @@
 module Telegram
   class Client
-    TELEGRAM_TOKEN = ENV.fetch('TELEGRAM_TOKEN').freeze
+    TELEGRAM_TOKEN = ENV['TELEGRAM_TOKEN'].freeze
     TELEGRAM_BASE_URL = "https://api.telegram.org/bot#{TELEGRAM_TOKEN}".freeze
 
     include Spotify::HttpRequests
