@@ -4,6 +4,7 @@ resource "aws_instance" "rockolify_app" {
   subnet_id              = aws_subnet.rockolify_public.id
   vpc_security_group_ids = [aws_security_group.rockolify_public.id]
   iam_instance_profile   = aws_iam_instance_profile.ecr_ec2_iprofile.name
+  user_data              = file("ec2_user_data.sh")
 
   tags = {
     Name = "Rockolify-app"
