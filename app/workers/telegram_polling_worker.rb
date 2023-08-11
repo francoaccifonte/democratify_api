@@ -2,13 +2,14 @@ class TelegramPollingWorker
   TELEGRAM_TOKEN = ENV['TELEGRAM_TOKEN'].freeze
 
   include Sidekiq::Worker
-  sidekiq_options queue: :default
 
   def perform # rubocop:disable Metrics/AbcSize
     messages = client.list_updates
     raise unless messages[:ok]
 
     messages = messages[:result]
+    return unless messages.any?
+
     messages.each do |message|
       case message[:message][:text]
       when %r{/help}
