@@ -16,6 +16,8 @@ class TelegramPollingWorker
         client.send_help(message[:message][:chat][:id])
       when %r{/whitelist}
         whitelist(message)
+      when /refresh_playlists/
+        refresh_playlists(message)
       end
     end
 
@@ -34,5 +36,12 @@ class TelegramPollingWorker
     SpotifyUser.find_by!(account_id:).update!(whitelisted: true)
 
     client.send_message(chat_id:, text: "whitelisted account with id #{account_id}")
+  end
+
+  def refresh_playlists(message)
+    cmd = message[:message][:text]
+    account = Account.find cmd.split.last.to_i
+
+    PlaylistImportWorker.perform_async(account.spotify_user.id)
   end
 end
