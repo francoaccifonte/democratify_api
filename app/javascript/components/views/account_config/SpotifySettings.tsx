@@ -54,6 +54,18 @@ const AuthButton = (props: StreamingCardProps) => {
   )
 }
 
+const Description = (props: StreamingCardProps) => {
+  if (props.account.spotify_user?.email) { return null }
+  return (
+    <div className={props.classes.description}>
+      Estamos muy contentos de tenerte a bordo en nuestra fase beta. Para brindarte la mejor experiencia, debemos realizar un paso manual.
+      <br />
+      Simplemente ingresa tu email, espera a ser añadido a la lista permitida y luego regresa para otorgar a Rockolify acceso en Spotify para controlar la reproducción en tus dispositivos.
+      <br />
+    </div>
+  )
+}
+
 const SpotifySettings = (props: StreamingCardProps) => {
   const [showEditBox, setShowEditBox] = useState<Boolean>(!!props.account.spotify_user?.user_provided_email)
   const [formEmail, setFormEmail] = useState<String>()
@@ -68,6 +80,7 @@ const SpotifySettings = (props: StreamingCardProps) => {
         <Text type="bodyImportant" color='White'>Spotify</Text>
       </div>
       <div className={classes.body}>
+        <Description {...props}/>
         <EmailForm {...props} editBox={editBox} email={email}/>
         <AuthButton {...props} />
       </div>
@@ -111,6 +124,10 @@ const styles = (theme: any) => {
       color: theme.White,
       fontSize: '20px',
       paddingRight: '1rem'
+    },
+    description: {
+      color: theme.White,
+      marginBottom: '1rem'
     }
   }
 }

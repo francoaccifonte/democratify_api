@@ -13,6 +13,7 @@
 #  scope                    :string
 #  uri                      :string
 #  user_provided_email      :string           not null
+#  whitelisted              :boolean          default(FALSE)
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  account_id               :bigint

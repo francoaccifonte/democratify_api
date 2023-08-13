@@ -1,6 +1,10 @@
 class WhitelistAccountInSpotify
+  TELEGRAM_TOKEN = ENV['TELEGRAM_TOKEN'].freeze
+  TELEGRAM_CHAT_ID = ENV['TELEGRAM_CHAT_ID'].to_i
+
   def initialize(account_id:, email:)
     @account_id = account_id
+    @account = Account.find(account_id)
     @email = email
   end
 
@@ -8,35 +12,28 @@ class WhitelistAccountInSpotify
     new(*args, **kwargs).call
   end
 
-  def call # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    @account = Account.find(account_id)
-    options_driver = Selenium::WebDriver::Options.chrome(args: ['--headless=new'])
-    driver = Selenium::WebDriver.for(:chrome, options: options_driver)
-    wait = Selenium::WebDriver::Wait.new(timeout: 15)
-
-    driver.get('https://developer.spotify.com/')
-    driver.find_element(:xpath, '/html/body/div[1]/div/header/div[2]/button').click
-    wait.until { driver.find_element(id: 'login-username') }.send_keys ENV.fetch('SPOTIFY_ACCOUNT_EMAIL')
-    wait.until { driver.find_element(id: 'login-password') }.send_keys ENV.fetch('SPOTIFY_ACCOUNT_PASSWORD')
-    driver.find_element(:xpath, '/html/body/div[1]/div/div[2]/div/div/div[1]/div[4]/button/span[1]').click
-
-    wait.until { driver.find_element(:xpath, '/html/body/div[1]/div/header/div[2]/div/div/button/span') }
-
-    driver.get('https://developer.spotify.com/dashboard/9d48abfbbf194adc9051e1b82b0ecdb0/users')
-    wait.until { driver.find_element(id: 'name') }.send_keys("#{@account.name}#{account_id}" || "namelessUser#{account_id}")
-    wait.until { driver.find_element(id: 'email') }.send_keys(email)
-    driver.find_element(:xpath, '/html/body/div[1]/div/div/main/div/div/div[4]/div/div/div[2]/form/div/div[3]/button/span[1]').click
-    sleep 3
-    driver.quit
+  def call
+    client.send_message(
+      chat_id: TELEGRAM_CHAT_ID,
+      text: message
+    )
   end
 
   private
 
-  def email_xpath
-    xpath = <<~XPATH
-      './/*[contains(., "#{email}")]'
-    XPATH
-    xpath.strip
+  def client
+    Telegram::Client.new
+  end
+
+  def message
+    <<~HEREDOC
+      #{Time.current}
+      Alguien se suscribio a Rockolify!
+      Agregalo a la lista de usuarios permitidos en https://developer.spotify.com/dashboard/9d48abfbbf194adc9051e1b82b0ecdb0/users
+      email: #{@email}
+      account_id: #{@account_id}
+      account_name: #{@account.name}
+    HEREDOC
   end
 
   attr_reader :email, :account_id

@@ -107,6 +107,8 @@ GEM
       dotenv (= 2.8.1)
       railties (>= 3.2)
     erubi (1.12.0)
+    et-orbi (1.2.7)
+      tzinfo
     ethon (0.16.0)
       ffi (>= 1.15.0)
     execjs (2.8.1)
@@ -118,6 +120,9 @@ GEM
     faker (3.1.1)
       i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
+    fugit (1.8.1)
+      et-orbi (~> 1, >= 1.2.7)
+      raabro (~> 1.4)
     globalid (1.1.0)
       activesupport (>= 5.0)
     hashdiff (1.0.1)
@@ -169,6 +174,7 @@ GEM
     public_suffix (5.0.1)
     puma (5.6.5)
       nio4r (~> 2.0)
+    raabro (1.4.0)
     racc (1.6.2)
     rack (2.2.6.4)
     rack-cors (2.0.1)
@@ -260,6 +266,8 @@ GEM
       rubocop-capybara (~> 2.17)
     ruby-progressbar (1.13.0)
     rubyzip (2.3.2)
+    rufus-scheduler (3.9.1)
+      fugit (~> 1.1, >= 1.1.6)
     selenium-webdriver (4.8.6)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
@@ -283,6 +291,10 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.11.0)
+    sidekiq-scheduler (5.0.3)
+      rufus-scheduler (~> 3.2)
+      sidekiq (>= 6, < 8)
+      tilt (>= 1.4.0)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -299,6 +311,7 @@ GEM
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
     thor (1.2.1)
+    tilt (2.2.0)
     timeout (0.3.2)
     typhoeus (1.4.0)
       ethon (>= 0.9.0)
@@ -360,6 +373,7 @@ DEPENDENCIES
   sentry-sidekiq
   shakapacker (= 6.6)
   sidekiq
+  sidekiq-scheduler
   simplecov
   sprockets-rails
   stimulus-rails

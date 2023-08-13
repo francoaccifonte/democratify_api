@@ -99,6 +99,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_19_140938) do
     t.datetime "updated_at", null: false
     t.bigint "account_id"
     t.string "user_provided_email", null: false
+    t.boolean "whitelisted", default: false
     t.index ["account_id"], name: "index_spotify_users_on_account_id", unique: true
   end
 

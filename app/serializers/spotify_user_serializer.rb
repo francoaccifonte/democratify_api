@@ -15,6 +15,7 @@
 #  scope                    :string
 #  uri                      :string
 #  user_provided_email      :string           not null
+#  whitelisted              :boolean          default(FALSE)
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  account_id               :bigint
@@ -29,5 +30,5 @@
 #  fk_rails_...  (account_id => accounts.id)
 #
 class SpotifyUserSerializer < Panko::Serializer
-  attributes :id, :email, :created_at, :updated_at, :user_provided_email, :account_id
+  attributes :id, :email, :created_at, :updated_at, :user_provided_email, :account_id, :whitelisted
 end

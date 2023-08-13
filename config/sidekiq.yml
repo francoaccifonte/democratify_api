@@ -15,6 +15,12 @@
   - spotify_import
   - default
 
+:scheduler:
+  :schedule:
+    telegram_bot:
+      cron: '0 * * * * *'
+      class: TelegramPollingWorker
+
 # you can override concurrency based on environment
 production:
   :concurrency: 25
