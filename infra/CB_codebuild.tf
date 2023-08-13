@@ -197,7 +197,7 @@ resource "aws_codebuild_webhook" "on_merge_or_message" {
   }
   filter_group {
     filter {
-      pattern = "[codebuild]"
+      pattern = "\\[CodeBuild\\]"
       type    = "COMMIT_MESSAGE"
     }
     filter {
