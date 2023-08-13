@@ -3,7 +3,7 @@ class TelegramPollingWorker
 
   include Sidekiq::Worker
 
-  def perform # rubocop:disable Metrics/AbcSize
+  def perform # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     messages = client.list_updates
     raise unless messages[:ok]
 
@@ -43,5 +43,6 @@ class TelegramPollingWorker
     account = Account.find cmd.split.last.to_i
 
     PlaylistImportWorker.perform_async(account.spotify_user.id)
+    client.send_message(chat_id:, text: "queued PlaylistImportWorker for account with id #{account_id}")
   end
 end
