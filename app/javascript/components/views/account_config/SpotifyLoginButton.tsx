@@ -13,30 +13,40 @@ type SpotifyLoginButtonProps = {
 }
 
 const SpotifyLoginButton = (props: SpotifyLoginButtonProps) => {
-  const alreadyLinked = (!!props.account.spotify_user)
+  const alreadyLinked = (!!props.account?.spotify_user?.email)
+  const whitelistPending = (!props.account?.spotify_user?.whitelisted)
+  const userPrividedAnEmail = (!!props.account?.spotify_user?.user_provided_email)
 
   const DisabledMessage = () => {
     if (alreadyLinked) {
       return (
         <>
-          <br />
-          <Text type="bodyRegular" color="White">Spotify ya fue vinculado</Text>
+          <Text type="bodyRegular" color="White">Vinculado con exito!</Text>
         </>
       )
     }
     return <></>
   }
 
+  const ShowButton = (props) => {
+    if (alreadyLinked) { return null }
+    return (
+      <Button
+        href={props.authUri}
+        target="_blank"
+        disabled={alreadyLinked || !userPrividedAnEmail || whitelistPending}
+      >
+        <FontAwesomeIcon icon={['fab', 'spotify']} className={props.classes.icon}/>
+        <Text type="bodyRegular" className={props.classes.buttonText}>Conectar</Text>
+      </Button>
+    )
+  }
+
   return (
-    <Button
-      variant="link"
-      href={props.authUri}
-      target="_blank"
-      disabled={alreadyLinked}
-    >
-    <FontAwesomeIcon icon={['fab', 'spotify']} className={props.classes.icon}/>
+    <>
+    <ShowButton {...props} />
     <DisabledMessage />
-  </Button>
+    </>
   )
 }
 
@@ -44,7 +54,9 @@ const styles = (theme: any) => {
   return {
     icon: {
       color: theme.White,
-      fontSize: '200px'
+    },
+    buttonText: {
+      paddingLeft: '0.5rem'
     }
   }
 }

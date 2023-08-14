@@ -14,7 +14,6 @@ module AccountSettingsHelper
   end
 
   def redirect_uri
-    # TODO: remove this and use the same variable being set from the aplication controller
-    Rails.env.production? ? 'https://rockolify.holasoyfranco.com/spotify_login' : 'http://localhost:3001/spotify_login'
+    Rails.env.production? ? "#{ENV.fetch('PROD_URL')}/spotify_login" : 'http://localhost:3001/spotify_login'
   end
 end

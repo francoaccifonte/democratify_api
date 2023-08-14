@@ -35,10 +35,10 @@ class ApplicationController < ActionController::Base
 
   def handle_invalid_cookies
     Rails.logger.debug { 'Invalid cookies' }
-    cookies.delete(:account_id)
-    cookies.delete(:id_token)
-    cookies.delete(:access_token)
-    redirect_to root_path
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.json { render json: { error: 'unauthorized' }, status: :unauthorized }
+    end
   end
 
   # rubocop:disable Naming/MemoizedInstanceVariableName

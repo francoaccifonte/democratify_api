@@ -121,46 +121,6 @@ resource "aws_codebuild_project" "Rockolify" {
       name  = "REGION"
       value = local.region
     }
-    environment_variable {
-      name  = "SPOTIFY_CLIENT_ID"
-      value = var.SPOTIFY_CLIENT_ID
-    }
-    environment_variable {
-      name  = "SPOTIFY_SECRET"
-      value = var.SPOTIFY_SECRET
-    }
-    environment_variable {
-      name  = "SENTRY_DSN"
-      value = var.SENTRY_DSN
-    }
-    environment_variable {
-      name  = "MASTER_KEY"
-      value = var.MASTER_KEY
-    }
-    environment_variable {
-      name  = "RAILS_SERVE_STATIC_FILES"
-      value = "TRUE"
-    }
-    environment_variable {
-      name  = "DEMOCRATIFYAPI_DATABASE_DB_NAME"
-      value = aws_db_instance.rockolify_db.db_name
-    }
-    environment_variable {
-      name  = "DEMOCRATIFYAPI_DATABASE_USERNAME"
-      value = aws_db_instance.rockolify_db.username
-    }
-    environment_variable {
-      name  = "DEMOCRATIFYAPI_DATABASE_PASSWORD"
-      value = aws_db_instance.rockolify_db.password
-    }
-    environment_variable {
-      name  = "DEMOCRATIFYAPI_DATABASE_HOSTNAME"
-      value = aws_db_instance.rockolify_db.address
-    }
-    environment_variable {
-      name  = "DEMOCRATIFYAPI_DATABASE_PORT"
-      value = aws_db_instance.rockolify_db.port
-    }
   }
 
   logs_config {
@@ -197,7 +157,7 @@ resource "aws_codebuild_webhook" "on_merge_or_message" {
   }
   filter_group {
     filter {
-      pattern = "[codebuild]"
+      pattern = "\\[CodeBuild\\]"
       type    = "COMMIT_MESSAGE"
     }
     filter {

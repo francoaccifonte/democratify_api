@@ -1,4 +1,4 @@
-class SpotifyUserCreator
+class SpotifyUserAuthorizer
   def initialize(account_id:, code:)
     @account_id = account_id
     @code = code
@@ -10,12 +10,12 @@ class SpotifyUserCreator
   end
 
   def call
-    new_user = SpotifyUser.new(account_id:)
-    authorize(new_user)
-    user_data(new_user)
+    user = SpotifyUser.find_by!(account_id:)
+    authorize(user)
+    user_data(user)
 
-    new_user.save!
-    PlaylistImportWorker.perform_async(new_user.id)
+    user.save!
+    PlaylistImportWorker.perform_async(user.id)
   end
 
   private

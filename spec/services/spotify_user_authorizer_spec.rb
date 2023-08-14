@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe SpotifyUserCreator do
+describe SpotifyUserAuthorizer do
   subject { described_class.call(account_id: account.id, code:) }
 
   let!(:account) { create(:account) }
@@ -36,8 +36,10 @@ describe SpotifyUserCreator do
   end
 
   context 'when all goes well' do
-    it 'creates the user' do
-      expect { subject }.to change(SpotifyUser, :count).by(1)
+    let!(:spotify_user) { create(:spotify_user, account:) }
+
+    it 'updates the user' do
+      expect { subject }.not_to change(SpotifyUser, :count)
       user = account.spotify_user.reload
       expect(user.scope).to eq('some_scope')
       expect(user.access_token).to eq('some_access_token')

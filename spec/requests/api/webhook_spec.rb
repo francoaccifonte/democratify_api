@@ -38,10 +38,14 @@ RSpec.describe Api::WebhookController do
         )
       end
 
-      before { mock_user(mock) }
+      before do
+        mock_user(mock)
+        allow(SpotifyUserAuthorizer).to receive(:call)
+      end
 
       it 'creates the spotify user' do
-        expect { subject }.to change(SpotifyUser, :count).by(1)
+        subject
+        expect(SpotifyUserAuthorizer).to have_received(:call).with(account_id: account.id.to_s, code: 'farafa')
       end
 
       it 'redirects home' do
