@@ -18,6 +18,16 @@ class AccountsController < ApplicationController
     render :login, status: :unauthorized
   end
 
+  def cognito_endpoint # rubocop:disable Metrics/AbcSize
+    data = CodeToAccount.call(params.require(:code))
+    cookies.encrypted[:account_id] = data.fetch(:account).id
+    cognito_tokens_to_cookies(data.fetch(:tokens))
+
+    return redirect_to(account_settings_path) if data[:account].spotify_user.blank?
+
+    redirect_to(spotify_playlists_url)
+  end
+
   private
 
   def redirect_if_already_loged_in
@@ -33,5 +43,11 @@ class AccountsController < ApplicationController
     {
       email: params.require(:email)
     }.merge!(params.permit(:name)).compact
+  end
+
+  def cognito_tokens_to_cookies(tokens)
+    cookies.encrypted[:id_token] = { value: tokens[:id_token], expires_in: tokens[:expires_in].seconds }
+    cookies.encrypted[:access_token] = { value: tokens[:access_token], expires_in: tokens[:expires_in].seconds }
+    cookies.encrypted[:refresh_token] = tokens[:refresh_token]
   end
 end

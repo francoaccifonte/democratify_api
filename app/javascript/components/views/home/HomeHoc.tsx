@@ -1,14 +1,15 @@
 import React from 'react'
-import { ThemeProvider } from 'react-jss'
 
 import { Home } from '.'
-import { adminPalette } from '../../ColorPalette'
+import Hoc, { HocPropsType } from '../../common/Hoc'
 
-const HomeHoc = () => {
+type HomeHocProps = HocPropsType
+
+const HomeHoc: React.FC<HomeHocProps> = (props): JSX.Element => {
   return (
-    <ThemeProvider theme={adminPalette}>
+    <Hoc {...props}>
       <Home />
-    </ThemeProvider>
+    </Hoc>
   )
 }
 

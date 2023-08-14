@@ -17,10 +17,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_19_140938) do
   create_table "accounts", force: :cascade do |t|
     t.string "name"
     t.string "email", null: false
-    t.string "token", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "password_digest"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["name"], name: "index_accounts_on_name", unique: true
   end

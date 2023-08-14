@@ -15,8 +15,8 @@ Rails.application.routes.draw do
 
   get '/accounts/login', to: 'accounts#login'
   get '/accounts/signup', to: 'accounts#signup'
-  post '/accounts/signup', to: 'api/accounts#signup'
   post '/accounts/login', to: 'accounts#login_form'
+  get '/v2/accounts/login', to: 'accounts#cognito_endpoint'
 
   resources :accounts, only: [] do
     get '/votation', to: 'votations#show'

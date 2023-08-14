@@ -8,7 +8,9 @@ import { serializedVotation, serializedOngoingPlaylist, jsonTo } from '../types'
 type HocPropsType = {
   ongoingPlaylist?: string;
   votation?: string;
-  palette?: Palette
+  palette?: Palette;
+  cognitoEndpoint?: string;
+  backendBaseUrl?: string;
 }
 
 type HocType = HocPropsType & {
@@ -20,7 +22,7 @@ const Hoc = (props: HocType): JSX.Element => {
   const votation = props.votation ? jsonTo<serializedVotation>(props.votation) : null
   return (
     <ThemeProvider theme={props.palette || adminPalette}>
-      <FooterContext.Provider value={{ ongoingPlaylist, votation }}>
+      <FooterContext.Provider value={{ ongoingPlaylist, votation, cognitoEndpoint: props.cognitoEndpoint, backendBaseUrl: props.backendBaseUrl }}>
         {props.children}
       </FooterContext.Provider>
     </ThemeProvider>

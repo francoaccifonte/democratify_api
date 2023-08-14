@@ -2,13 +2,11 @@
 #
 # Table name: accounts
 #
-#  id              :bigint           not null, primary key
-#  email           :string           not null
-#  name            :string
-#  password_digest :string
-#  token           :string           not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  id         :bigint           not null, primary key
+#  email      :string           not null
+#  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 # Indexes
 #
@@ -19,7 +17,5 @@ FactoryBot.define do
   factory :account do
     email { Faker::Internet.email }
     name { Faker::Name.name }
-    token { Faker::Lorem.characters(number: 50) }
-    password { Faker::Lorem.characters(number: 15) }
   end
 end
