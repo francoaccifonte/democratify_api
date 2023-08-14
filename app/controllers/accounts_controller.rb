@@ -11,7 +11,7 @@ class AccountsController < ApplicationController
     @account.authenticate!(params.require(:password))
     set_account_cookies
 
-    redirect_to spotify_playlists_url
+    login_redirect
   rescue AuthenticationError
     Rails.logger.debug('login failed')
     @failed_auth = true
@@ -33,5 +33,9 @@ class AccountsController < ApplicationController
     {
       email: params.require(:email)
     }.merge!(params.permit(:name)).compact
+  end
+
+  def login_redirect
+    redirect_to(@account.spotify_user.present? ? spotify_playlists_url : account_settings_url)
   end
 end

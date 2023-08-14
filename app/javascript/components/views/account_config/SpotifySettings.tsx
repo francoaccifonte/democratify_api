@@ -54,7 +54,7 @@ const AuthButton = (props: StreamingCardProps) => {
   )
 }
 
-const Description = (props: StreamingCardProps) => {
+const StepZeroDescription = (props: StreamingCardProps) => {
   if (props.account.spotify_user?.email) { return null }
   return (
     <div className={props.classes.description}>
@@ -66,11 +66,42 @@ const Description = (props: StreamingCardProps) => {
   )
 }
 
+const StepOneDescription = (props: StreamingCardProps) => {
+  if (props.account.spotify_user?.email) { return null }
+  return (
+    <div className={props.classes.description}>
+      Ya recibimos tu email. Pronto un administrador te agregara a la lista de usuarios permitidos. Vuelve en unos minutos para continuar al siguiente paso.
+    </div>
+  )
+}
+
+const StepTwoDescription = (props: StreamingCardProps) => {
+  if (props.account.spotify_user?.email) { return null }
+  return (
+    <div className={props.classes.description}>
+      Ya casi 🥳! Autoriza Rockolify a acceder a tus datos de Spotify
+    </div>
+  )
+}
+
+const StepThreeDescription = (props: StreamingCardProps) => null
+
 const SpotifySettings = (props: StreamingCardProps) => {
   const [showEditBox, setShowEditBox] = useState<Boolean>(!!props.account.spotify_user?.user_provided_email)
   const [formEmail, setFormEmail] = useState<String>()
   const editBox = { showEditBox, setShowEditBox }
   const email = { formEmail, setFormEmail }
+  let Description
+  console.log(props)
+  if (!props.account.spotify_user?.user_provided_email) {
+    Description = StepZeroDescription
+  } else if (!props.account.spotify_user.whitelisted) {
+    Description = StepOneDescription
+  } else if (!props.account.spotify_user.email) {
+    Description = StepTwoDescription
+  } else {
+    Description = StepThreeDescription
+  }
 
   const { classes } = props
   return (

@@ -3,6 +3,7 @@ class SpotifyPlaylistsController < ApplicationController
 
   # GET /spotify_playlists
   def index
+    redirect_to account_settings_url if @account.spotify_user.blank?
     @spotify_playlists = @account.spotify_playlists.all
   end
 

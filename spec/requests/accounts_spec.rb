@@ -50,9 +50,20 @@ RSpec.describe "Accounts" do
     end
 
     context 'when user is not logged in' do
-      it 'returns http success' do
-        post accounts_login_url, params: { email: account.email, password: account.password }
-        expect(response).to redirect_to(spotify_playlists_url)
+      context 'when account has a spotify user' do
+        let!(:spotify_user) { create(:spotify_user, account:) }
+
+        it 'redirects to spotify playlists view' do
+          post accounts_login_url, params: { email: account.email, password: account.password }
+          expect(response).to redirect_to(spotify_playlists_url)
+        end
+      end
+
+      context 'when account does not have a spotify user' do
+        it 'redirects to account_settings' do
+          post accounts_login_url, params: { email: account.email, password: account.password }
+          expect(response).to redirect_to(account_settings_url)
+        end
       end
     end
 
