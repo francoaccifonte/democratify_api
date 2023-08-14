@@ -10,8 +10,8 @@ type SpotifyPlaylistSelectionViewHocProps = {
 } & HocPropsType
 
 const SpotifyPlaylistSelectionViewHoc = (props: SpotifyPlaylistSelectionViewHocProps) => {
-  const account: serializedAccount = jsonTo<serializedAccount>(props.account)
   const playlists: serializedSpotifyPlaylist[] = jsonTo<serializedSpotifyPlaylist[]>(props.playlists)
+  const account: serializedAccount = jsonTo<serializedAccount>(props.account)
 
   return (
     <Hoc {...props}>

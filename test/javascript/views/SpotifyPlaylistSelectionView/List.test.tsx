@@ -15,4 +15,10 @@ describe('List', () => {
     expect(subject.getByText(playlist[0].name)).toBeInTheDocument()
     expect(subject.getByText(playlist[1].name)).toBeInTheDocument()
   })
+
+  it('handles an empty state', async () => {
+    const subject = render(<List playlists={[]}/>)
+
+    expect(subject.getByText('No se encontraron playlists')).toBeInTheDocument()
+  })
 })
