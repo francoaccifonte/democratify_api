@@ -36,7 +36,9 @@ const List = (props: ListProps) => {
   return (
     <div className={props.classes.empyState} >
       <Text type="bodyRegular" color="white">
-        <FontAwesomeIcon icon={['fas', 'microphone-slash']} /> No se encontraron playlists
+        <FontAwesomeIcon icon={['fas', 'microphone-slash']} /> No se encontraron playlists.
+        <br />
+        <Text href="account_settings/import_playlists" type="link">Haz click para importarlas desde tu cuenta de Spotify</Text>
       </Text>
     </div>
   )

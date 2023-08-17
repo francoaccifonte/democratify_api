@@ -14,8 +14,18 @@ class SpotifyPlaylistsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_spotify_playlist
     @spotify_playlist = @account.spotify_playlists.find(params[:id])
+  end
+
+  def component_props
+    @component_props =
+      if action_name == 'index'
+        {
+          import_in_progress: PlaylistImportWorker.jobs_for_user?(@account.spotify_user&.id)
+        }
+      else
+        {}
+      end
   end
 end
