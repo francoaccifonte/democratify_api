@@ -1,6 +1,18 @@
 class PlaylistImportWorker
   include Sidekiq::Worker
-  sidekiq_options queue: :spotify_import
+
+  def self.queue
+    :spotify_import
+  end
+
+  def self.jobs_for_user?(user_id)
+    return unless user_id
+
+    queue = Sidekiq::Queue.new(self.queue)
+    queue.detect { |job| job.args.first == user_id }.present? || ImportSpotifySongsIntoPlaylistWorker.jobs_for_user?(user_id)
+  end
+
+  sidekiq_options queue: PlaylistImportWorker.queue
 
   def perform(user_id)
     user = SpotifyUser.find(user_id)
@@ -9,7 +21,7 @@ class PlaylistImportWorker
       playlist = SpotifyPlaylist.find_or_initialize_by(external_id: api_playlist.fetch(:id), account_id: user.account_id)
 
       update_playlist!(playlist, user, api_playlist)
-      ImportSpotifySongsIntoPlaylistWorker.perform_async(playlist.id)
+      ImportSpotifySongsIntoPlaylistWorker.perform_async(playlist.id, user_id)
     end
   end
 

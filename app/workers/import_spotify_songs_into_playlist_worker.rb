@@ -2,13 +2,25 @@
 
 class ImportSpotifySongsIntoPlaylistWorker
   include Sidekiq::Worker
+
+  def self.queue
+    :spotify_import
+  end
+
+  def self.jobs_for_user?(user_id)
+    return unless user_id
+
+    queue = Sidekiq::Queue.new(self.queue)
+    queue.detect { |job| job.args.second == user_id }.present?
+  end
+
   sidekiq_options queue: :spotify_import
 
   # TODO: remove songs if they were removed from the spotfify playlist (from the api response)
-  def perform(playlist_id) # rubocop:disable Metrics/AbcSize
+  def perform(playlist_id, spotify_user_id) # rubocop:disable Metrics/AbcSize
     playlist = SpotifyPlaylist.find(playlist_id)
+    client = SpotifyUser.find(spotify_user_id).client
 
-    client = playlist.spotify_user.client
     songs = client.playlist_tracks(playlist.external_id).fetch(:items)
     initial_index = playlist.spotify_playlist_songs.count
 
