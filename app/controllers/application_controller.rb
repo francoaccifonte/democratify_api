@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include ReactComponentConcern
   attr_reader :account
 
   before_action :proces_cookies
