@@ -18,7 +18,7 @@ module SerializationConcern
   end
 
   def serialize_one(object, options: {}, serializer_class: nil)
-    return nil if object.nil?
+    return nil.to_json if object.nil?
 
     serializer = serializer_class&.new(**options) ||
                  guess_serializer(object.class).new(**options)
@@ -26,7 +26,7 @@ module SerializationConcern
   end
 
   def serialize_many(resources, options: {}, serializer_class: nil)
-    return [] unless resources.any?
+    return [].to_json unless resources.any?
 
     Panko::ArraySerializer.new(
       resources,

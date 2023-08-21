@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include ReactComponentConcern
+  include SerializationConcern
   attr_reader :account
 
   before_action :proces_cookies

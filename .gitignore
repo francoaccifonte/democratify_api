@@ -50,3 +50,4 @@ terraform_ec2_key
 infra/.terraform.tfstate.lock.info
 infra/terraform.tfvars
 .ec2.sh
+*.DS_STORE
