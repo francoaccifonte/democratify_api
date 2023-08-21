@@ -23,7 +23,8 @@ RSpec.describe '/spotify_playlists' do
             expect(controller.instance_variable_get(:@component_props)).to include(
               {
                 account: anything,
-                playlists: anything
+                playlists: anything,
+                importInProgress: anything
               }
             )
           end

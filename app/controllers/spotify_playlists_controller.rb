@@ -20,7 +20,7 @@ class SpotifyPlaylistsController < ApplicationController
 
   def index_props
     {
-      # import_in_progress: PlaylistImportWorker.jobs_for_user?(@account.spotify_user&.id),
+      import_in_progress: PlaylistImportWorker.jobs_for_user?(@account.spotify_user&.id),
       account: serialized_account(@account),
       playlists: serialize_many(@spotify_playlists, options: { except: %i[spotify_songs sample_songs] })
     }

@@ -7,6 +7,7 @@ import Hoc, { HocPropsType } from '../../../common/Hoc'
 type SpotifyPlaylistSelectionViewHocProps = {
   playlists: string;
   account: string;
+  import_in_progress: boolean;
 } & HocPropsType
 
 const SpotifyPlaylistSelectionViewHoc = (props: SpotifyPlaylistSelectionViewHocProps) => {
@@ -15,7 +16,7 @@ const SpotifyPlaylistSelectionViewHoc = (props: SpotifyPlaylistSelectionViewHocP
 
   return (
     <Hoc {...props}>
-      <SpotifyPlaylistSelectionView account={account} playlists={playlists} />
+      <SpotifyPlaylistSelectionView account={account} playlists={playlists} importInProgress={props.import_in_progress}/>
     </Hoc>
   )
 }
