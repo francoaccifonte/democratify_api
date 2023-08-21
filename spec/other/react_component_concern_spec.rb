@@ -1,40 +1,23 @@
 require 'rails_helper'
-# rubocop:disable Rails/ApplicationController, RSpec/FilePath
+# rubocop:disable RSpec/FilePath
 
-class DummyController < ActionController::Base
-  include SerializationConcern
-  include ReactComponentConcern
-  before_action :dummy_json
-  def dummy_json
-    render json: {}, status: :ok
-  end
+describe SpotifyPlaylistsController, type: :request do
+  let(:account) { create(:account) }
+  let!(:spotify_playlists) { create(:spotify_playlist, account:) }
 
-  def index; end
-
-  def index_props
-    { some_prop_name: 'some_prop_value' }
-  end
-end
-
-describe DummyController, type: :request do
-  before do
-    Rails.application.routes.draw do
-      get '/dummy/index', to: 'dummy#index'
-    end
-  end
+  before { WithAccountCookies.set_account_cookie(cookies, account) }
 
   context 'when a request renders a react component' do
     it 'adds the props for that action' do
-      get '/dummy/index'
+      get '/spotify_playlists'
       expect(controller.instance_variable_get(:@component_props)).to include(
-        {
-          some_prop_name: 'some_prop_value'
-        }
+        account: AccountSerializer.new.serialize_to_json(account),
+        playlists: anything
       )
     end
 
     it 'adds the default props' do
-      get '/dummy/index'
+      get '/spotify_playlists'
       expect(controller.instance_variable_get(:@component_props)).to include(
         {
           ongoingPlaylist: anything,
@@ -45,4 +28,4 @@ describe DummyController, type: :request do
   end
 end
 
-# rubocop:enable Rails/ApplicationController, RSpec/FilePath
+# rubocop:enable RSpec/FilePath

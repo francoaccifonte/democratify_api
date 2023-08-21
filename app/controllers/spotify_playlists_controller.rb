@@ -13,8 +13,22 @@ class SpotifyPlaylistsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_spotify_playlist
     @spotify_playlist = @account.spotify_playlists.find(params[:id])
+  end
+
+  def index_props
+    {
+      # import_in_progress: PlaylistImportWorker.jobs_for_user?(@account.spotify_user&.id),
+      account: serialized_account(@account),
+      playlists: serialize_many(@spotify_playlists, options: { except: %i[spotify_songs sample_songs] })
+    }
+  end
+
+  def show_props
+    {
+      account: serialized_account(@account),
+      playlist: serialize_one(@spotify_playlist)
+    }
   end
 end

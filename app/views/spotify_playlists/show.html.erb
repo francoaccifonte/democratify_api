@@ -1,8 +1,5 @@
 <%= react_component(
   'SpotifyPlaylistShowViewHoc',
-  props: {
-    account: serialized_account(@account),
-    playlist: serialize_one(@spotify_playlist)
-  }.merge(hoc_params),
+  props: @component_props.merge(hoc_params),
   prerender: false
   ) %>

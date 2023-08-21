@@ -25,7 +25,7 @@ module ReactComponentConcern
     )
 
     # add_component_props(action_name == 'index' ? index_props : show_props)
-    add_component_props(send("#{action_name}_props")) if respond_to?("#{action_name}_props")
+    add_component_props(send("#{action_name}_props")) if respond_to?("#{action_name}_props", true)
 
     add_component_props(custom_props)
   end
