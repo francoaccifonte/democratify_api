@@ -20,7 +20,7 @@ describe SerializationConcern do
         expect(response).to include("\"name\":\"#{Account.first.name}\"")
       end
 
-      it 'returns null when nothing to serialize' do
+      it 'returns nil when nothing to serialize' do
         expect(DummyHelper.new.serialize_one(Account.where(name: 'farafafejajfia').first)).to eq(nil.to_json)
         expect(DummyHelper.new.serialize_one(nil)).to eq(nil.to_json)
       end

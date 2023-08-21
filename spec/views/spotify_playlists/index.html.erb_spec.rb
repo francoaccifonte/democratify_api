@@ -1,12 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "spotify_playlists/index" do
-  let!(:account) { create(:account) }
-  let!(:spotify_playlists) { create_list(:spotify_playlist, 2) }
+  let(:props) { { hash: 123 } }
 
   before do
-    assign(:account, account)
-    assign(:spotify_playlists, spotify_playlists)
+    assign(:component_props, props)
   end
 
   it 'renders the react component' do
@@ -16,10 +14,7 @@ RSpec.describe "spotify_playlists/index" do
       have_received(:react_component)
       .with('SpotifyPlaylistSelectionViewHoc',
             props: hash_including(
-              {
-                account: serialized_account(account),
-                playlists: serialize_many(spotify_playlists, options: { except: %i[spotify_songs sample_songs] })
-              }
+              props
             ),
             prerender: false)
     )

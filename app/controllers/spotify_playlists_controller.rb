@@ -18,14 +18,18 @@ class SpotifyPlaylistsController < ApplicationController
     @spotify_playlist = @account.spotify_playlists.find(params[:id])
   end
 
-  def component_props
-    @component_props =
-      if action_name == 'index'
-        {
-          import_in_progress: PlaylistImportWorker.jobs_for_user?(@account.spotify_user&.id)
-        }
-      else
-        {}
-      end
+  def index_props
+    {
+      # import_in_progress: PlaylistImportWorker.jobs_for_user?(@account.spotify_user&.id),
+      account: serialized_account(@account),
+      playlists: serialize_many(@spotify_playlists, options: { except: %i[spotify_songs sample_songs] })
+    }
+  end
+
+  def show_props
+    {
+      account: serialized_account(@account),
+      playlist: serialize_one(@spotify_playlist)
+    }
   end
 end

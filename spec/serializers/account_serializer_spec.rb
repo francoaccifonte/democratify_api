@@ -23,7 +23,7 @@ describe AccountSerializer do
   let!(:account) { create(:account) }
 
   it 'contains the correct attributes' do
-    %i[id email name created_at updated_at token spotify_user].each do |attribute|
+    %i[id email name created_at updated_at spotify_user].each do |attribute|
       expect(subject).to include("\"#{attribute}\":")
       expect(subject).to include(account.attributes[attribute].to_s) if account.attributes[attribute]
     end

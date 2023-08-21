@@ -1,8 +1,5 @@
 <%= react_component(
   'SpotifyPlaylistSelectionViewHoc',
-  props: {
-    account: serialized_account(@account),
-    playlists: serialize_many(@spotify_playlists, options: { except: %i[spotify_songs sample_songs] })
-  }.merge(hoc_params).merge(@component_props),
+  props: @component_props.merge(hoc_params),
   prerender: false
 ) %>
