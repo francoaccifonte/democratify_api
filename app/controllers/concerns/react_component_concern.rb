@@ -24,7 +24,6 @@ module ReactComponentConcern
       votation: serialize_one(@votation)
     )
 
-    # add_component_props(action_name == 'index' ? index_props : show_props)
     add_component_props(send("#{action_name}_props")) if respond_to?("#{action_name}_props", true)
 
     add_component_props(custom_props)
@@ -39,9 +38,6 @@ module ReactComponentConcern
   end
 
   def serialized_account(account, _options: {})
-    # options[:except].nil? ? options[:except] = %i[token] : options[:except] << :token
-
-    # AccountSerializer.new(**options).serialize_to_json(account)
     serialize_one(account)
   end
 end

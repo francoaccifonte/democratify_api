@@ -1,6 +1,9 @@
 require 'rails_helper'
 # rubocop:disable RSpec/FilePath
 
+# I'm testing this concern through the SpotifyPlaylistsController because it's a lot of boilerplate
+# to create a dummy controller just to test it
+
 describe SpotifyPlaylistsController, type: :request do
   let(:account) { create(:account) }
   let!(:spotify_playlists) { create(:spotify_playlist, account:) }
