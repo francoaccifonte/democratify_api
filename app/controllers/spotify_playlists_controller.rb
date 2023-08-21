@@ -12,6 +12,11 @@ class SpotifyPlaylistsController < ApplicationController
     @spotify_playlist = @account.spotify_playlists.find(params.fetch(:id))
   end
 
+  def import
+    PlaylistImportWorker.perform_async(@account.spotify_user.id)
+    redirect_to spotify_playlists_url
+  end
+
   private
 
   def set_spotify_playlist

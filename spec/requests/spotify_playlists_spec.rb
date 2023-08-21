@@ -24,7 +24,7 @@ RSpec.describe '/spotify_playlists' do
               {
                 account: anything,
                 playlists: anything,
-                importInProgress: anything
+                import_in_progress: anything
               }
             )
           end
