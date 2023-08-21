@@ -10,7 +10,7 @@ const playlist = buildList(SerializedSpotifyPlaylistFactory, 2)
 
 describe('List', () => {
   it('renders a list of playlists', async () => {
-    const subject = render(<SpotifyPlaylistSelectionViewHoc playlists={toJson(playlist)} account={toJson(SerializedAccountFactory())} />)
+    const subject = render(<SpotifyPlaylistSelectionViewHoc playlists={toJson(playlist)} account={toJson(SerializedAccountFactory())} import_in_progress={false}/>)
 
     expect(subject.getByText(playlist[0].name)).toBeInTheDocument()
     expect(subject.getByText(playlist[1].name)).toBeInTheDocument()

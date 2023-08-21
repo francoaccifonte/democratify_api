@@ -3,11 +3,9 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import withStyles from 'react-jss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { PlaylistCard } from './'
 import { serializedSpotifyPlaylist } from '../../../types'
-import { Text } from '../../../common'
 
 type ListProps = {
   playlists: serializedSpotifyPlaylist[],
@@ -33,23 +31,11 @@ const List = (props: ListProps) => {
     )
   }
 
-  return (
-    <div className={props.classes.empyState} >
-      <Text type="bodyRegular" color="white">
-        <FontAwesomeIcon icon={['fas', 'microphone-slash']} /> No se encontraron playlists.
-        <br />
-        <Text href="account_settings/import_playlists" type="link">Haz click para importarlas desde tu cuenta de Spotify</Text>
-      </Text>
-    </div>
-  )
+  return (null)
 }
 
 const styles = (theme: any) => {
-  return {
-    empyState: {
-      color: theme.White
-    }
-  }
+  return {}
 }
 
 export default withStyles(styles)(List)
