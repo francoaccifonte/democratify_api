@@ -6,6 +6,7 @@ require 'rails_helper'
 
 describe SpotifyPlaylistsController, type: :request do
   let(:account) { create(:account) }
+  let!(:spotify_user) { create(:spotify_user, account:) }
   let!(:spotify_playlists) { create(:spotify_playlist, account:) }
 
   before { WithAccountCookies.set_account_cookie(cookies, account) }
