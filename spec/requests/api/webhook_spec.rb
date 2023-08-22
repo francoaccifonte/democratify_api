@@ -46,7 +46,7 @@ RSpec.describe Api::WebhookController do
         expect(SpotifyUserAuthorizer).to have_received(:call).with(account_id: account.id.to_s, code: 'farafa')
       end
 
-      it 'returns ok' do
+      it 'redirects to the playlist selection view' do
         subject
         expect(response).to redirect_to(spotify_playlists_url)
       end

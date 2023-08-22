@@ -46,4 +46,20 @@ RSpec.describe PlaylistImportWorker, type: :worker do
       expect(old_time).not_to eq(playlist.reload.updated_at)
     end
   end
+
+  describe '.jobs_for_user?' do
+    context 'when no jobs are enqueued' do
+      it 'returns false' do
+        expect(described_class.jobs_for_user?(spotify_user.id)).to be false
+      end
+    end
+
+    context 'when there are enqueued jobs' do
+      pending 'returns true' do
+        # the sidekiq queue does not find jobs during specs, so this example returns false
+        described_class.perform_async(spotify_user.id)
+        expect(described_class.jobs_for_user?(spotify_user.id)).to be true
+      end
+    end
+  end
 end
