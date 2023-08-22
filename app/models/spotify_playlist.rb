@@ -31,13 +31,5 @@ class SpotifyPlaylist < ApplicationRecord
   belongs_to :account
   belongs_to :spotify_user, optional: false
 
-  after_create :import_songs
-
   accepts_nested_attributes_for :spotify_playlist_songs
-
-  private
-
-  def import_songs
-    ImportSpotifySongsIntoPlaylistWorker.perform_async(id)
-  end
 end

@@ -3,12 +3,18 @@ class SpotifyPlaylistsController < ApplicationController
 
   # GET /spotify_playlists
   def index
+    redirect_to account_settings_url if @account.spotify_user.blank?
     @spotify_playlists = @account.spotify_playlists.all
   end
 
   # GET /spotify_playlists/1
   def show
     @spotify_playlist = @account.spotify_playlists.find(params.fetch(:id))
+  end
+
+  def import
+    PlaylistImportWorker.perform_async(@account.spotify_user.id)
+    redirect_to spotify_playlists_url
   end
 
   private
@@ -19,7 +25,7 @@ class SpotifyPlaylistsController < ApplicationController
 
   def index_props
     {
-      # import_in_progress: PlaylistImportWorker.jobs_for_user?(@account.spotify_user&.id),
+      import_in_progress: PlaylistImportWorker.jobs_for_user?(@account.spotify_user&.id),
       account: serialized_account(@account),
       playlists: serialize_many(@spotify_playlists, options: { except: %i[spotify_songs sample_songs] })
     }

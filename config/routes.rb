@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   resources :spotify_users, only: %i[create]
   resources :ongoing_playlists, only: %i[index]
   resources :account_settings, only: %i[index]
-  resources :spotify_playlists, only: %i[show index]
+  resources :spotify_playlists, only: %i[show index] do
+    collection do
+      get '/import', to: 'spotify_playlists#import'
+    end
+  end
   root 'welcome#index'
   mount Sidekiq::Web => '/sidekiq'
 

@@ -17,7 +17,7 @@ const LoginView = (props: LogInViewProps) => {
   const [password, setPassword] = useState<string>('')
   const [logInState, setLogInState] = useState<'idle' | 'pending' | 'fulfilled' | 'rejected'>('idle')
 
-  const handleLogIn = async (event: React.MouseEvent<HTMLInputElement>) => {
+  const handleLogIn = async (event: React.MouseEvent<HTMLButtonElement>) => {
     setLogInState('pending')
   }
 
