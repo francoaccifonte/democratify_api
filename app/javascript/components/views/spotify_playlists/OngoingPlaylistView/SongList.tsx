@@ -32,7 +32,7 @@ const handleDragEnd = (result, remainingSongs, setRemainingSongs) => {
 
 const SongList: React.FC<SongListProps> = ({ ongoingPlaylist, poolControls, classes }): JSX.Element => {
   let timerId: any
-  const [playingSong, votingSongs] = [ongoingPlaylist.playing_song, ongoingPlaylist.voting_songs.sort((it) => it.id)]
+  const [playingSong, votingSongs] = [ongoingPlaylist.playing_song, ongoingPlaylist.voting_songs.sort((it) => -it.id)]
   const [remainingSongs, setRemainingSongs] = useState<serializedSpotifyPlaylistSong[]>(ongoingPlaylist.remaining_songs.sort((it) => -it.index))
 
   useEffect(() => {
