@@ -1,11 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import Image from 'react-bootstrap/Image'
 
 import { serializedSpotifySong } from '../../../types'
 import { Text } from '../../../common'
 import { adminPalette } from '../../../ColorPalette'
 import withStyles from 'react-jss'
-import { ResponsiveContext } from '../../contexts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 type songListProps = {
@@ -17,17 +16,15 @@ type songListProps = {
 
 const SongListElement: React.FC<songListProps> = ({ rowNumber, data, poolSize, classes }): JSX.Element => {
   const color = rowNumber < poolSize ? adminPalette.Success : adminPalette.Secondary
-  const device = useContext(ResponsiveContext)
 
   return (
     <div className={classes.container} style={{ backgroundColor: color }}>
       <Image className={classes.image} src={data.cover_art[2].url} alt="album art" roundedCircle/>
-        <div className={device.isMobile ? classes.textBlockMobile : classes.textBlockDesktop }>
-          <Text type="bodyRegular" color="White" className={device.isMobile ? classes.textItemMobile : classes.textItemDesktop}>{data.title}</Text>
-          <Text type="bodyCaption" color="White" className={device.isMobile ? classes.textItemMobile : classes.textItemDesktop}>{data.artist}</Text>
-          { device.isDesktop && <Text type="bodyRegular" color="White" className={device.isMobile ? classes.textItemMobile : classes.textItemDesktop}>{data.album}</Text>}
+        <div className={classes.textBlock}>
+          <Text type="bodyRegular" color="White" className={classes.textItem}>{data.title}</Text>
+          <Text type="bodyCaption" color="White" className={classes.textItem}>{data.artist}</Text>
         </div>
-      { device.isMobile && <FontAwesomeIcon icon={['fas', 'grip-lines']} className={classes.grabber} />}
+      <FontAwesomeIcon icon={['fas', 'grip-lines']} className={classes.grabber} />
     </div>
   )
 }
@@ -43,18 +40,17 @@ const styles = (theme: typeof adminPalette) => {
       flexDirection: 'row',
       alignItems: 'center',
     },
-    textBlockMobile: {
+    textBlock: {
       display: 'flex',
       flexDirection: 'column',
-      marginRight: '20px'
+      marginRight: '20px',
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
     },
-    textItemMobile: {
-      textAlign: 'left'
-    },
-    textItemDesktop: {},
-    textBlockDesktop: {
-      display: 'flex',
-      flexDirection: 'row'
+    textItem: {
+      textAlign: 'left',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
     },
     image: {
       width: '64px',

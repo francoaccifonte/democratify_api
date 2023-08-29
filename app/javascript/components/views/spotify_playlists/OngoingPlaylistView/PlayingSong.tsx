@@ -1,39 +1,65 @@
 
 import React from 'react'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import Image from 'react-bootstrap/Image'
 import { serializedSpotifySong } from '../../../types'
 import { Text } from '../../../common'
 import { adminPalette } from '../../../ColorPalette'
+import withStyles from 'react-jss'
 
 type PlayingSongProps = {
   song?: serializedSpotifySong;
+  classes: any
 }
 
 const PlayingSong = (props: PlayingSongProps) => {
-  const { song } = props
+  const { classes, song } = props
 
   if (!song) { return null }
 
   return (
-    <>
-      <Row className={'my-2 px-2 py-2'} style={{ backgroundColor: adminPalette.Primary }}>
-        <Col lg={1}>
-          <Image src={song.cover_art[2].url} alt="album art" roundedCircle/>
-        </Col>
-        <Col xs={4} sm={3}>
-          <Text type="bodyRegular" color="White">{song.title}</Text>
-        </Col>
-        <Col xs={4} sm={3}>
-          <Text type="bodyRegular" color="White">{song.artist}</Text>
-        </Col>
-        <Col sm={4} className="d-none d-sm-block">
-          <Text type="bodyRegular" color="White">{song.album}</Text>
-        </Col>
-      </Row>
-    </>
+    <div className={classes.container}>
+      <Image className={classes.image} src={song.cover_art[2].url} alt="album art" roundedCircle/>
+        <div className={classes.textBlock }>
+          <Text type="bodyRegular" color="White" className={classes.textItem}>{song.title}</Text>
+          <Text type="bodyCaption" color="White" className={classes.textItem}>{song.artist}</Text>
+        </div>
+    </div>
   )
 }
 
-export default PlayingSong
+const styles = (theme: typeof adminPalette) => {
+  return {
+    container: {
+      marginTop: '0.5rem',
+      marginBottom: '0.5rem',
+      marginRight: '-12px',
+      marginLeft: '-12px',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: theme.Primary
+    },
+    textBlock: {
+      display: 'flex',
+      flexDirection: 'column',
+      marginRight: '20px',
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+    },
+    textItem: {
+      textAlign: 'left',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+    },
+    image: {
+      width: '64px',
+      height: '64px',
+      marginTop: '10px',
+      marginBottom: '10px',
+      marginRight: '20px',
+      marginLeft: '20px',
+    },
+  }
+}
+
+export default withStyles(styles)(PlayingSong)
