@@ -21,6 +21,10 @@ type HeaderProps = {
 }
 
 const AppHeader = (props: HeaderProps) => {
+  const handleLogoClick = (event) => {
+    event.preventDefault()
+    window.location.href = '/'
+  }
   const LogInButtons = () => {
     return (
       <>
@@ -41,10 +45,10 @@ const AppHeader = (props: HeaderProps) => {
 
   return (
     <div className={props.classes.container}>
-      <div className={props.classes.brand} onClick={() => { window.location.href = '/' }}>
+      <a className={props.classes.brand} onClick={handleLogoClick} href='/'>
         <AppLogo />
         <Text type="header" color="white">Rockolify</Text>
-      </div>
+      </a>
       <div className={props.classes.leftCluster}>
         <RightCluster type={props.type} />
       </div>

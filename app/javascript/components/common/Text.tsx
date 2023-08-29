@@ -1,4 +1,5 @@
 import React from 'react'
+import { TextStyles } from '../sharedStyles/text'
 
 type TextProps = {
   type: 'header' | 'title' | 'bodyRegular' | 'bodyImportant' | 'bodyCaption' | 'link';
@@ -11,79 +12,17 @@ type TextProps = {
 }
 
 const Text = (props: TextProps) => {
-  const headerStyle = {
-    fontFamily: 'Poppins',
-    fontStyle: 'normal',
-    fontWeight: 600,
-    fontSize: '2.5rem',
-    lineHeight: '3.75rem'
-  }
-  const titleStyle = {
-    fontFamily: 'Poppins',
-    fontStyle: 'normal',
-    fontWeight: 600,
-    fontSize: '1rem',
-    lineHeight: '1.5rem'
-  }
-  const bodyRegularStyle = {
-    fontFamily: 'Poppins',
-    fontStyle: 'normal',
-    fontWeight: '400',
-    fontSize: '1.125rem',
-    lineHeight: '1.75rem'
-  }
-  const bodyImportantStyle = {
-    fontFamily: 'Poppins',
-    fontStyle: 'normal',
-    fontWeight: '400',
-    fontSize: '1.5rem',
-    lineHeight: '2.25rem'
-  }
-  const bodyCaptionStyle = {
-    fontFamily: 'Poppins',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: '0.75rem',
-    lineHeight: '1.125rem'
-  }
-  const linkStyle = {
-    fontFamily: 'Poppins',
-    fontStyle: 'normal',
-    fontWeight: '600',
-    fontSize: '1.125rem',
-    lineHeight: '1.75rem',
-    cursor: 'pointer',
-    '&:hover': {
-      cursor: 'pointer'
-    }
-  }
-  let normalStyle: any
-
-  switch (props.type) {
-    case 'header':
-      normalStyle = headerStyle
-      break
-    case 'title':
-      normalStyle = titleStyle
-      break
-    case 'bodyRegular':
-      normalStyle = bodyRegularStyle
-      break
-    case 'bodyImportant':
-      normalStyle = bodyImportantStyle
-      break
-    case 'bodyCaption':
-      normalStyle = bodyCaptionStyle
-      break
-    case 'link':
-      normalStyle = linkStyle
-      break
-  }
+  const normalStyle: any = TextStyles[props.type]
   normalStyle.color = props.color
+
   const style = { ...normalStyle, ...props.style }
 
   if (props.type === 'link') {
-    return <span className ={props.className} style={style} onClick={() => { window.location.href = props.href }} >{props.children}</span>
+    const handleOnClick: React.MouseEventHandler<HTMLAnchorElement> = (event) => {
+      event.preventDefault()
+      window.location.href = props.href
+    }
+    return <a className ={props.className} style={style} href={props.href} onClick={handleOnClick} >{props.children}</a>
   } else {
     return <span className ={props.className} style={style} onClick={props.onClick}>{props.children}</span>
   }
