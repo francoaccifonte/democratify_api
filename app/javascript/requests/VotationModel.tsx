@@ -6,11 +6,11 @@ class VotationModel extends BaseModel {
   }
 
   show (id: number, token: string = '') {
-    return this.appGet(`accounts/${id}/votation`, { token: token })
+    return this.appGet(`accounts/${id}/votation`, { token })
   }
 
   castVote (accountId: number, candidateId: number, fingerprint: string = '') {
-    return this.appPut({ candidate_id: candidateId, fingerprint: fingerprint }, `api/accounts/${accountId}/votation`)
+    return this.appPut({ candidate_id: candidateId, fingerprint }, `api/accounts/${accountId}/votation`)
   }
 }
 

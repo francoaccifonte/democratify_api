@@ -2,8 +2,10 @@ import React from 'react'
 
 import { ThemeProvider } from 'react-jss'
 import { Palette, adminPalette } from '../ColorPalette'
-import { FooterContext } from '../views/contexts/FooterContext'
+import { FooterContext, ResponsiveContext } from '../views/contexts/'
 import { serializedVotation, serializedOngoingPlaylist, jsonTo } from '../types'
+import { DeviceTypes } from './size_helpers'
+import { useMediaQuery } from 'react-responsive'
 
 type HocPropsType = {
   ongoingPlaylist?: string;
@@ -18,10 +20,13 @@ type HocType = HocPropsType & {
 const Hoc = (props: HocType): JSX.Element => {
   const ongoingPlaylist = props.ongoingPlaylist ? jsonTo<serializedOngoingPlaylist>(props.ongoingPlaylist) : null
   const votation = props.votation ? jsonTo<serializedVotation>(props.votation) : null
+  const devices = DeviceTypes(useMediaQuery)
   return (
     <ThemeProvider theme={props.palette || adminPalette}>
       <FooterContext.Provider value={{ ongoingPlaylist, votation }}>
-        {props.children}
+        <ResponsiveContext.Provider value={devices}>
+          {props.children}
+        </ResponsiveContext.Provider>
       </FooterContext.Provider>
     </ThemeProvider>
   )

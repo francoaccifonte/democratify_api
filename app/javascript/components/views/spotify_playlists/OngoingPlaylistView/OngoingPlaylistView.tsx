@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Container from 'react-bootstrap/Container'
 
 import { serializedAccount, serializedOngoingPlaylist, serializedVotation } from '../../../types'
 import { Player, SongList } from './'
 import { FullHeightSkeleton } from '../../../common'
+import { ResponsiveContext } from '../../contexts'
 
 type OngoingPlaylistViewProps = {
   account: serializedAccount;
@@ -12,6 +13,7 @@ type OngoingPlaylistViewProps = {
 }
 
 const OngoingPlaylistView: React.FC<OngoingPlaylistViewProps> = (props) => {
+  const device = useContext(ResponsiveContext)
   const [poolSize, setPoolSize] = useState<number>(props.ongoingPlaylist.pool_size)
   const poolControls = {
     incrementPoolSize: () => { setPoolSize(Math.min(poolSize + 1, props.ongoingPlaylist.remaining_songs.length)) },
@@ -32,9 +34,11 @@ const OngoingPlaylistView: React.FC<OngoingPlaylistViewProps> = (props) => {
   return (
     <>
       <FullHeightSkeleton header palette='admin' overflowY="hidden">
-        <Container style={{ width: '40%' }}>
-          <Player ongoingPlaylist={props.ongoingPlaylist} poolControls={poolControls}/>
-        </Container>
+          { !device.isMobile &&
+          <Container style={{ width: '40%' }}>
+            <Player ongoingPlaylist={props.ongoingPlaylist} poolControls={poolControls}/>
+          </Container>
+          }
         <Container>
           <SongList ongoingPlaylist={props.ongoingPlaylist} poolControls={poolControls}/>
         </Container>
