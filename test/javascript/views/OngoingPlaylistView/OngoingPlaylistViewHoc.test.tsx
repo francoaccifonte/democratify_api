@@ -17,8 +17,8 @@ describe('OngoingPlaylistViewHoc', () => {
       const subject = render(<OngoingPlaylistViewHoc votation={toJson(votation)} ongoingPlaylist={toJson(ongoingPlaylist)} account={toJson(account)} />)
 
       expect(subject.getByText(ongoingPlaylist.playing_song.title)).toBeInTheDocument()
-      ongoingPlaylist.voting_songs.forEach((value) => {
-        expect(subject.getAllByText(value.title)[0]).toBeInTheDocument()
+      votation.votation_candidates.forEach((value) => {
+        expect(subject.getAllByText(value.spotify_song.title)[0]).toBeInTheDocument()
       })
       ongoingPlaylist.remaining_songs.forEach((value) => {
         expect(subject.getAllByText(value.title)[0]).toBeInTheDocument()
