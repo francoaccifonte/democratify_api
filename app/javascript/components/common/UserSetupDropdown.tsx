@@ -4,7 +4,7 @@ import withStyles from 'react-jss'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Cookies from 'js-cookie'
 
-// import { openQrOnNewWindow } from './qr'
+import { openQrOnNewWindow } from './'
 
 type UserSetupDropdownProps = {
   classes: any
@@ -49,7 +49,7 @@ const UserSetupDropdown = (props: UserSetupDropdownProps) => {
           <Dropdown.Item onClick={() => { window.location.href = '/account_settings' }}>Configuracion de Streaming</Dropdown.Item>
           <Dropdown.Item onClick={() => { window.location.href = '/spotify_playlists' }}>Mis Playlists</Dropdown.Item>
           <Dropdown.Item onClick={() => { window.location.href = '/ongoing_playlists' }}>Reproduccion Activa</Dropdown.Item>
-          {/* <Dropdown.Item onClick={() => openQrOnNewWindow(accountId)}>QR Votacion</Dropdown.Item> */}
+          <Dropdown.Item onClick={() => openQrOnNewWindow(accountId)}>QR Votacion</Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item onClick={handleLogout}>Salir</Dropdown.Item>
         </Dropdown.Menu>
