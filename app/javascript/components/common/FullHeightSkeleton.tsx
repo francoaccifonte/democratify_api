@@ -14,7 +14,7 @@ type SkeletonProps = {
 };
 
 const AddHeader = (props: { header?: SkeletonProps['header'], palette: ColorProps['palette'] }) => {
-  if (props.header) return <AppHeader palette={props.palette} type={props.header}/>
+  if (props.header) return <AppHeader type={props.header}/>
   return <></>
 }
 

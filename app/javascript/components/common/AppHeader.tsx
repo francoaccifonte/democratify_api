@@ -1,8 +1,8 @@
 import React from 'react'
 import withStyles from 'react-jss'
+import Cookies from 'js-cookie'
 
-import { ColorProps } from '../ColorPalette'
-import { AppLogo, Text } from './'
+import { AppLogo, Text, UserSetupDropdown } from './'
 
 export const useAppHeaderUtils = () => {
   return {
@@ -11,11 +11,7 @@ export const useAppHeaderUtils = () => {
 }
 
 type HeaderProps = {
-  palette: ColorProps['palette']
-  isMobile?: boolean;
-  public?: boolean;
   className?: string;
-  style?: React.CSSProperties;
   classes: any;
   type?: boolean | 'landing' | 'default';
 }
@@ -36,7 +32,7 @@ const AppHeader = (props: HeaderProps) => {
 
   const RightCluster = ({ type }: { type: HeaderProps['type'] }) => {
     if (type === true || type === 'default') {
-      // if (userIsLoggedIn()) { return <UserSetupDropdown /> }
+      if (Cookies.get('account_id')) { return <UserSetupDropdown /> }
     }
     if (type === 'landing') { return <LogInButtons /> }
 
@@ -65,9 +61,6 @@ const styles = (theme: any) => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      '&:hover': {
-        cursor: 'pointer'
-      }
     },
     leftCluster: {
       textDecoration: 'none',
