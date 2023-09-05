@@ -12,4 +12,16 @@ Sentry.init do |config|
   # config.traces_sampler = lambda do |context|
   #   true
   # end
+
+  ignored_exceptions = [Puma::HttpParserError]
+  config.before_send = lambda do |event, hint|
+    # NOTE: hint[:exception] would be a String if you use async callback
+    if ignored_exceptions.any? { |ex| hint[:exception].is_a?(ex) }
+      nil
+    else
+      event
+    end
+  rescue StandardError => e
+    e
+  end
 end
