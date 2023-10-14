@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container'
 
 import { serializedAccount, serializedOngoingPlaylist, serializedVotation } from '../../../types'
 import { Player, SongList } from './'
-import { FullHeightSkeleton } from '../../../common'
+import { FullHeightSkeleton, QR } from '../../../common'
 import { ResponsiveContext } from '../../contexts'
 
 type OngoingPlaylistViewProps = {
@@ -37,6 +37,7 @@ const OngoingPlaylistView: React.FC<OngoingPlaylistViewProps> = (props) => {
           { !device.isMobile &&
           <Container style={{ width: '40%' }}>
             <Player ongoingPlaylist={props.ongoingPlaylist} poolControls={poolControls}/>
+            <QR accountId={props.account.id}/>
           </Container>
           }
         <Container>

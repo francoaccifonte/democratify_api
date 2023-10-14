@@ -19,15 +19,17 @@ type VotationViewParams = {
 const VotationView: React.FC<VotationViewParams> = (props): JSX.Element => {
   const [selected, setSelected] = useState<serializedVotationCandidate | undefined>(undefined)
   const { votation } = useContext(FooterContext)
-  const previousVotationIds = localStorage.getItem('votation_ids')?.split(',') || []
+  const [previousVotationIds, setPreviousVotationIds] = useState<String[]>(localStorage.getItem('votation_ids')?.split(',') || [])
   const { accountId } = props
 
   const voteAlreadyCasted = previousVotationIds.includes(String(votation.id))
 
-  const handleVote = async (event: React.MouseEvent<HTMLInputElement>) => {
+  const handleVote = async (event: React.MouseEvent<HTMLButtonElement>) => {
     const response = await client.votations.castVote(accountId, selected.id, new ClientJS().getFingerprint())
     if (response.ok) {
-      localStorage.setItem('votation_ids', [...previousVotationIds, votation.id].join(','))
+      const newVotationList = [...previousVotationIds, String(votation.id)]
+      localStorage.setItem('votation_ids', newVotationList.join(','))
+      setPreviousVotationIds(newVotationList)
     }
   }
 

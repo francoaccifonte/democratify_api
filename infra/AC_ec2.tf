@@ -83,7 +83,7 @@ resource "aws_lb" "rockolify_lb" {
   security_groups    = [aws_security_group.rockolify_public.id]
   subnets            = [aws_subnet.rockolify_public.id, aws_subnet.rockolify_public2.id]
 
-  enable_deletion_protection = true
+  enable_deletion_protection = false
 }
 
 resource "aws_lb_target_group" "rockolify_app" {
